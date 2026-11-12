@@ -1,0 +1,2 @@
+test/e2e/server/** text eol=lf
+native/patches/*.patch -text

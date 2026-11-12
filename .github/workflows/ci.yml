@@ -1,0 +1,166 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Format, analyze, test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - uses: ./.github/actions/setup
+        with:
+          native: plain
+
+      - name: Check formatting
+        run: dart format --output=none --set-exit-if-changed lib test tool
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Test
+        run: flutter test --coverage --dart-define=TT_NATIVE_LIB=$PWD/build/native-host/libtt_audio.so
+
+      - name: Coverage by layer
+        run: dart run tool/coverage.dart coverage/lcov.info --summary "$GITHUB_STEP_SUMMARY"
+
+  sanitizers:
+    name: Native tests with sanitizers
+    needs: check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - uses: ./.github/actions/setup
+        with:
+          native: sanitize
+
+      - name: Run the native tests
+        run: bash scripts/test_native_sanitized.sh
+
+  e2e:
+    name: E2E against TeamTalk server
+    needs: check
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      TT_PRO_BEARWARE_ID: ${{ secrets.TT_PRO_BEARWARE_ID }}
+      TT_PRO_BEARWARE_TOKEN: ${{ secrets.TT_PRO_BEARWARE_TOKEN }}
+      IMAGE_TAR: /tmp/teamtalkx-e2e.tar
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Restore the server image
+        id: image
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ${{ env.IMAGE_TAR }}
+          key: e2e-image-${{ hashFiles('test/e2e/server/**') }}
+
+      - name: Load the server image
+        if: steps.image.outputs.cache-hit == 'true'
+        run: docker load --input "$IMAGE_TAR"
+
+      - name: Build the server image
+        if: steps.image.outputs.cache-hit != 'true'
+        run: |
+          docker build -t teamtalkx-e2e test/e2e/server
+          docker save --output "$IMAGE_TAR" teamtalkx-e2e
+
+      - name: Save the server image
+        if: steps.image.outputs.cache-hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ${{ env.IMAGE_TAR }}
+          key: ${{ steps.image.outputs.cache-primary-key }}
+
+      - name: Start the servers
+        run: |
+          docker run -d --name teamtalkx-e2e \
+            -e TT_PRO_BEARWARE_ID -e TT_PRO_BEARWARE_TOKEN \
+            -p 10333:10333 -p 10333:10333/udp -p 10443:10443 \
+            -p 10543:10543 -p 10543:10543/udp \
+            teamtalkx-e2e
+          ports="10333 10443"
+          if [ -n "$TT_PRO_BEARWARE_ID" ] && [ -n "$TT_PRO_BEARWARE_TOKEN" ]; then
+            ports="$ports 10543"
+          fi
+          for port in $ports; do
+            for _ in $(seq 60); do
+              (echo > "/dev/tcp/127.0.0.1/$port") 2>/dev/null && break
+              sleep 1
+            done
+            (echo > "/dev/tcp/127.0.0.1/$port") 2>/dev/null || {
+              echo "::error::Port $port did not open"
+              exit 1
+            }
+          done
+
+      - uses: ./.github/actions/setup
+        with:
+          native: plain
+
+      - name: Run E2E tests
+        run: |
+          defines=(
+            --dart-define=TT_E2E_HOST=127.0.0.1
+            --dart-define=TT_NATIVE_LIB=$PWD/build/native-host/libtt_audio.so
+          )
+          if [ -n "$TT_PRO_BEARWARE_ID" ] && [ -n "$TT_PRO_BEARWARE_TOKEN" ]; then
+            defines+=(--dart-define=TT_E2E_PRO_PORT=10543)
+          fi
+          flutter test "${defines[@]}" test/e2e
+
+      - name: Server log
+        if: always()
+        run: docker logs teamtalkx-e2e || true
+
+  apk:
+    name: Debug APK
+    needs: check
+    uses: ./.github/workflows/apk.yml
+
+  release-please:
+    name: Release PR and tag
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    needs: [check, sanitizers, e2e, apk]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      created: ${{ steps.release.outputs.release_created }}
+      tag: ${{ steps.release.outputs.tag_name }}
+    steps:
+      - id: release
+        uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  release:
+    name: Release
+    needs: release-please
+    if: needs.release-please.outputs.created == 'true'
+    permissions:
+      contents: write
+    uses: ./.github/workflows/apk.yml
+    with:
+      release-tag: ${{ needs.release-please.outputs.tag }}
+    secrets: inherit

@@ -1,0 +1,46 @@
+name: teamtalkx
+description: "TeamTalk 5 Flutter client."
+publish_to: 'none'
+
+version: 2.0.0-beta.1 # x-release-please-version
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.3
+
+  flutter_riverpod: ^3.5.0
+  ffi: ^2.2.0
+  shared_preferences: ^2.5.6
+  permission_handler: ^13.0.2
+  xml: ^7.1.0
+  file_selector: ^1.1.0
+  path_provider: ^2.1.6
+  url_launcher: ^6.3.3
+  pointycastle: ^4.0.0
+  drift: ^2.35.4
+  drift_flutter: ^0.3.1
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^6.0.0
+  drift_dev: ^2.35.3
+  build_runner: ^2.17.1
+
+flutter:
+
+  uses-material-design: true
+  generate: true
+
+  assets:
+    - assets/sounds/
+    - assets/vad/
+    - assets/soundpacks/majorly/
+    - assets/icons/
+    - assets/licenses/

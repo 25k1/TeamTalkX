@@ -1,0 +1,2671 @@
+{
+  "@@locale": "en",
+  "appTitle": "TeamTalk",
+  "@appTitle": {
+    "description": "App name in the task switcher."
+  },
+  "commonSave": "Save",
+  "commonDelete": "Delete",
+  "commonEdit": "Edit",
+  "commonRemove": "Remove",
+  "commonCancel": "Cancel",
+  "commonDiscard": "Discard",
+  "commonSettings": "Settings",
+  "commonMoreOptions": "More options",
+  "commonPassword": "Password",
+  "commonNickname": "Nickname",
+  "languageSetting": "Language",
+  "languageSystem": "System default",
+  "@languageSystem": {
+    "description": "Language choice that follows the Android language."
+  },
+  "failureReport": "{action}: {reason}",
+  "@failureReport": {
+    "description": "An operation that failed and why, e.g. 'Save failed: Wrong channel password.'",
+    "placeholders": {
+      "action": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "failureServerUnreachable": "The server can't be reached. Check the address and your internet connection.",
+  "failureTimedOut": "The server didn't respond in time.",
+  "failureSecureConnection": "The encrypted connection couldn't be set up.",
+  "failureNotConnected": "Not connected to the server.",
+  "failureServerClosed": "The server closed the connection.",
+  "failureStorage": "The file couldn't be read or written.",
+  "failureWebService": "The web service didn't respond correctly.",
+  "failureWebLoginRequired": "This server uses BearWare web login. Link your BearWare account in Settings first.",
+  "failureUnexpected": "Something went wrong. The details are in the diagnostics log.",
+  "failureServerOther": "The server refused: {message}",
+  "@failureServerOther": {
+    "description": "A server error without a translation; message is the server's own (English) text.",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "serverErrorProtocol": "The server doesn't understand this version of the app.",
+  "serverErrorUnknownAudioCodec": "The server doesn't support this audio codec.",
+  "serverErrorInvalidUsername": "The username isn't valid.",
+  "serverErrorIncorrectChannelPassword": "Wrong channel password.",
+  "serverErrorInvalidAccount": "Wrong username or password.",
+  "serverErrorServerFull": "The server is full.",
+  "serverErrorChannelFull": "The channel is full.",
+  "serverErrorBannedFromServer": "You are banned from this server.",
+  "serverErrorNotAuthorized": "You don't have permission to do that.",
+  "serverErrorDiskQuota": "The channel's file storage is full.",
+  "serverErrorIncorrectOpPassword": "Wrong operator password.",
+  "serverErrorBitrateLimit": "The audio bitrate is above the server's limit.",
+  "serverErrorTooManyLogins": "Too many logins from your network address.",
+  "serverErrorTooManyChannels": "The server can't hold more channels.",
+  "serverErrorCommandFlood": "Too many requests. Wait a moment and try again.",
+  "serverErrorBannedFromChannel": "You are banned from this channel.",
+  "serverErrorTooManyTransfers": "Too many file transfers at once.",
+  "serverErrorNotLoggedIn": "You are not logged in.",
+  "serverErrorAlreadyLoggedIn": "You are already logged in.",
+  "serverErrorNotInChannel": "You are not in a channel.",
+  "serverErrorAlreadyInChannel": "You are already in that channel.",
+  "serverErrorChannelExists": "A channel with that name already exists.",
+  "serverErrorChannelNotFound": "The channel doesn't exist.",
+  "serverErrorUserNotFound": "The user isn't on the server.",
+  "serverErrorBanNotFound": "That ban doesn't exist.",
+  "serverErrorTransferNotFound": "The file transfer doesn't exist.",
+  "serverErrorOpenFileFailed": "The server couldn't open the file.",
+  "serverErrorAccountNotFound": "The user account doesn't exist.",
+  "serverErrorFileNotFound": "The file doesn't exist.",
+  "serverErrorFileExists": "A file with that name already exists.",
+  "serverErrorFileSharingDisabled": "File sharing is turned off on this server.",
+  "serverErrorChannelHasUsers": "The channel still has users in it.",
+  "serverErrorLoginServiceUnavailable": "The login service is unavailable.",
+  "serverErrorChannelCannotBeHidden": "This channel can't be hidden.",
+  "actionConnect": "Connection failed",
+  "actionSave": "Save failed",
+  "actionJoinChannel": "Joining the channel failed",
+  "actionLogin": "Login failed",
+  "actionChangeNickname": "Changing the nickname failed",
+  "actionExport": "Export failed",
+  "actionImport": "Import failed",
+  "actionUnban": "Unban failed",
+  "actionBan": "Ban failed",
+  "actionDelete": "Delete failed",
+  "actionChangeSubscription": "Changing the subscription failed",
+  "actionDownload": "Downloading {fileName} failed",
+  "@actionDownload": {
+    "placeholders": {
+      "fileName": {
+        "type": "String"
+      }
+    }
+  },
+  "exportedTo": "Exported to {path}",
+  "@exportedTo": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "connectionReconnected": "Reconnected",
+  "connectionKicked": "Kicked from the server",
+  "connectionKickedBy": "Kicked from the server by {name}",
+  "@connectionKickedBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "connectionLost": "Connection lost. Reconnecting",
+  "connectionKickedFromChannel": "Kicked from the channel",
+  "connectionKickedFromChannelBy": "Kicked from the channel by {name}",
+  "@connectionKickedFromChannelBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "connectionCouldNotJoinChannel": "Could not join the channel",
+  "serverListTitle": "TeamTalk servers",
+  "serverListingLocal": "local server",
+  "serverListingOfficial": "official server",
+  "serverListingPublic": "public server",
+  "serverListingUnofficial": "unofficial server",
+  "@serverListingLocal": {
+    "description": "Read by the screen reader before a server's name."
+  },
+  "serverEncrypted": "encrypted",
+  "@serverEncrypted": {
+    "description": "Read by the screen reader for an encrypted server."
+  },
+  "serverUserCount": "{count, plural, =1{1 user} other{{count} users}}",
+  "@serverUserCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "serverMicPermissionDenied": "Microphone permission denied. You can listen but not talk.",
+  "serverDeleteTitle": "Delete {name}?",
+  "@serverDeleteTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "serverAddedToMine": "Added {name} to my servers",
+  "@serverAddedToMine": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "serverAlreadyMine": "The server is already in my servers",
+  "serverEnterJoinCode": "Enter join code",
+  "serverJoinCode": "Join code",
+  "serverLookingUpJoinCode": "Looking up the join code…",
+  "serverJoinCodeNotRecognised": "Join code not recognised",
+  "serverFileTypeLabel": "TeamTalk servers",
+  "@serverFileTypeLabel": {
+    "description": "File type name in the file picker for .tt files."
+  },
+  "serverNoServersInFile": "No servers found in the file",
+  "serverAllAlreadyExist": "All servers in the file already exist",
+  "serverImported": "{count, plural, =1{Imported 1 server} other{Imported {count} servers}}",
+  "@serverImported": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "serverAddToMine": "Add to my servers",
+  "serverExport": "Export server",
+  "serverAdd": "Add server",
+  "serverRefreshList": "Refresh server list",
+  "serverImportFile": "Import .tt file",
+  "serverExportAll": "Export all servers",
+  "serverSearch": "Search servers",
+  "serverClearSearch": "Clear search",
+  "serverNoneYet": "No servers yet. Use Add server to create one.",
+  "serverNoneMatch": "No servers match \"{query}\"",
+  "@serverNoneMatch": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "serverLoadingPublic": "Loading public servers…",
+  "serverPublicLoadFailed": "Could not load public servers",
+  "serverDoubleTapToRetry": "Double tap to retry",
+  "serverConnecting": "Connecting",
+  "serverEditTitleAdd": "Add server",
+  "serverEditTitleEdit": "Edit server",
+  "serverEditEnterAddress": "Enter a server address",
+  "serverEditUnsavedTitle": "Unsaved changes",
+  "serverEditUnsavedBody": "You have unsaved changes. Save before leaving?",
+  "serverEditKeepEditing": "Keep editing",
+  "serverEditName": "Server name",
+  "serverEditAddress": "Server address",
+  "serverEditTcpPort": "TCP port",
+  "serverEditUdpPort": "UDP port",
+  "serverEditEncrypted": "Encrypted connection",
+  "serverEditNicknameOptional": "Nickname (optional)",
+  "serverEditUsernameOptional": "Username (optional)",
+  "serverEditPasswordOptional": "Password (optional)",
+  "serverEditRememberChannel": "Remember last channel",
+  "serverEditRememberChannelHint": "Join the channel you last joined on this server",
+  "serverEditChannelOptional": "Channel to join (optional)",
+  "serverEditChannelPasswordOptional": "Channel password (optional)",
+  "bearwareTitle": "BearWare login",
+  "bearwareLoginFailed": "Login failed. Check your BearWare ID and password.",
+  "bearwareLoggedInAs": "Logged in as {name}",
+  "@bearwareLoggedInAs": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "bearwareLinkedAs": "Linked as {name}",
+  "@bearwareLinkedAs": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "bearwareLinkedHint": "Servers using web login will sign in with this account",
+  "bearwareUnlinked": "BearWare account unlinked",
+  "bearwareUnlink": "Unlink account",
+  "bearwareIntro": "Enter your BearWare ID to use servers with web login. You can create an account at www.bearware.dk.",
+  "bearwareId": "BearWare ID",
+  "bearwareLoggingIn": "Logging in",
+  "bearwareLogIn": "Log in",
+  "commonJoin": "Join",
+  "commonSend": "Send",
+  "commonApply": "Apply",
+  "commonOk": "OK",
+  "commonSelect": "Select",
+  "commonDeselect": "Deselect",
+  "commonDownload": "Download",
+  "commonMute": "Mute",
+  "commonUnmute": "Unmute",
+  "commonMuted": "Muted",
+  "commonUnmuted": "Unmuted",
+  "commonYes": "Yes",
+  "commonNo": "No",
+  "commonClearSearch": "Clear search",
+  "commonUndoSelection": "Undo selection",
+  "commonSelectionCleared": "Selection cleared",
+  "commonMessage": "Message",
+  "commonDisconnect": "Disconnect",
+  "commonSelected": "selected",
+  "commonInsertVariable": "Insert variable",
+  "commonShowPassword": "Show password",
+  "commonName": "Name",
+  "commonOptionSelected": "{option} (selected)",
+  "@commonOptionSelected": {
+    "placeholders": {
+      "option": {
+        "type": "String"
+      }
+    }
+  },
+  "sortAscending": "ascending",
+  "sortDescending": "descending",
+  "sortReverseOrder": "Reverse order (now {direction})",
+  "@sortReverseOrder": {
+    "placeholders": {
+      "direction": {
+        "type": "String"
+      }
+    }
+  },
+  "sortSortedAscending": "Sorted ascending",
+  "sortSortedDescending": "Sorted descending",
+  "sortSortedBy": "Sorted by {field}",
+  "@sortSortedBy": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "sortLabel": "Sort by {field} {direction}",
+  "@sortLabel": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      },
+      "direction": {
+        "type": "String"
+      }
+    }
+  },
+  "fileSizeBytes": "{count, plural, =1{1 byte} other{{count} bytes}}",
+  "@fileSizeBytes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "fileSizeKb": "{size} KB",
+  "@fileSizeKb": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "fileSizeMb": "{size} MB",
+  "@fileSizeMb": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "fileSizeGb": "{size} GB",
+  "@fileSizeGb": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "actionBroadcast": "Sending the broadcast failed",
+  "actionSend": "Sending failed",
+  "actionUpload": "Upload failed",
+  "actionDownloadFile": "Download failed",
+  "actionOperator": "Changing the channel operator failed",
+  "actionMoveUser": "Moving the user failed",
+  "actionModerate": "{action} failed",
+  "@actionModerate": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  "channelsTitle": "Channels",
+  "channelsSortTitle": "Sort channels",
+  "channelsSortedBy": "Channels sorted by {sort}",
+  "@channelsSortedBy": {
+    "placeholders": {
+      "sort": {
+        "type": "String"
+      }
+    }
+  },
+  "channelsSortBy": "Sort channels by {sort}",
+  "@channelsSortBy": {
+    "placeholders": {
+      "sort": {
+        "type": "String"
+      }
+    }
+  },
+  "channelSortName": "Name",
+  "channelSortPopularity": "Popularity",
+  "channelPasswordTitle": "Channel password",
+  "mainMuteServer": "Mute server",
+  "mainUnmuteServer": "Unmute server",
+  "mainJoinChannel": "Join {name}",
+  "@mainJoinChannel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "mainServerMuted": "Server muted",
+  "mainServerUnmuted": "Server unmuted",
+  "channelsNone": "No channels",
+  "channelDeleteTitle": "Delete channel {name}?",
+  "@channelDeleteTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "channelPasswordProtected": "password protected",
+  "channelJoined": "joined",
+  "channelExpanded": "expanded",
+  "channelMoveHere": "Move here",
+  "channelInformation": "Channel information",
+  "channelBannedUsers": "Banned users",
+  "channelCreateSub": "Create subchannel",
+  "channelEdit": "Edit channel",
+  "channelDelete": "Delete channel",
+  "channelNoLongerAvailable": "The channel is no longer available",
+  "channelInfoTopic": "Topic",
+  "channelInfoUsers": "Users",
+  "channelInfoUsersOf": "{count} of {max}",
+  "@channelInfoUsersOf": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "channelInfoPasswordProtected": "Password protected",
+  "channelInfoType": "Type",
+  "channelTypeDefault": "Default",
+  "channelTypePermanent": "Permanent",
+  "channelTypeSoloTransmit": "Solo transmit",
+  "channelTypeClassroom": "Classroom",
+  "channelTypeOperatorRecvOnly": "Operators hear all",
+  "channelTypeNoVoiceActivation": "No voice activation",
+  "channelTypeNoRecording": "No recording",
+  "channelTypeHidden": "Hidden",
+  "broadcastTitle": "Broadcast message",
+  "broadcastLabel": "Message to everyone on the server",
+  "broadcastSent": "Broadcast sent",
+  "streamingFile": "Streaming {name}",
+  "@streamingFile": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "streamingStopped": "Streaming stopped",
+  "failureMediaFileUnplayable": "This file can't be played. Try an MP3, AAC, Ogg, Opus, FLAC or WAV file.",
+  "navMediaStream": "Media stream",
+  "mediaStreamTitle": "Media stream",
+  "mediaStreamPause": "Pause",
+  "mediaStreamResume": "Resume",
+  "mediaStreamBack": "Back 10 seconds",
+  "mediaStreamForward": "Forward 10 seconds",
+  "mediaStreamLoop": "Loop",
+  "mediaStreamVolume": "Stream volume",
+  "mediaStreamMonitor": "Hear it on this device",
+  "mediaStreamMonitorSub": "The channel hears the stream either way",
+  "mediaStreamStop": "Stop streaming",
+  "mediaStreamPosition": "{position} of {duration}",
+  "@mediaStreamPosition": {
+    "placeholders": {
+      "position": {
+        "type": "String"
+      },
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "mediaStreamPaused": "Paused",
+  "mediaStreamResumed": "Resumed",
+  "mediaStreamLoopOn": "Loop on",
+  "mediaStreamLoopOff": "Loop off",
+  "mediaStreamFinished": "Finished streaming {name}",
+  "@mediaStreamFinished": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "mediaStreamReadFailed": "Streaming {name} stopped: the file could not be read",
+  "@mediaStreamReadFailed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "statusChange": "Change status",
+  "statusMessage": "Status message",
+  "statusAvailable": "Available",
+  "statusAway": "Away",
+  "statusQuestion": "Question",
+  "controlsAudioSettings": "Audio settings",
+  "controlsVoiceActivation": "Voice activation",
+  "controlsTransmitting": "Transmitting",
+  "controlsTransmitInactive": "Transmit inactive",
+  "controlsJoinChannelFirst": "Join a channel first",
+  "controlsLockTransmission": "Lock transmission",
+  "controlsUnlockTransmission": "Unlock transmission",
+  "controlsTransmissionLocked": "Transmission locked",
+  "navConnectedAs": "Connected as {nickname}",
+  "@navConnectedAs": {
+    "placeholders": {
+      "nickname": {
+        "type": "String"
+      }
+    }
+  },
+  "navOnlineUsers": "Online users",
+  "navChangeNickname": "Change nickname",
+  "navSendBroadcast": "Send broadcast message",
+  "navUserAccounts": "User accounts",
+  "navServerProperties": "Server properties",
+  "navStopStreaming": "Stop streaming",
+  "navStreamMediaFile": "Stream media file",
+  "tabChat": "Chat",
+  "tabFiles": "Files",
+  "tabPosition": "{name} tab {index} of {count}",
+  "@tabPosition": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "index": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chatNoMessages": "No messages",
+  "chatJoinToChat": "Join a channel to chat",
+  "chatLogConnected": "Connected to the server",
+  "chatLogLoggedIn": "Logged in",
+  "chatLogConnectionLost": "Connection lost",
+  "chatMessageCopied": "Message copied",
+  "chatCopyMessage": "Copy message",
+  "pmTitle": "Private messages",
+  "pmTypingLabel": "{name}, typing",
+  "@pmTypingLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pmTyping": "typing…",
+  "pmNoMessages": "No messages yet",
+  "pmYou": "You",
+  "pmUserOffline": "The user is offline",
+  "usersSortTitle": "Sort users",
+  "usersSortNickname": "Nickname",
+  "usersSortId": "ID",
+  "usersNobodyOnline": "Nobody is online",
+  "usersOnlineCount": "Online users ({count})",
+  "@usersOnlineCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "usersNotInChannel": "not in a channel",
+  "usersInChannel": "in {path}",
+  "@usersInChannel": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "usersNotInChannelTitle": "Not in a channel",
+  "userYou": "{name} (you)",
+  "@userYou": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "userSelected": "Selected {name}",
+  "@userSelected": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "userDeselected": "Deselected {name}",
+  "@userDeselected": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "userOperatorGranted": "Channel operator granted",
+  "userOperatorRemoved": "Channel operator removed",
+  "userDetails": "User details",
+  "userSendPrivateMessage": "Send private message",
+  "userMakeOperator": "Make channel operator",
+  "userRemoveOperator": "Remove channel operator",
+  "userKick": "Kick",
+  "userBan": "Ban",
+  "userKickAndBan": "Kick and ban",
+  "userTitle": "User",
+  "userNoLongerOnline": "The user is no longer online",
+  "userStatus": "Status",
+  "userClient": "Client",
+  "userForgotSettings": "Forgot the settings for this user",
+  "userVoiceVolume": "Voice volume",
+  "userMuteVoice": "Mute voice",
+  "userMediaVolume": "Media volume",
+  "userMuteMedia": "Mute media",
+  "userMediaMuted": "Media muted",
+  "userMediaUnmuted": "Media unmuted",
+  "userSubscriptions": "Subscriptions",
+  "userSubVoice": "Voice",
+  "userSubChannelMessages": "Channel messages",
+  "userSubPrivateMessages": "Private messages",
+  "userSubMediaFiles": "Media files",
+  "userIntercept": "Intercept (admin)",
+  "userInterceptVoice": "Intercept voice",
+  "userInterceptPrivate": "Intercept private messages",
+  "userInterceptChannel": "Intercept channel messages",
+  "userInterceptMedia": "Intercept media files",
+  "userRememberedSettings": "Remembered settings",
+  "userRememberForClient": "Remember for this client only",
+  "userRememberMatch": "Match {user} on {client}",
+  "@userRememberMatch": {
+    "placeholders": {
+      "user": {
+        "type": "String"
+      },
+      "client": {
+        "type": "String"
+      }
+    }
+  },
+  "userRememberThisUser": "this user",
+  "userForgetRemembered": "Forget remembered settings",
+  "userMoveToMyChannel": "Move to my channel",
+  "userMoved": "Moved {name}",
+  "@userMoved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "userEffectiveVolume": "Heard at {percent}% of the sender's level",
+  "@userEffectiveVolume": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "selectionMoveToChannel": "Move to channel",
+  "selectionUsersSelected": "{count, plural, =1{1 user selected} other{{count} users selected}}",
+  "@selectionUsersSelected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "selectionMoveTo": "Move to",
+  "selectionUsersMoved": "{count, plural, =1{Moved 1 user} other{Moved {count} users}}",
+  "@selectionUsersMoved": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "selectionSomeNotMoved": "Some users could not be moved",
+  "moderationConfirm": "{action} {name}?",
+  "@moderationConfirm": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "moderationDoneChannel": "{action}: {name}, from the channel",
+  "@moderationDoneChannel": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "moderationDoneServer": "{action}: {name}, from the server",
+  "@moderationDoneServer": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "moderationFromChannel": "From the channel",
+  "moderationFromServer": "From the server",
+  "moderationFromThisChannel": "From this channel",
+  "filesOverrideTitle": "{name} already exists. Replace it?",
+  "@filesOverrideTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "filesOverride": "Replace",
+  "filesUploadStarted": "Upload started",
+  "filesDownloadStarted": "Download started",
+  "filesDownloading": "{count, plural, =1{Downloading 1 file} other{Downloading {count} files}}",
+  "@filesDownloading": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "filesDeleteTitle": "Delete {name} from the channel?",
+  "@filesDeleteTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "filesSortTitle": "Sort files",
+  "filesSortName": "Name",
+  "filesSortSize": "Size",
+  "filesSortOwner": "Owner",
+  "filesSortDate": "Upload date",
+  "filesJoinToSee": "Join a channel to see its files",
+  "filesTransfers": "Transfers",
+  "filesNoMatch": "No files match your search",
+  "filesNone": "No files in this channel",
+  "filesSelected": "{count, plural, =1{1 file selected} other{{count} files selected}}",
+  "@filesSelected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "filesDownloadSelected": "Download files",
+  "filesCloseSearch": "Close search",
+  "filesSearch": "Search files",
+  "filesUpload": "Upload file",
+  "transferDownloading": "Downloading",
+  "transferUploading": "Uploading",
+  "transferProgress": "{direction}, {percent} percent",
+  "@transferProgress": {
+    "placeholders": {
+      "direction": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "transferCompleted": "Completed",
+  "transferFailed": "Failed",
+  "transferCancelled": "Cancelled",
+  "transferCancel": "Cancel transfer",
+  "transferOpenFile": "Open file",
+  "transferRemove": "Remove from list",
+  "userMutedTag": "muted",
+  "@userMutedTag": {
+    "description": "Read by the screen reader after a user you muted."
+  },
+  "commonResetToDefault": "Reset to default",
+  "commonNone": "None",
+  "valuePercent": "{value, plural, =1{1 percent} other{{value} percent}}",
+  "@valuePercent": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsGeneral": "General",
+  "settingsGeneralSub": "Account",
+  "settingsServerList": "Server list",
+  "settingsServerListSub": "Public server listings",
+  "settingsSound": "Sound",
+  "settingsSoundSub": "Microphone, hardware",
+  "settingsEvents": "Events",
+  "settingsEventsSub": "Speech, sound and haptics per event",
+  "settingsDiagnostics": "Diagnostics",
+  "settingsDiagnosticsSub": "Export the app log",
+  "settingsSectionLabel": "{title}, {subtitle}",
+  "@settingsSectionLabel": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "subtitle": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsAccount": "Account",
+  "settingsNotSet": "Not set",
+  "settingsNotLinked": "Not linked",
+  "settingsRememberedUsers": "Remembered users",
+  "settingsRememberedUsersSub": "Per-server mutes, volumes and subscriptions; export and import",
+  "settingsProfile": "Profile",
+  "settingsGender": "Gender",
+  "genderMale": "Male",
+  "genderFemale": "Female",
+  "genderNeutral": "Neutral",
+  "settingsConnection": "Connection",
+  "settingsAutoJoinRoot": "Automatically join the root channel",
+  "settingsAutoJoinRootSub": "When a server has no channel to join, join the root channel",
+  "settingsKeepAwake": "Keep the phone awake while connected",
+  "settingsKeepAwakeSub": "Turn on if the connection drops while the screen is off. Uses more battery.",
+  "settingsPushToTalk": "Push-to-talk",
+  "settingsPttKey": "Hardware push-to-talk key",
+  "settingsPttKeyNone": "None. Tap to map a key (hold to talk)",
+  "settingsPttKeyHold": "{key}: hold to talk",
+  "@settingsPttKeyHold": {
+    "placeholders": {
+      "key": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsPttKeyClear": "Clear push-to-talk key",
+  "settingsPttMapTitle": "Map push-to-talk key",
+  "settingsPttMapBody": "Press the hardware key to use for push-to-talk. It works while the app is in the foreground.",
+  "settingsShowOfficial": "Show official servers",
+  "settingsShowOfficialSub": "Include BearWare.dk official servers in the server list",
+  "settingsShowUnofficial": "Show unofficial servers",
+  "settingsShowUnofficialSub": "Include community-listed servers in the server list",
+  "settingsHardware": "Hardware",
+  "settingsCalls": "Calls and interruptions",
+  "settingsCallsSub": "Phone calls, other apps playing, and lowering other apps",
+  "callsIntro": "During a phone or VoIP call, TeamTalkX stops transmitting, mutes the channel and releases the microphone, and you stay connected. Afterwards the sound and voice activation come back; transmission stays off.",
+  "callsAway": "Set status to away during calls",
+  "callsAwaySub": "Your previous status comes back after the call",
+  "callsStatusMessage": "Status message during calls",
+  "callsStatusMessageLabel": "Message",
+  "callsStatusMessageKeep": "Not set: your current message stays",
+  "callIncoming": "Incoming call",
+  "callEnded": "Call ended",
+  "callEndedTxOff": "Call ended, transmission off",
+  "callMicUnavailable": "The microphone is unavailable during a call",
+  "callsSection": "Calls",
+  "otherAppsSection": "Other apps",
+  "focusPolicyTitle": "When another app plays media",
+  "focusPolicyIgnore": "Keep TeamTalkX at full volume",
+  "focusPolicyDuck": "Lower TeamTalkX",
+  "focusPolicyMute": "Mute TeamTalkX",
+  "focusPolicyNote": "Games, and audio marked as speech such as some podcasts, aren't noticed.",
+  "duckOthersVoice": "Lower other apps while someone talks",
+  "duckOthersEvents": "Lower other apps during event sounds",
+  "duckOthersSub": "Meanwhile, TeamTalkX itself isn't lowered or muted for other apps",
+  "keepVolumeTalkBack": "Keep TeamTalkX at full volume when TalkBack speaks",
+  "keepVolumeTalkBackSub": "While TeamTalkX lowers other apps, TalkBack and notifications would lower TeamTalkX too",
+  "headsetDisconnected": "Headset disconnected",
+  "headsetDisconnectedTxOff": "Headset disconnected, transmission off",
+  "settingsMediaKeys": "Media keys",
+  "settingsMediaKeysSub": "Actions for headset and Bluetooth buttons",
+  "mediaKeysIntro": "Keys without an action reach other apps as usual. Once any key has an action, TeamTalkX receives every media key while connected, and keys without an action do nothing. Holding a wired headset's button usually opens the voice assistant instead of reaching TeamTalkX. While any key has an action, TeamTalkX also counts as the playing player, so apps that skip tracks for you, such as a long press of a volume key with the screen off, act as the Next and Previous keys.",
+  "mediaKeyPlayPause": "Play/Pause",
+  "mediaKeyNext": "Next",
+  "mediaKeyPrevious": "Previous",
+  "mediaKeyFastForward": "Fast forward",
+  "mediaKeyRewind": "Rewind",
+  "mediaKeyStop": "Stop",
+  "keyPressSingle": "press",
+  "keyPressLong": "hold",
+  "mediaKeyBinding": "{key}, {press}",
+  "@mediaKeyBinding": {
+    "placeholders": {
+      "key": {
+        "type": "String"
+      },
+      "press": {
+        "type": "String"
+      }
+    }
+  },
+  "keyActionNone": "Nothing",
+  "keyActionToggleTransmission": "Toggle transmission",
+  "keyActionHoldToTalk": "Talk while held",
+  "keyActionToggleVoiceActivation": "Toggle voice activation",
+  "keyActionToggleSpeakers": "Mute or unmute sound",
+  "keyActionToggleMicrophone": "Mute or unmute the microphone",
+  "keyActionNextChannel": "Next channel",
+  "keyActionPreviousChannel": "Previous channel",
+  "keyActionJoinSelectedChannel": "Join the selected channel",
+  "keyActionSpeakTalking": "Say who is talking",
+  "keyActionSpeakChannel": "Say the current channel",
+  "keysRootChannel": "Root channel",
+  "keysChannelSelected": "{name}, {count, plural, =0{no users} =1{1 user} other{{count} users}}",
+  "@keysChannelSelected": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "keysNoChannelSelected": "No channel selected. Use the next or previous channel key first",
+  "keysAlreadyInChannel": "Already in {name}",
+  "@keysAlreadyInChannel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "keysChannelNeedsPassword": "{name} needs a password. Join it from the channel list",
+  "@keysChannelNeedsPassword": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "keysNobodyTalking": "Nobody is talking",
+  "keysTalking": "Talking: {names}",
+  "@keysTalking": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "keysNotInChannel": "Not in a channel",
+  "keysCurrentChannel": "In {name}, {count, plural, =0{no users} =1{1 user} other{{count} users}}",
+  "@keysCurrentChannel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "micMuted": "Microphone muted",
+  "micUnmuted": "Microphone unmuted",
+  "eventsSpeechSub": "How events are spoken",
+  "eventsSoundSub": "Master event-sound switch",
+  "eventsEditChatTemplates": "Edit chat templates",
+  "eventsEditChatTemplatesSub": "How chat-history lines are formatted",
+  "eventsEditTimestamp": "Edit timestamp",
+  "eventsEditTimestampSub": "Format of {token} in chat templates",
+  "@eventsEditTimestampSub": {
+    "placeholders": {
+      "token": {
+        "type": "String"
+      }
+    }
+  },
+  "eventsSpeech": "Speech",
+  "eventsHaptic": "Haptic",
+  "eventsChat": "Chat",
+  "eventsOn": "On",
+  "eventsDisabled": "Disabled",
+  "eventsOpenSettings": "Open settings",
+  "eventsAudioFiles": "Audio",
+  "eventEnabled": "Event enabled",
+  "eventEnabledSub": "Give any feedback for this event",
+  "eventSpeechSub": "Speak a message for this event",
+  "eventWhatToSpeak": "What to speak",
+  "eventShowInChat": "Show in chat history",
+  "eventShowInChatSub": "Add a line to the chat tab for this event",
+  "eventWhatToShow": "What to show",
+  "eventSoundSub": "Play a sound for this event",
+  "eventDefaultSound": "Default sound",
+  "eventChooseSound": "Tap to choose a custom sound",
+  "eventPlay": "Play",
+  "eventResetSound": "Reset to default sound",
+  "eventHaptic": "Haptic feedback",
+  "eventHapticSub": "Vibrate for this event",
+  "eventAddVibration": "Add vibration",
+  "eventTest": "Test",
+  "eventStepPause": "Pause after step {step} in milliseconds",
+  "@eventStepPause": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      }
+    }
+  },
+  "eventPauseMs": "Pause (ms)",
+  "eventRemoveStep": "Remove step {step}",
+  "@eventRemoveStep": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      }
+    }
+  },
+  "hapticLight": "Light",
+  "hapticMedium": "Medium",
+  "hapticHeavy": "Heavy",
+  "appEventUserLoggedIn": "User logs in",
+  "appEventUserLoggedOut": "User logs off",
+  "appEventUserJoined": "User joins your channel",
+  "appEventUserLeft": "User leaves your channel",
+  "appEventUserJoinedOther": "User joins another channel",
+  "appEventUserLeftOther": "User leaves another channel",
+  "appEventChannelMessage": "Channel message received",
+  "appEventChannelMessageSent": "You send a channel message",
+  "appEventPrivateMessage": "Private message received",
+  "appEventBroadcastMessage": "Broadcast message received",
+  "appEventFilesUpdated": "Channel files updated",
+  "appEventTransmitOn": "Push-to-talk hold (transmit on)",
+  "appEventTransmitOff": "Push-to-talk release (transmit off)",
+  "appEventVoxEnabled": "You enable voice activation",
+  "appEventVoxDisabled": "You disable voice activation",
+  "appEventVoxTriggered": "Voice activation triggers",
+  "appEventVoxReleased": "Voice activation releases",
+  "eventTplUserLoggedIn": "{nickname} logged on",
+  "@eventTplUserLoggedIn": {
+    "placeholders": {
+      "nickname": {
+        "type": "String"
+      }
+    }
+  },
+  "eventTplUserLoggedOut": "{nickname} logged off",
+  "@eventTplUserLoggedOut": {
+    "placeholders": {
+      "nickname": {
+        "type": "String"
+      }
+    }
+  },
+  "eventTplUserJoined": "{nickname} joined the channel",
+  "@eventTplUserJoined": {
+    "placeholders": {
+      "nickname": {
+        "type": "String"
+      }
+    }
+  },
+  "eventTplUserLeft": "{nickname} left the channel",
+  "@eventTplUserLeft": {
+    "placeholders": {
+      "nickname": {
+        "type": "String"
+      }
+    }
+  },
+  "eventTplUserJoinedOther": "{nickname} joined {channel}",
+  "@eventTplUserJoinedOther": {
+    "placeholders": {
+      "nickname": {
+        "type": "String"
+      },
+      "channel": {
+        "type": "String"
+      }
+    }
+  },
+  "eventTplUserLeftOther": "{nickname} left {channel}",
+  "@eventTplUserLeftOther": {
+    "placeholders": {
+      "nickname": {
+        "type": "String"
+      },
+      "channel": {
+        "type": "String"
+      }
+    }
+  },
+  "eventTplChannelMessage": "{nickname}: {message}",
+  "@eventTplChannelMessage": {
+    "placeholders": {
+      "nickname": {
+        "type": "String"
+      },
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "eventTplPrivateMessage": "Private message from {nickname}: {message}",
+  "@eventTplPrivateMessage": {
+    "placeholders": {
+      "nickname": {
+        "type": "String"
+      },
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "eventTplBroadcastMessage": "Broadcast from {nickname}: {message}",
+  "@eventTplBroadcastMessage": {
+    "placeholders": {
+      "nickname": {
+        "type": "String"
+      },
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "eventTplFilesUpdated": "Channel files updated",
+  "soundEventUserJoin": "User joins your channel",
+  "soundEventUserLeft": "User leaves your channel",
+  "soundEventLoggedOn": "User logs on to the server",
+  "soundEventLoggedOff": "User logs off the server",
+  "soundEventChannelMessage": "Channel message received",
+  "soundEventChannelMessageSent": "Channel message sent",
+  "soundEventUserMessage": "Private message received",
+  "soundEventBroadcastMessage": "Broadcast message received",
+  "soundEventServerLost": "Connection to the server lost",
+  "soundEventTxOn": "Voice transmission on",
+  "soundEventTxOff": "Voice transmission off",
+  "soundEventVoxEnable": "Voice activation enabled",
+  "soundEventVoxDisable": "Voice activation disabled",
+  "soundEventVoxOn": "Voice activation triggers",
+  "soundEventVoxOff": "Voice activation releases",
+  "soundEventFileUpdate": "Channel files updated",
+  "soundEventTyping": "User is typing",
+  "eventConnectionLostReconnecting": "Connection to the server lost. Reconnecting.",
+  "eventDownloadCompleted": "Download of {name} completed",
+  "@eventDownloadCompleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "eventUploadCompleted": "Upload of {name} completed",
+  "@eventUploadCompleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "voiceProblemServerUnreachable": "Voice is not reaching the server, so nobody can hear you or be heard. Text and files still work.",
+  "voiceProblemPlaybackFailed": "Sound output could not be started; you can't hear others.",
+  "voiceProblemMicrophoneFailed": "The microphone could not be started; others can't hear you.",
+  "voiceProblemStartFailed": "Voice could not be started. Text and files still work.",
+  "eventTransferFailed": "Transfer of {name} failed",
+  "@eventTransferFailed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "speechSpeakEventsThrough": "Speak events through",
+  "speechScreenReader": "Screen reader",
+  "speechScreenReaderSub": "TalkBack announcements",
+  "speechTts": "Text-to-speech engine",
+  "speechNothing": "Nothing",
+  "ttsAccessibilityStream": "Use accessibility audio stream",
+  "ttsAccessibilityStreamSub": "Play speech on the accessibility volume instead of media",
+  "ttsVolume": "Speech volume",
+  "ttsRate": "Speech rate",
+  "ttsPitch": "Pitch",
+  "ttsTest": "Speak a test sentence",
+  "ttsTestSentence": "This is the TeamTalk speech test.",
+  "ttsEngine": "Engine",
+  "ttsSystemDefault": "System default",
+  "ttsEngineDefault": "Engine default",
+  "ttsVoice": "Voice",
+  "ttsDefaultVoice": "Default voice",
+  "soundRescan": "Read the sound pack folder again",
+  "soundPlayEvents": "Play event sounds",
+  "soundPlayEventsSub": "Master switch for all event sounds",
+  "soundPack": "Sound pack",
+  "soundLoadingPacks": "Loading sound packs…",
+  "soundPacksFailed": "Could not read sound packs",
+  "soundCustomFolder": "From your folder",
+  "soundPackDefault": "Default",
+  "diagnosticsExport": "Export diagnostics",
+  "diagnosticsExportSub": "Saves the app log to Downloads, to attach to a bug report. Passwords and message text are left out; server names, nicknames and user IDs are included.",
+  "audioSourceDefault": "Default",
+  "audioSourceMicrophone": "Microphone",
+  "audioSourceCamcorder": "Camcorder",
+  "audioSourceVoiceRecognition": "Voice recognition",
+  "audioSourceVoiceCommunication": "Voice communication",
+  "audioSourceUnprocessed": "Unprocessed",
+  "audioSourceVoicePerformance": "Voice performance",
+  "audioMono": "Mono",
+  "audioStereo": "Stereo",
+  "audioInput": "Input",
+  "audioSource": "Audio source",
+  "audioSourceOther": "Source {id}",
+  "@audioSourceOther": {
+    "placeholders": {
+      "id": {
+        "type": "int"
+      }
+    }
+  },
+  "audioSampleRate": "Sample rate",
+  "audioChannels": "Channels",
+  "audioStereoChannel": "Stereo channel",
+  "stereoBoth": "Both",
+  "stereoLeft": "Left",
+  "stereoRight": "Right",
+  "audioProcessing": "Processing",
+  "audioVoiceDetection": "Voice detection",
+  "audioNoiseSuppression": "Noise suppression",
+  "audioNoiseSuppressionSub": "Removes background noise from the microphone using a neural network (RNNoise). Improves clarity in noisy environments.",
+  "audioSuppressionLevel": "Suppression level",
+  "audioAgc": "Automatic gain control",
+  "audioAgcSub": "Continuously levels the microphone volume to the Microphone gain slider value. Applied after noise suppression; voice activation uses the unprocessed signal.",
+  "audioLevels": "Levels",
+  "audioMasterVolume": "Master volume",
+  "soundEventVolume": "Event sounds volume",
+  "eventSoundVolume": "Sound volume",
+  "audioOutputSection": "Output",
+  "audioVoiceCallMode": "Voice call mode",
+  "audioVoiceCallModeSub": "Uses the phone's echo canceller and call routing, and a Bluetooth headset's microphone. Media mode keeps the full audio quality.",
+  "audioOutputAutomatic": "Automatic",
+  "audioOutputSpeaker": "Phone speaker",
+  "audioOutputEarpiece": "Earpiece",
+  "audioOutputWired": "Wired headset",
+  "audioOutputUsb": "USB audio",
+  "audioOutputBluetooth": "Bluetooth",
+  "audioOutputHearingAid": "Hearing aid",
+  "audioOutputNotConnected": "{name}, not connected",
+  "@audioOutputNotConnected": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "micTestTitle": "Microphone test",
+  "micTestEntry": "Test microphone",
+  "micTestEntrySub": "Hear yourself as others will",
+  "micTestIntro": "Your microphone with your noise suppression, gain and audio settings, played back to you.",
+  "micTestListenLive": "Listen live",
+  "micTestLiveNeedsHeadphones": "Connect headphones to listen live; on the speaker it would howl.",
+  "micTestRecord": "Record 5 seconds and play back",
+  "micTestStop": "Stop",
+  "micTestListening": "Listening. You hear your microphone as others will.",
+  "micTestRecording": "Recording for 5 seconds. Speak now.",
+  "micTestPlaying": "Playing back",
+  "micTestFinished": "Microphone test finished",
+  "micTestStopTransmitting": "Stop transmitting and turn off voice activation to test the microphone",
+  "micTestNoPermission": "The microphone permission is needed for the test",
+  "audioMediaVolume": "Media streams volume",
+  "audioNormalize": "Even out speaker volumes",
+  "audioNormalizeSub": "Slowly brings quiet and loud speakers closer to the same level",
+  "audioVoiceQuality": "Voice quality",
+  "audioEnhancement": "Voice enhancement",
+  "audioEnhancementOff": "Off",
+  "audioEnhancementStandard": "Standard: repairs lost audio",
+  "audioEnhancementBetter": "Better: also cleans up low-quality voices",
+  "audioEnhancementBest": "Best: strongest, uses more battery",
+  "audioBandwidthExtension": "Fuller sound for low-quality voices",
+  "audioBandwidthExtensionSub": "Rebuilds the high frequencies of voices sent at a low bitrate. Uses more battery.",
+  "audioLossProtection": "Protect my voice against lost packets",
+  "audioLossProtectionChannel": "As the channel says (error correction)",
+  "audioLossProtectionDred": "Channel's error correction plus deep redundancy (more data)",
+  "audioLossProtectionNone": "Off",
+  "audioTargetMicLevel": "Target microphone level",
+  "audioMicGain": "Microphone gain",
+  "audioVoxLevel": "Voice activation level",
+  "chatTplLabelChannel": "Channel message",
+  "chatTplLabelBroadcast": "Broadcast message",
+  "chatTplLabelPrivate": "Private message",
+  "chatTplLabelLog": "Log message",
+  "chatTplLabelServerName": "Server name",
+  "chatTplLabelMotd": "Server message of the day",
+  "chatTplLabelJoined": "Joined channel",
+  "chatTplLabelTopic": "Channel topic",
+  "chatTplLabelQuota": "Channel disk quota",
+  "chatTplChannel": "{date} <{user}>\n{content}",
+  "@chatTplChannel": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "user": {
+        "type": "String"
+      },
+      "content": {
+        "type": "String"
+      }
+    }
+  },
+  "chatTplBroadcast": "{date} <{user}->BROADCAST>\n{content}",
+  "@chatTplBroadcast": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "user": {
+        "type": "String"
+      },
+      "content": {
+        "type": "String"
+      }
+    }
+  },
+  "chatTplPrivate": "{date} <{user}>\n{content}",
+  "@chatTplPrivate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "user": {
+        "type": "String"
+      },
+      "content": {
+        "type": "String"
+      }
+    }
+  },
+  "chatTplLog": "{date} * {content}",
+  "@chatTplLog": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "content": {
+        "type": "String"
+      }
+    }
+  },
+  "chatTplServerName": "{date} Server name: {server}",
+  "@chatTplServerName": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "server": {
+        "type": "String"
+      }
+    }
+  },
+  "chatTplMotd": "{date} Message of the day: {motd}",
+  "@chatTplMotd": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "motd": {
+        "type": "String"
+      }
+    }
+  },
+  "chatTplJoined": "{date} Joined channel: {path}",
+  "@chatTplJoined": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "chatTplTopic": "Topic: {topic}",
+  "@chatTplTopic": {
+    "placeholders": {
+      "topic": {
+        "type": "String"
+      }
+    }
+  },
+  "chatTplQuota": "Disk quota: {quota}",
+  "@chatTplQuota": {
+    "placeholders": {
+      "quota": {
+        "type": "String"
+      }
+    }
+  },
+  "varDate": "Date",
+  "varMessageDate": "Message date",
+  "varChannelPath": "Channel path",
+  "varChannelName": "Channel name",
+  "varChannelTopic": "Channel topic",
+  "varQuota": "Disk quota",
+  "varSender": "Sender's nickname",
+  "varContent": "Message content",
+  "varServerName": "Server name",
+  "varMotd": "Server's message of the day",
+  "tsYear": "Year (4 digits)",
+  "tsMonth": "Month (01-12)",
+  "tsDay": "Day (01-31)",
+  "tsHour": "Hour (00-23)",
+  "tsHour12": "Hour (01-12)",
+  "tsMinute": "Minute (00-59)",
+  "tsSecond": "Second (00-59)",
+  "tsAmPm": "AM or PM",
+  "chatTemplatesTitle": "Chat templates",
+  "chatTemplatesResetAll": "Reset all to defaults",
+  "chatTemplatesResetAllConfirm": "Reset all chat templates to their defaults?",
+  "chatTemplatesResetAllButton": "Reset all",
+  "chatTemplateField": "Template",
+  "chatTemplateFieldHelp": "How this line appears in the chat history",
+  "timestampTitle": "Timestamp",
+  "timestampField": "Timestamp format",
+  "timestampFieldHelp": "Used for {token} in every chat template",
+  "@timestampFieldHelp": {
+    "placeholders": {
+      "token": {
+        "type": "String"
+      }
+    }
+  },
+  "timestampPreview": "Preview",
+  "unitKhz": "{value} kHz",
+  "@unitKhz": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "unitMs": "{value} msec",
+  "@unitMs": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "commonRefresh": "Refresh",
+  "commonUsername": "Username",
+  "commonChannel": "Channel",
+  "commonUnknown": "Unknown",
+  "commonImport": "Import",
+  "commonExport": "Export",
+  "commonForget": "Forget",
+  "motdVarUsers": "Number of users on the server",
+  "motdVarAdmins": "Number of admins on the server",
+  "motdVarUptime": "Server's time online",
+  "motdVarVoiceRx": "Kilobytes received",
+  "motdVarVoiceTx": "Kilobytes sent",
+  "motdVarLastUser": "Last user to log on",
+  "serverPropsSaved": "Server properties saved",
+  "serverPropsGeneral": "General",
+  "serverPropsName": "Server name",
+  "serverPropsMaxUsers": "Maximum users",
+  "serverPropsUserTimeout": "User timeout (seconds)",
+  "serverPropsAutoSave": "Auto-save configuration",
+  "serverPropsConnection": "Connection",
+  "serverPropsTcpPort": "TCP port",
+  "serverPropsUdpPort": "UDP port",
+  "serverPropsMaxLoginAttempts": "Max failed login attempts",
+  "serverPropsMaxIpLogins": "Max logins per IP (0 = no limit)",
+  "serverPropsLoginDelay": "Login delay (msec, 0 = no limit)",
+  "serverPropsBandwidth": "Bandwidth limits (KB/s, 0 = no limit)",
+  "serverPropsVoice": "Voice",
+  "serverPropsVideo": "Video",
+  "serverPropsMediaFile": "Media file",
+  "serverPropsDesktop": "Desktop",
+  "serverPropsTotal": "Total",
+  "serverPropsServer": "Server",
+  "serverPropsVersion": "Server version",
+  "serverPropsLoggedEvents": "Logged events",
+  "serverPropsMotd": "Message of the day",
+  "logUserConnected": "User connected",
+  "logUserDisconnected": "User disconnected",
+  "logUserLoggedIn": "User logged in",
+  "logUserLoggedOut": "User logged out",
+  "logUserLoginFailed": "User login failed",
+  "logUserTimedOut": "User timed out",
+  "logUserKicked": "User kicked",
+  "logUserBanned": "User banned",
+  "logUserUnbanned": "User unbanned",
+  "logUserUpdated": "User updated",
+  "logUserJoinedChannel": "User joined a channel",
+  "logUserLeftChannel": "User left a channel",
+  "logUserMoved": "User moved",
+  "logUserTextPrivate": "Private text message",
+  "logUserTextCustom": "Custom text message",
+  "logUserTextChannel": "Channel text message",
+  "logUserTextBroadcast": "Broadcast text message",
+  "logChannelCreated": "Channel created",
+  "logChannelUpdated": "Channel updated",
+  "logChannelRemoved": "Channel removed",
+  "logFileUploaded": "File uploaded",
+  "logFileDownloaded": "File downloaded",
+  "logFileDeleted": "File deleted",
+  "logServerUpdated": "Server updated",
+  "logServerSaveConfig": "Server configuration saved",
+  "logUserCryptError": "User encryption error",
+  "logUserNewStream": "User started a stream",
+  "accountsTitle": "User accounts",
+  "accountsSortTitle": "Sort accounts",
+  "accountsSortUserType": "User type",
+  "accountsSortLastEdited": "Last edited",
+  "accountsSortLastLogin": "Last login",
+  "accountsDeleteTitle": "Delete user \"{name}\"?",
+  "@accountsDeleteTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "accountsDeleted": "Deleted {name}",
+  "@accountsDeleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "accountsAdd": "Add user account",
+  "accountsLoading": "Loading user accounts",
+  "accountsLoadFailed": "Could not load accounts",
+  "accountsNone": "No user accounts",
+  "accountsAnonymous": "(anonymous)",
+  "accountTypeAdmin": "Administrator",
+  "accountTypeDefault": "Default user",
+  "accountTypeDisabled": "Disabled",
+  "actionLoadList": "{what}: {reason}",
+  "@actionLoadList": {
+    "placeholders": {
+      "what": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "rightMultiLogin": "Multiple logins",
+  "rightViewAllUsers": "See all users",
+  "rightCreateTempChannel": "Create temporary channels",
+  "rightModifyChannels": "Modify channels",
+  "rightBroadcast": "Broadcast messages",
+  "rightKick": "Kick users",
+  "rightBan": "Ban users",
+  "rightMove": "Move users",
+  "rightOperatorEnable": "Enable operators",
+  "rightUpload": "Upload files",
+  "rightDownload": "Download files",
+  "rightUpdateServer": "Update server properties",
+  "rightTransmitVoice": "Transmit voice",
+  "rightTransmitVideo": "Transmit video",
+  "rightTransmitDesktop": "Transmit desktop",
+  "rightTransmitDesktopInput": "Transmit desktop input",
+  "rightTransmitMediaAudio": "Transmit media file audio",
+  "rightTransmitMediaVideo": "Transmit media file video",
+  "rightLockedNickname": "Locked nickname",
+  "rightLockedStatus": "Locked status",
+  "rightRecordVoice": "Record voice",
+  "rightViewHiddenChannels": "See hidden channels",
+  "rightTextUser": "Send private messages",
+  "rightTextChannel": "Send channel messages",
+  "cmdLimitDisabled": "Disabled",
+  "cmdLimitPerSeconds": "{count} commands per {seconds} seconds",
+  "@cmdLimitPerSeconds": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "cmdLimitCustom": "Custom: {count} per {seconds} seconds",
+  "@cmdLimitCustom": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "accountSelectChannel": "Select channel",
+  "accountMaxAutoOp": "At most 16 auto-operator channels",
+  "accountCommandLimit": "Command limit",
+  "accountCustomLimit": "Custom…",
+  "accountAnonymousTitle": "Create an anonymous user account?",
+  "accountAnonymousBody": "An account with no username lets anyone log in without one.",
+  "accountNewTitle": "New user account",
+  "accountEditTitle": "Edit user account",
+  "accountLastEdited": "Last edited: {when}",
+  "@accountLastEdited": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "accountLastLogin": "Last login: {when}",
+  "@accountLastLogin": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "accountUserType": "User type",
+  "accountInitialChannel": "Initial channel",
+  "accountPickInitialChannel": "Pick initial channel",
+  "accountPickChannel": "Pick channel",
+  "accountCodecLimit": "Audio codec limit (kbps)",
+  "accountNoLimitHint": "0 = no limit",
+  "accountCommandLimitValue": "Command limit, {limit}",
+  "@accountCommandLimitValue": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "accountNote": "Note",
+  "accountAutoOpChannels": "Auto-operator channels",
+  "accountChannelId": "Channel #{id}",
+  "@accountChannelId": {
+    "placeholders": {
+      "id": {
+        "type": "int"
+      }
+    }
+  },
+  "accountRemoveAutoOp": "Remove auto-operator channel",
+  "accountAddAutoOp": "Add auto-operator channel",
+  "accountUserRights": "User rights",
+  "accountSetCommandLimit": "Set command limit",
+  "accountInterval": "Interval (seconds)",
+  "bansSortIp": "IP",
+  "bansUnbanned": "Unbanned {name}",
+  "@bansUnbanned": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "bansBanned": "Banned {value}",
+  "@bansBanned": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "bansTitleChannel": "Banned users: {channel}",
+  "@bansTitleChannel": {
+    "placeholders": {
+      "channel": {
+        "type": "String"
+      }
+    }
+  },
+  "bansAdd": "Add ban",
+  "bansLoading": "Loading the ban list",
+  "bansLoadFailed": "Could not load bans",
+  "bansNone": "No banned users",
+  "bansItemLabel": "Banned: {name}",
+  "@bansItemLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "bansUnban": "Unban",
+  "bansBanIp": "Ban IP address",
+  "bansBanUsername": "Ban username",
+  "bansIpAddress": "IP address",
+  "rememberedSubVoice": "voice",
+  "rememberedSubChannel": "channel messages",
+  "rememberedSubPrivate": "private messages",
+  "rememberedSubMedia": "media files",
+  "rememberedInterceptVoice": "intercept voice",
+  "rememberedInterceptPrivate": "intercept private",
+  "rememberedInterceptChannel": "intercept channel",
+  "rememberedInterceptMedia": "intercept media",
+  "rememberedVolume": "Volume {percent}%",
+  "@rememberedVolume": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "rememberedMediaVolume": "Media volume {percent}%",
+  "@rememberedMediaVolume": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "rememberedNoOverrides": "No overrides",
+  "rememberedJson": "JSON",
+  "rememberedReadFailed": "Could not read the file",
+  "rememberedImported": "{count, plural, =1{Imported 1 user setting} other{Imported {count} user settings}}",
+  "@rememberedImported": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "rememberedForgetAll": "Forget all",
+  "rememberedForgetAllConfirm": "Forget all remembered users?",
+  "rememberedNoUsername": "(no username)",
+  "rememberedNone": "No remembered users",
+  "channelEditCreate": "Create channel",
+  "channelEditName": "Channel name",
+  "channelEditMaxUsers": "Maximum users",
+  "channelEditCodecField": "Codec",
+  "channelEditNameRequired": "Enter a name",
+  "channelEditTopicOptional": "Topic (optional)",
+  "channelEditPasswordRemoves": "Password (empty removes it)",
+  "channelEditOpPasswordOptional": "Operator password (optional)",
+  "channelEditDiskQuota": "Disk quota for files (KB, 0 = none)",
+  "channelEditType": "Channel type",
+  "channelEditPermanentSub": "Keep the channel when the last user leaves",
+  "channelEditHiddenSub": "Only visible to admins",
+  "channelEditClassroomSub": "Only operators and chosen users may transmit",
+  "channelEditOperatorsHearAll": "Operators hear everything",
+  "channelEditSoloSub": "Only one user transmits at a time",
+  "channelEditCodec": "Audio codec",
+  "channelEditAudioConfig": "Audio configuration",
+  "channelEditAgcSub": "Level the microphone volume for all users",
+  "channelEditGainLevel": "Gain level (0–32768)",
+  "channelEditApplication": "Application",
+  "channelEditVoip": "VoIP",
+  "channelEditMusic": "Music",
+  "channelEditBitrate": "Bitrate (kbps)",
+  "channelEditVbr": "Variable bitrate",
+  "channelEditDtx": "Discontinuous transmission",
+  "channelEditTxInterval": "Transmit interval (msec)",
+  "channelEditFrameSize": "Frame size",
+  "channelEditAuto": "Auto",
+  "channelEditNarrowBand": "{rate} (narrow band)",
+  "@channelEditNarrowBand": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "channelEditWideBand": "{rate} (wide band)",
+  "@channelEditWideBand": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "channelEditUltraWideBand": "{rate} (ultra-wide band)",
+  "@channelEditUltraWideBand": {
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
+  "channelEditQuality": "Quality (0–10)",
+  "channelEditMaxBitrate": "Max bitrate (bps, 0 = none)",
+  "channelEditSpeexVbr": "Speex variable bitrate",
+  "channelEditNoAudio": "No audio",
+  "failureCertificateNew": "The server's certificate isn't trusted yet.",
+  "failureCertificateChanged": "The server's certificate has changed.",
+  "certificateNewTitle": "Trust this server?",
+  "certificateNewBody": "This is the first encrypted connection to {server}. No certificate authority vouches for its certificate, which is usual for TeamTalk servers. If the server's owner published its fingerprint, compare it before you trust it.",
+  "@certificateNewBody": {
+    "placeholders": {
+      "server": {
+        "type": "String"
+      }
+    }
+  },
+  "certificateChangedTitle": "Server certificate changed",
+  "certificateChangedBody": "The certificate of {server} isn't the one you trusted. Its owner may have replaced it, or someone may be intercepting the connection. Trust the new certificate only if you know it was replaced.",
+  "@certificateChangedBody": {
+    "placeholders": {
+      "server": {
+        "type": "String"
+      }
+    }
+  },
+  "certificateWasAuthority": "Before, a certificate authority vouched for this server's certificate. No authority vouches for this one.",
+  "certificateFingerprint": "SHA-256 fingerprint: {fingerprint}",
+  "@certificateFingerprint": {
+    "placeholders": {
+      "fingerprint": {
+        "type": "String"
+      }
+    }
+  },
+  "certificatePreviousFingerprint": "Trusted fingerprint: {fingerprint}",
+  "@certificatePreviousFingerprint": {
+    "placeholders": {
+      "fingerprint": {
+        "type": "String"
+      }
+    }
+  },
+  "certificateSubject": "Issued to: {subject}",
+  "@certificateSubject": {
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
+  },
+  "certificateIssuer": "Issued by: {issuer}",
+  "@certificateIssuer": {
+    "placeholders": {
+      "issuer": {
+        "type": "String"
+      }
+    }
+  },
+  "certificateValidUntil": "Valid until: {date}",
+  "@certificateValidUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "certificateSaved": "Trusted since: {date}",
+  "@certificateSaved": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "certificateCopyFingerprint": "Copy fingerprint",
+  "certificateCopied": "Fingerprint copied",
+  "certificateTrust": "Trust and connect",
+  "certificateDetails": "Details",
+  "certificateAuthorityVouched": "Vouched for by a certificate authority",
+  "certificateForgetConfirm": "Forget the certificate of {endpoint}?",
+  "@certificateForgetConfirm": {
+    "placeholders": {
+      "endpoint": {
+        "type": "String"
+      }
+    }
+  },
+  "certificateForgetBody": "The next encrypted connection to it asks again before trusting the server's certificate.",
+  "certificatesTitle": "Trusted certificates",
+  "certificatesSub": "Certificates of encrypted servers you trusted",
+  "certificatesForgetAll": "Forget all",
+  "certificatesForgetAllConfirm": "Forget all trusted certificates?",
+  "certificatesNone": "No trusted certificates yet",
+  "serverOfferLinkTitle": "Open server link?",
+  "serverOfferFileTitle": "Open server file?",
+  "serverOfferAddress": "Address: {address}",
+  "@serverOfferAddress": {
+    "placeholders": {
+      "address": {
+        "type": "String"
+      }
+    }
+  },
+  "serverOfferEncrypted": "Encrypted connection",
+  "serverOfferUsername": "Logs in as {username}",
+  "@serverOfferUsername": {
+    "placeholders": {
+      "username": {
+        "type": "String"
+      }
+    }
+  },
+  "serverOfferPassword": "Includes a password",
+  "serverOfferChannel": "Joins channel {channel}",
+  "@serverOfferChannel": {
+    "placeholders": {
+      "channel": {
+        "type": "String"
+      }
+    }
+  },
+  "serverOfferChannelPassword": "Includes a channel password",
+  "serverOfferLeaves": "You're connected to {server}. Connecting leaves it.",
+  "@serverOfferLeaves": {
+    "placeholders": {
+      "server": {
+        "type": "String"
+      }
+    }
+  },
+  "serverOfferConnect": "Connect",
+  "serverImportTitle": "{count, plural, =1{Import 1 server?} other{Import {count} servers?}}",
+  "@serverImportTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "serverImportWithPasswords": "{count, plural, =1{1 of them includes passwords.} other{{count} of them include passwords.}}",
+  "@serverImportWithPasswords": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "serverExportPasswordsTitle": "Include passwords?",
+  "serverExportPasswordsBody": "Some of these servers have passwords. The file is saved to Downloads, where other apps and anyone you share it with can read them.",
+  "serverExportPasswordsInclude": "Include",
+  "serverExportPasswordsLeaveOut": "Leave out",
+  "soundPackFolder": "Sound pack folder",
+  "soundPackFolderNone": "None chosen. Pick a folder whose subfolders hold sound packs, such as teamtalk/sounds.",
+  "soundPackFolderChosen": "{name}. Each subfolder with sounds is a pack.",
+  "@soundPackFolderChosen": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "soundPackFolderUnreadable": "The folder can't be read any more. Choose it again.",
+  "soundPackFolderForget": "Stop using this folder",
+  "soundPackFolderPicked": "Sound pack folder: {name}",
+  "@soundPackFolderPicked": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "filesNoAppToOpen": "No app can open this file",
+  "filesSavedTo": "Saved to {path}",
+  "@filesSavedTo": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "tabChatUnread": "Chat, {count} unread",
+  "@tabChatUnread": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chatJumpToFirstUnread": "Jump to first unread ({count})",
+  "@chatJumpToFirstUnread": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chatUnread": "Unread",
+  "pmUnreadCount": "{count, plural, =1{1 unread message} other{{count} unread messages}}",
+  "@pmUnreadCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsChatHistory": "Chat history",
+  "settingsChatHistorySub": "How long messages are kept, and clearing them",
+  "chatHistoryKeep": "Keep messages",
+  "chatHistoryDays": "{count, plural, =1{1 day} other{{count} days}}",
+  "@chatHistoryDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chatHistoryForever": "Forever",
+  "chatHistoryServers": "Saved chat",
+  "chatHistoryMessages": "{count, plural, =1{1 message} other{{count} messages}}",
+  "@chatHistoryMessages": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chatHistoryNone": "No saved messages",
+  "chatHistoryClear": "Clear",
+  "chatHistoryClearServerConfirm": "Clear the chat history of {name}?",
+  "@chatHistoryClearServerConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "chatHistoryClearAll": "Clear all chat history",
+  "chatHistoryClearAllConfirm": "Clear all saved chat history?",
+  "operatorBecomeTitle": "Become operator of {channel}",
+  "@operatorBecomeTitle": {
+    "placeholders": {
+      "channel": {
+        "type": "String"
+      }
+    }
+  },
+  "operatorPassword": "Operator password",
+  "operatorBecome": "Become operator",
+  "operatorStop": "Stop being operator",
+  "operatorYouGained": "You are now operator of {channel}",
+  "@operatorYouGained": {
+    "placeholders": {
+      "channel": {
+        "type": "String"
+      }
+    }
+  },
+  "operatorYouLost": "You are no longer operator of {channel}",
+  "@operatorYouLost": {
+    "placeholders": {
+      "channel": {
+        "type": "String"
+      }
+    }
+  },
+  "operatorUserGained": "{user} is now operator",
+  "@operatorUserGained": {
+    "placeholders": {
+      "user": {
+        "type": "String"
+      }
+    }
+  },
+  "operatorUserLost": "{user} is no longer operator",
+  "@operatorUserLost": {
+    "placeholders": {
+      "user": {
+        "type": "String"
+      }
+    }
+  },
+  "userOperatorTag": "operator",
+  "userMayTalkTag": "may talk",
+  "userMayNotTalkTag": "may not talk",
+  "channelYouAreOperator": "you are operator",
+  "transmitYouMayTalk": "You may talk now",
+  "transmitYouMayNotTalk": "You may not talk in this channel",
+  "transmitYouMayStream": "You may stream media files now",
+  "transmitYouMayNotStream": "You may not stream media files in this channel",
+  "transmitAllowTalk": "Allow to talk",
+  "transmitStopAllowTalk": "Stop allowing to talk",
+  "transmitBlockTalk": "Block from talking",
+  "transmitUnblockTalk": "Unblock talking",
+  "transmitAllowStream": "Allow to stream media",
+  "transmitStopAllowStream": "Stop allowing to stream media",
+  "transmitBlockStream": "Block from streaming media",
+  "transmitUnblockStream": "Unblock streaming media",
+  "transmitEveryoneTalks": "Let everyone talk",
+  "transmitOnlyAllowedTalk": "Only allowed users may talk",
+  "actionTransmitControl": "Changing who may talk failed",
+  "userSubBroadcasts": "Broadcast messages",
+  "userSubCustom": "Typing indicators and other app messages",
+  "userInterceptCustom": "Intercept app messages",
+  "rememberedSubBroadcast": "broadcasts",
+  "rememberedSubCustom": "app messages",
+  "rememberedInterceptCustom": "intercept app messages",
+  "banBy": "Ban by",
+  "banByIp": "IP address",
+  "banByUsername": "Username",
+  "banByBoth": "IP address and username",
+  "statsTitle": "Server statistics",
+  "statsSinceStart": "Since the server started",
+  "statsUptime": "Running for",
+  "statsUsersServed": "Users who logged in",
+  "statsUsersSpoke": "Users who talked",
+  "statsVoice": "Voice",
+  "statsMediaFiles": "Streamed media files",
+  "statsFiles": "File transfers",
+  "statsTotal": "All audio traffic",
+  "statsTraffic": "{sent} sent, {received} received",
+  "@statsTraffic": {
+    "placeholders": {
+      "sent": {
+        "type": "String"
+      },
+      "received": {
+        "type": "String"
+      }
+    }
+  },
+  "statsDays": "{count, plural, =1{1 day} other{{count} days}}",
+  "@statsDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "statsHours": "{count, plural, =1{1 hour} other{{count} hours}}",
+  "@statsHours": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "statsMinutes": "{count, plural, =1{1 minute} other{{count} minutes}}",
+  "@statsMinutes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "eventTplConnectionLost": "Connection lost. Reconnecting",
+  "eventTplKickedFromServer": "Kicked from the server by {kicker}",
+  "@eventTplKickedFromServer": {
+    "placeholders": {
+      "kicker": {
+        "type": "String"
+      }
+    }
+  },
+  "eventTplKickedFromChannel": "Kicked from {channel} by {kicker}",
+  "@eventTplKickedFromChannel": {
+    "placeholders": {
+      "channel": {
+        "type": "String"
+      },
+      "kicker": {
+        "type": "String"
+      }
+    }
+  },
+  "kickerServer": "the server",
+  "eventConnectionLost": "Connection lost",
+  "eventKickedFromServer": "Kicked from the server",
+  "eventKickedFromChannel": "Kicked from a channel",
+  "eventInterrupts": "Interrupt other speech",
+  "eventInterruptsSub": "Speak at once, cutting off what is being spoken, instead of waiting",
+  "kickedChannelUnknown": "the channel",
+  "settingsAudio": "Audio",
+  "settingsAudioSub": "Output, microphone, processing and volumes",
+  "settingsVoiceActivation": "Voice activation",
+  "settingsVoiceActivationSub": "How speech is detected, and its level",
+  "settingsKeys": "Keys and buttons",
+  "settingsKeysSub": "Push-to-talk key and media keys",
+  "settingsChat": "Chat and history",
+  "settingsChatSub": "Saved messages, chat templates and timestamps",
+  "settingsPrivacy": "Privacy and diagnostics",
+  "settingsPrivacySub": "Logs and diagnostics reports",
+  "settingsAbout": "About",
+  "settingsAboutSub": "Version and licenses",
+  "settingsSearch": "Search settings",
+  "settingsSearchNone": "No setting matches",
+  "settingsSearchResults": "{count, plural, =1{1 setting found} other{{count} settings found}}",
+  "@settingsSearchResults": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "aboutVersion": "Version {version}",
+  "@aboutVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "aboutLicenses": "Open-source licenses",
+  "aboutLicensesSub": "The libraries TeamTalkX uses and their licenses",
+  "settingsFileExport": "Export settings",
+  "settingsFileImport": "Import settings",
+  "settingsFile": "Settings file",
+  "settingsFileExportSub": "Save settings, servers, events and key mappings to Download/TeamTalkX",
+  "settingsFileImportSub": "Load them from a file exported here or on another device",
+  "settingsFileExportPasswords": "Server passwords and your BearWare.dk sign-in are left out unless you protect them with a passphrase, which you will need to import them.",
+  "settingsFileWithoutPasswords": "Without passwords",
+  "settingsFileWithPasswords": "With passwords",
+  "settingsFilePassphraseTitle": "Passphrase for passwords",
+  "settingsFilePassphraseNote": "Anyone with the file and this passphrase can read the passwords. It can't be recovered if you forget it.",
+  "settingsFilePassphrase": "Passphrase",
+  "settingsFilePassphraseRepeat": "Passphrase again",
+  "settingsFilePassphraseEmpty": "Type a passphrase",
+  "settingsFilePassphraseMismatch": "The two don't match",
+  "settingsFileWorking": "Working on the passwords…",
+  "settingsFileType": "TeamTalkX settings",
+  "settingsFileNotOne": "This isn't a TeamTalkX settings file, or it's damaged",
+  "settingsFileOpenPasswords": "Open passwords",
+  "settingsFileSkipPasswords": "Skip passwords",
+  "settingsFileWrongPassphrase": "Wrong passphrase. Try again, or skip the passwords",
+  "settingsFileImportTitle": "Import settings?",
+  "settingsFileImportSettings": "{count, plural, =1{1 setting replaces yours, including events and key mappings.} other{{count} settings replace yours, including events and key mappings.}}",
+  "@settingsFileImportSettings": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsFileImportServers": "Servers: {added} new will be added; {kept} already in your list stay as they are.",
+  "@settingsFileImportServers": {
+    "placeholders": {
+      "added": {
+        "type": "int"
+      },
+      "kept": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsFileImportPasswords": "Passwords of the new servers and the BearWare.dk sign-in are included.",
+  "settingsFileImportNoPasswords": "The file's passwords are skipped.",
+  "settingsFileImported": "Settings imported",
+  "setupStepTitle": "{title}, step {step} of {count}",
+  "@setupStepTitle": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "step": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "setupWelcome": "Welcome",
+  "setupWelcomeBody": "TeamTalkX needs a few choices before you start. Every step can be skipped and changed later in Settings. First, the language:",
+  "setupNicknameTitle": "Your name",
+  "setupNicknameBody": "The nickname others see on servers. You can also set one per server.",
+  "setupGenderBody": "Shown to others next to your name, as other TeamTalk apps do.",
+  "setupSpeechTitle": "Speaking events",
+  "setupSpeechBody": "How TeamTalkX tells you what happens: someone joins, a message arrives, the connection drops.",
+  "setupSpeechTtsSub": "TeamTalkX's own voice, from your phone's text-to-speech",
+  "setupSpeechNoneSub": "Nothing is spoken; sounds and vibration still tell you",
+  "setupVoxBody": "With voice activation on, TeamTalkX transmits when you speak. It tells speech from noise with one of these:",
+  "setupVoxRnnoise": "Light on the battery, good in quiet rooms",
+  "setupVoxSilero": "More accurate with background noise, uses more battery",
+  "setupPermissionsTitle": "Permissions",
+  "setupPermissionsBody": "What TeamTalkX asks Android for, and why. You can allow them now or when they are first needed.",
+  "setupBatteryTitle": "Staying connected",
+  "setupBatteryBody": "Some phones cut network access of apps with the screen off. Letting TeamTalkX ignore battery optimization keeps you connected and hearing others.",
+  "setupAllow": "Allow",
+  "setupAllowed": "Allowed",
+  "setupDoneTitle": "All set",
+  "setupDoneBody": "Add a server, or pick one from the public list, to start talking. Settings has everything you chose here and more.",
+  "setupNext": "Next",
+  "setupStart": "Start",
+  "setupSkipAll": "Skip setup",
+  "setupRunAgain": "Run setup again",
+  "setupRunAgainSub": "Language, nickname, speech, voice activation and permissions",
+  "permissionMicrophone": "Microphone",
+  "permissionMicrophoneWhy": "To talk in channels",
+  "permissionNotifications": "Notifications",
+  "permissionNotificationsWhy": "To show private messages, and that TeamTalkX is connected",
+  "permissionPhone": "Phone calls",
+  "permissionPhoneWhy": "To notice calls, and stop transmitting during them",
+  "permissionBluetooth": "Bluetooth",
+  "permissionBluetoothWhy": "To talk and listen through a Bluetooth headset",
+  "permissionBattery": "Battery optimization",
+  "permissionBatteryWhy": "To stay connected with the screen off",
+  "serverTabMine": "Mine",
+  "serverTabPublic": "Public",
+  "serverSearchMine": "Search my servers",
+  "serverSearchPublic": "Search public servers",
+  "serverFavorites": "Favorites",
+  "serverMine": "My servers",
+  "serverFavorite": "favorite",
+  "serverMakeFavorite": "Add to favorites",
+  "serverUnfavorite": "Remove from favorites",
+  "serverFavoriteAdded": "{name} added to favorites",
+  "@serverFavoriteAdded": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "serverFavoriteRemoved": "{name} removed from favorites",
+  "@serverFavoriteRemoved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "serverConnectOnStartup": "Connect on startup",
+  "serverStartupStop": "Don't connect on startup",
+  "serverStartupOn": "TeamTalkX connects to {name} when it starts",
+  "@serverStartupOn": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "serverStartupOff": "{name} is no longer connected to on startup",
+  "@serverStartupOff": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "serverDetails": "Details",
+  "serverDetailsKind": "Kind",
+  "serverDetailsAddress": "Address",
+  "serverDetailsUsers": "Users online",
+  "serverDetailsCountry": "Country",
+  "serverDetailsMotd": "Message of the day",
+  "serverDetailsLastConnected": "Last connected",
+  "serverLastConnected": "last connected {when}",
+  "@serverLastConnected": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "serverWhenToday": "today at {time}",
+  "@serverWhenToday": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "serverWhenYesterday": "yesterday at {time}",
+  "@serverWhenYesterday": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "serverSortOrder": "Order",
+  "serverSortYours": "Your order",
+  "serverSortName": "Name",
+  "serverSortRecent": "Recently connected",
+  "serverSortUsers": "Most users",
+  "serverSortCountry": "Country",
+  "serverFilterCountry": "Country",
+  "serverFilterUsers": "Users",
+  "serverFilterAny": "Any",
+  "serverFilterAtLeast": "At least {count}",
+  "@serverFilterAtLeast": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "serverHiddenByFilters": "{count, plural, =1{1 server hidden by filters} other{{count} servers hidden by filters}}",
+  "@serverHiddenByFilters": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "serverClearFilters": "Double-tap to clear the filters",
+  "serverPublicNone": "No public servers",
+  "serverBannerConnecting": "Connecting to {name}",
+  "@serverBannerConnecting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "serverBannerConnected": "Connected to {name}",
+  "@serverBannerConnected": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "serverBannerOpen": "Open",
+  "serverMoved": "{name}, {position} of {count}",
+  "@serverMoved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "position": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "serverCopyName": "{name} (copy)",
+  "@serverCopyName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "serverStartupTag": "connects on startup",
+  "serverMoveUp": "Move up",
+  "serverMoveDown": "Move down",
+  "serverMoveTop": "Move to top",
+  "serverMoveBottom": "Move to bottom",
+  "serverDuplicate": "Duplicate",
+  "serverNoneYetTitle": "No servers yet",
+  "serverNoneYetBody": "Pick one from the public list, enter a join code someone gave you, import a .tt file, or add one yourself.",
+  "serverBrowsePublic": "Browse public servers",
+  "serverFilterAndSort": "Filter and sort",
+  "serverFilterAnyCountry": "any country",
+  "serverFilterAnyUsers": "any number of users",
+  "serverFilterAtLeastUsers": "{count, plural, =1{at least 1 user} other{at least {count} users}}",
+  "@serverFilterAtLeastUsers": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "serverClearFiltersAction": "Clear filters",
+  "mainBackAgainToDisconnect": "Press back again to disconnect",
+  "channelSaved": "{name} saved",
+  "@channelSaved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "accountSaved": "Account {name} saved",
+  "@accountSaved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "serverSaved": "{name} saved",
+  "@serverSaved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "serverRemoved": "{name} removed",
+  "@serverRemoved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "certificateForgotten": "Certificate of {name} forgotten",
+  "@certificateForgotten": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "rememberedForgotten": "{name} forgotten",
+  "@rememberedForgotten": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "commonUndo": "Undo",
+  "settingsTheme": "Theme",
+  "themeSystem": "As the system",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "settingsHighContrast": "High contrast",
+  "settingsHighContrastSub": "Stronger colors and outlines",
+  "usersSearch": "Search users",
+  "accountsSearch": "Search accounts",
+  "bansSearch": "Search bans",
+  "searchNoMatch": "Nothing matches \"{query}\"",
+  "@searchNoMatch": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsUpdates": "Updates",
+  "settingsUpdatesSub": "New versions from GitHub, and betas",
+  "updateAvailable": "TeamTalkX {version} is available",
+  "@updateAvailable": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "updateReady": "TeamTalkX {version} is downloaded and ready to install",
+  "@updateReady": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "updateProgress": "Update {percent}% downloaded",
+  "@updateProgress": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "updateDownloading": "Downloading the update, {percent}%",
+  "@updateDownloading": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "updateChecking": "Checking for updates…",
+  "updateUpToDate": "TeamTalkX is up to date",
+  "updateNeverChecked": "Not checked yet",
+  "updateLastChecked": "Last checked {date}",
+  "@updateLastChecked": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "updateWhatsNew": "What's new",
+  "updateWhatsNewIn": "What's new in {version}",
+  "@updateWhatsNewIn": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "updateNoNotes": "The release has no notes.",
+  "updateDownload": "Download",
+  "updateInstall": "Install",
+  "updateCheckNow": "Check for updates",
+  "updateBetas": "Include beta versions",
+  "updateBetasSub": "Try new versions before their release; they may have problems",
+  "updateAbout": "Updates come from TeamTalkX's releases on GitHub. Each download is checked against the release's checksum and must be signed by the same key as this app before it is installed. On Android 12 and later TeamTalkX installs it without asking again once you have allowed it to install apps; TeamTalkX then closes, and you open it again.",
+  "updateMeteredTitle": "Download on mobile data?",
+  "updateMeteredBody": "The update is {size}.",
+  "@updateMeteredBody": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "updateAllowInstall": "Allow TeamTalkX to install apps in the settings that opened, then tap Install again",
+  "updateProblemCheck": "Couldn't check for updates. Try again later",
+  "updateProblemDownload": "The download failed. Try again",
+  "updateProblemNoApk": "This release has no version for your phone",
+  "updateProblemChecksum": "The download doesn't match the release's checksum, so it wasn't installed",
+  "updateProblemSignature": "The download isn't signed by TeamTalkX's key, so it wasn't installed",
+  "updateProblemInstall": "Android couldn't install the update",
+  "transferProgressAnnounce": "{name}, {percent}%",
+  "@transferProgressAnnounce": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "transferQueued": "{name} queued",
+  "@transferQueued": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "transferQueuedDownload": "Download queued",
+  "transferQueuedUpload": "Upload queued",
+  "transferSaved": "{name} saved to {path}",
+  "@transferSaved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsRecording": "Recording",
+  "settingsRecordingSub": "What is recorded, the file format and where recordings go",
+  "recordingStart": "Start recording",
+  "recordingStop": "Stop recording",
+  "recordingStarted": "Recording started",
+  "recordingSaved": "{count, plural, =1{Recording saved in {folder}} other{Recording saved: {count} files in {folder}}}",
+  "@recordingSaved": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "folder": {
+        "type": "String"
+      }
+    }
+  },
+  "recordingSaveFailed": "The recording couldn't be saved. TeamTalkX tries again when the next recording stops.",
+  "recordingNothing": "Nothing was recorded",
+  "recordingNotAllowed": "This channel doesn't allow recording",
+  "recordingStoppedNotAllowed": "Recording stopped: this channel doesn't allow recording",
+  "recordingUser": "User {id}",
+  "@recordingUser": {
+    "placeholders": {
+      "id": {
+        "type": "int"
+      }
+    }
+  },
+  "recordingDefaultFolder": "Download/TeamTalkX",
+  "recordingMode": "What to record",
+  "recordingModeMixed": "Everyone in one file",
+  "recordingModePerUser": "A file for each user",
+  "recordingFormat": "File format",
+  "recordingFormatWav": "WAV: uncompressed, large files",
+  "recordingFormatOggOpus": "Ogg Opus: small files",
+  "recordingFolder": "Recordings folder",
+  "recordingFolderPicked": "Recordings are saved in {name}",
+  "@recordingFolderPicked": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "recordingFolderForget": "Save in Download/TeamTalkX instead",
+  "recordingNote": "Recordings include your own voice while you transmit. A channel can forbid recording.",
+  "recordingIndicator": "Recording",
+  "keyActionToggleRecording": "Start or stop recording",
+  "failureRecording": "The recording file couldn't be created."
+}

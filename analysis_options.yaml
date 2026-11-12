@@ -1,0 +1,40 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
+    - reference/**
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+  errors:
+    unawaited_futures: warning
+    discarded_futures: warning
+    cancel_subscriptions: warning
+    close_sinks: warning
+
+linter:
+  rules:
+    - unawaited_futures
+    - discarded_futures
+    - cancel_subscriptions
+    - close_sinks
+    - avoid_void_async
+    - avoid_dynamic_calls
+    - only_throw_errors
+    - always_declare_return_types
+    - type_annotate_public_apis
+    - empty_catches
+    - avoid_catches_without_on_clauses
+    - prefer_final_locals
+    - prefer_final_in_for_each
+    - unnecessary_lambdas
+    - directives_ordering
+    - use_super_parameters

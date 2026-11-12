@@ -1,0 +1,45 @@
+name: Set up the toolchain
+description: Flutter and packages, and optionally Java with the Android SDK parts or the host build of the native module.
+
+inputs:
+  android:
+    description: Install Java and accept the SDK licenses; the Android Gradle plugin installs the platform, NDK and CMake that build.gradle.kts names.
+    default: "false"
+  native:
+    description: Build the native module for the host, "plain" or "sanitize", or "none".
+    default: "none"
+
+runs:
+  using: composite
+  steps:
+    - if: inputs.android == 'true'
+      uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad
+      with:
+        distribution: temurin
+        java-version: "21"
+        cache: gradle
+
+    - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
+      with:
+        flutter-version: 3.47.9
+        channel: stable
+        cache: true
+
+    - name: Get packages
+      shell: bash
+      run: flutter pub get
+
+    - name: Accept the Android SDK licenses
+      if: inputs.android == 'true'
+      shell: bash
+      run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null
+
+    - name: Build the native module for the host
+      if: inputs.native == 'plain'
+      shell: bash
+      run: bash scripts/build_native_host.sh
+
+    - name: Build the native module with AddressSanitizer and UBSan
+      if: inputs.native == 'sanitize'
+      shell: bash
+      run: bash scripts/build_native_host.sh --sanitize
