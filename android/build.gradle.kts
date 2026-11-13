@@ -16,6 +16,20 @@ subprojects {
     project.layout.buildDirectory.value(newSubprojectBuildDir)
 }
 subprojects {
+    plugins.withId("com.android.library") {
+        extensions.configure<com.android.build.api.variant.LibraryAndroidComponentsExtension> {
+            finalizeDsl { library ->
+                val app = project(":app").extensions
+                    .getByType<com.android.build.api.dsl.ApplicationExtension>()
+                library.ndkVersion = app.ndkVersion
+                if (library.externalNativeBuild.cmake.path != null) {
+                    library.externalNativeBuild.cmake.version = app.externalNativeBuild.cmake.version
+                }
+            }
+        }
+    }
+}
+subprojects {
     project.evaluationDependsOn(":app")
 }
 
