@@ -365,11 +365,13 @@ class VoiceNotifier extends Notifier<VoiceState> {
     if (wasVoxActive) {
       _notifyVox(active: false);
     }
-    unawaited(HapticFeedback.heavyImpact());
-    Future.delayed(
-      const Duration(milliseconds: 130),
-      HapticFeedback.heavyImpact,
-    );
+    if (ref.read(eventFeedbackSettingsProvider).vibrationEnabled) {
+      unawaited(HapticFeedback.heavyImpact());
+      Future.delayed(
+        const Duration(milliseconds: 130),
+        HapticFeedback.heavyImpact,
+      );
+    }
     ref
         .read(announcerProvider)
         .announce(

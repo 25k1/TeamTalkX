@@ -2673,5 +2673,9 @@
   "notificationRecording": "Recording",
   "notificationTransmit": "Transmit",
   "notificationStopTransmitting": "Stop transmitting",
-  "notificationStopRecording": "Stop recording"
+  "notificationStopRecording": "Stop recording",
+  "settingsBackTwice": "Press back twice to disconnect",
+  "settingsBackTwiceSub": "Off: one press of back disconnects",
+  "eventsVibration": "Vibration",
+  "eventsVibrationSub": "Vibrate for events that have a pattern"
 }

@@ -1243,5 +1243,9 @@
   "notificationRecording": "მიმდინარეობს ჩაწერა",
   "notificationTransmit": "გადაცემის დაწყება",
   "notificationStopTransmitting": "გადაცემის შეწყვეტა",
-  "notificationStopRecording": "ჩაწერის შეწყვეტა"
+  "notificationStopRecording": "ჩაწერის შეწყვეტა",
+  "settingsBackTwice": "გათიშვა „უკან“ ღილაკზე ორჯერ დაჭერით",
+  "settingsBackTwiceSub": "გამორთულია: „უკან“ ერთხელ დაჭერა გათიშავს",
+  "eventsVibration": "ვიბრაცია",
+  "eventsVibrationSub": "ვიბრაცია მოვლენებზე, რომლებსაც შაბლონი აქვთ"
 }

@@ -16,7 +16,7 @@ void invalidateAllSettings(Ref ref) => ref
   ..invalidate(profileSettingsProvider)
   ..invalidate(appearanceSettingsProvider)
   ..invalidate(speechSettingsProvider)
-  ..invalidate(eventSoundSettingsProvider)
+  ..invalidate(eventFeedbackSettingsProvider)
   ..invalidate(playbackSettingsProvider)
   ..invalidate(microphoneSettingsProvider)
   ..invalidate(keySettingsProvider)

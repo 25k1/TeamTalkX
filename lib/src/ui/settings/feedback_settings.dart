@@ -124,7 +124,7 @@ class SoundSettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final eventSoundSettings = ref.watch(eventSoundSettingsProvider);
+    final eventFeedbackSettings = ref.watch(eventFeedbackSettingsProvider);
     final packsAsync = ref.watch(soundPacksProvider);
     final selected = ref.watch(selectedSoundPackProvider);
     final folder = ref.watch(soundPackFolderSettingProvider);
@@ -146,19 +146,19 @@ class SoundSettingsScreen extends ConsumerWidget {
           SwitchListTile(
             title: Text(l10n.soundPlayEvents),
             subtitle: Text(l10n.soundPlayEventsSub),
-            value: eventSoundSettings.soundsEnabled,
+            value: eventFeedbackSettings.soundsEnabled,
             onChanged: ref
-                .read(eventSoundSettingsProvider.notifier)
+                .read(eventFeedbackSettingsProvider.notifier)
                 .setSoundsEnabled,
           ),
           LevelSlider(
             label: l10n.soundEventVolume,
-            value: eventSoundSettings.eventVolumePercent,
+            value: eventFeedbackSettings.eventVolumePercent,
             max: 300,
             step: 5,
             percent: true,
             onChanged: ref
-                .read(eventSoundSettingsProvider.notifier)
+                .read(eventFeedbackSettingsProvider.notifier)
                 .setEventVolumePercent,
             onChangeEnd: (_) => unawaited(
               ref.read(soundPlayerProvider).playAsset('channel_message.ogg'),

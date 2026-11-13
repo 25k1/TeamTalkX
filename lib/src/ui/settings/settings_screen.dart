@@ -402,6 +402,15 @@ class _GeneralTab extends ConsumerWidget {
               .setAutoJoinRootChannel,
         ),
         SwitchListTile(
+          secondary: const Icon(Icons.keyboard_return),
+          title: Text(l10n.settingsBackTwice),
+          subtitle: Text(l10n.settingsBackTwiceSub),
+          value: connectionSettings.backTwiceToDisconnect,
+          onChanged: ref
+              .read(connectionSettingsProvider.notifier)
+              .setBackTwiceToDisconnect,
+        ),
+        SwitchListTile(
           secondary: const Icon(Icons.power_settings_new),
           title: Text(l10n.settingsKeepAwake),
           subtitle: Text(l10n.settingsKeepAwakeSub),
