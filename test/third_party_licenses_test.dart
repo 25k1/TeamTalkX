@@ -19,6 +19,7 @@ void main() {
     expect(
       byPackage.keys,
       containsAll(<String>[
+        'TeamTalkX',
         'Opus',
         'Speex',
         'RNNoise',
@@ -29,6 +30,8 @@ void main() {
         'Kotlin standard library',
       ]),
     );
+    expect(byPackage['TeamTalkX'], contains('GNU GENERAL PUBLIC LICENSE'));
+    expect(byPackage['TeamTalkX'], contains('Version 3, 29 June 2007'));
     expect(byPackage['Opus'], contains('Xiph.Org'));
     expect(byPackage['Speex'], contains('Jean-Marc Valin'));
     expect(byPackage['RNNoise'], contains('Jean-Marc Valin'));
