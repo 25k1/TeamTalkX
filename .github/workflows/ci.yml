@@ -40,7 +40,6 @@ jobs:
 
   sanitizers:
     name: Native tests with sanitizers
-    needs: check
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
@@ -55,7 +54,6 @@ jobs:
 
   e2e:
     name: E2E against TeamTalk server
-    needs: check
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     env:
@@ -132,7 +130,6 @@ jobs:
 
   apk:
     name: Debug APK
-    needs: check
     uses: ./.github/workflows/apk.yml
 
   release-please:

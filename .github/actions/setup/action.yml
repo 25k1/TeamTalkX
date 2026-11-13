@@ -1,5 +1,5 @@
 name: Set up the toolchain
-description: Flutter and packages, and optionally Java with the Android SDK parts or the host build of the native module.
+description: Flutter and packages, and optionally Java with the Android SDK parts or the host build of the native module, with their downloads and compiler output cached.
 
 inputs:
   android:
@@ -21,13 +21,69 @@ runs:
 
     - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
       with:
-        flutter-version: 3.47.9
+        flutter-version-file: pubspec.yaml
         channel: stable
         cache: true
 
     - name: Get packages
       shell: bash
       run: flutter pub get
+
+    - name: Read the native toolchain versions
+      if: inputs.android == 'true' || inputs.native != 'none'
+      id: versions
+      shell: bash
+      run: |
+        gradle=android/app/build.gradle.kts
+        ndk="$(sed -n 's/^ *ndkVersion = "\(.*\)"$/\1/p' "$gradle")"
+        cmake="$(sed -n '/cmake {/,/}/s/^ *version = "\(.*\)"$/\1/p' "$gradle")"
+        if [[ -z "$ndk" || -z "$cmake" ]]; then
+          echo "::error::Could not read ndkVersion and the CMake version from $gradle"
+          exit 1
+        fi
+        echo "ndk=$ndk" >> "$GITHUB_OUTPUT"
+        echo "cmake=$cmake" >> "$GITHUB_OUTPUT"
+        {
+          echo "CCACHE_DIR=$HOME/.ccache"
+          echo "CCACHE_MAXSIZE=400M"
+          echo "CCACHE_COMPILERCHECK=content"
+          echo "CMAKE_C_COMPILER_LAUNCHER=ccache"
+          echo "CMAKE_CXX_COMPILER_LAUNCHER=ccache"
+        } >> "$GITHUB_ENV"
+
+    - name: Cache the native sources
+      if: steps.versions.outcome == 'success'
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+      with:
+        path: build/native-downloads
+        key: native-downloads-${{ hashFiles('native/CMakeLists.txt') }}
+
+    - name: Cache the NDK and CMake
+      if: inputs.android == 'true'
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+      with:
+        path: |
+          /usr/local/lib/android/sdk/ndk/${{ steps.versions.outputs.ndk }}
+          /usr/local/lib/android/sdk/cmake/${{ steps.versions.outputs.cmake }}
+        key: android-ndk-${{ steps.versions.outputs.ndk }}-cmake-${{ steps.versions.outputs.cmake }}
+
+    - name: Cache compiler output
+      if: steps.versions.outcome == 'success'
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+      with:
+        path: ~/.ccache
+        key: ccache-${{ github.job }}-${{ inputs.android }}-${{ inputs.native }}-${{ github.sha }}
+        restore-keys: ccache-${{ github.job }}-${{ inputs.android }}-${{ inputs.native }}-
+
+    - name: Install ccache
+      if: steps.versions.outcome == 'success'
+      shell: bash
+      run: |
+        command -v ccache > /dev/null || {
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ccache > /dev/null
+        }
+        ccache --zero-stats > /dev/null
 
     - name: Accept the Android SDK licenses
       if: inputs.android == 'true'
