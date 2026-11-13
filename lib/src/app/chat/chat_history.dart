@@ -16,7 +16,7 @@ final chatHistoryStoreProvider = Provider<ChatHistoryStore>(
 final chatHistoryProvider = Provider<ChatHistory>((ref) {
   final history = ChatHistory(ref);
   ref.onDispose(history.dispose);
-  ref.listen(settingsProvider.select((s) => s.chatRetentionDays), (_, _) {
+  ref.listen(chatSettingsProvider.select((s) => s.chatRetentionDays), (_, _) {
     unawaited(history.prune());
   });
   return history;
@@ -80,7 +80,7 @@ class ChatHistory {
       _use((s) => s.rememberServer(server, name));
 
   Future<void> prune() async {
-    final days = _ref.read(settingsProvider).chatRetentionDays;
+    final days = _ref.read(chatSettingsProvider).chatRetentionDays;
     if (days <= 0) return;
     final removed = await _use(
       (s) => s.prune(DateTime.now().subtract(Duration(days: days))),

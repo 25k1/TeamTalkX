@@ -34,15 +34,15 @@ class MediaStreamNotifier extends Notifier<MediaStreamState?> {
   void _announce(String text) => ref.read(announcerProvider).announce(text);
 
   Future<TtFailure?> start(String path, String fileName) async {
-    final settings = ref.read(settingsProvider);
+    final playbackSettings = ref.read(playbackSettingsProvider);
     try {
       await ref
           .read(teamTalkClientProvider)
           .startStreamingMediaFile(
             path,
             fileName: fileName,
-            volumePercent: settings.mediaStreamVolumePercent,
-            monitor: settings.mediaStreamMonitor,
+            volumePercent: playbackSettings.mediaStreamVolumePercent,
+            monitor: playbackSettings.mediaStreamMonitor,
           );
     } on Object catch (e) {
       return failureFrom(e);
@@ -88,12 +88,14 @@ class MediaStreamNotifier extends Notifier<MediaStreamState?> {
 
   void setVolume(int percent) {
     ref.read(teamTalkClientProvider).setMediaStreamVolume(percent);
-    ref.read(settingsProvider.notifier).setMediaStreamVolumePercent(percent);
+    ref
+        .read(playbackSettingsProvider.notifier)
+        .setMediaStreamVolumePercent(percent);
   }
 
   void setMonitor({required bool monitor}) {
     ref.read(teamTalkClientProvider).setMediaStreamMonitor(monitor: monitor);
-    ref.read(settingsProvider.notifier).setMediaStreamMonitor(monitor);
+    ref.read(playbackSettingsProvider.notifier).setMediaStreamMonitor(monitor);
   }
 
   void stop() {

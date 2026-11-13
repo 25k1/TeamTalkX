@@ -90,7 +90,7 @@ class _TeamTalkAppState extends ConsumerState<TeamTalkApp> {
   Widget build(BuildContext context) {
     ref.watch(ttsConfiguratorProvider);
     final settings = ref.watch(
-      settingsProvider.select(
+      appearanceSettingsProvider.select(
         (s) => (theme: s.theme, highContrast: s.highContrast),
       ),
     );

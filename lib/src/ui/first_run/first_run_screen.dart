@@ -52,7 +52,7 @@ class _StepState extends ConsumerState<_Step> {
   @override
   void initState() {
     super.initState();
-    _nickname.text = ref.read(settingsProvider).nickname;
+    _nickname.text = ref.read(profileSettingsProvider).nickname;
   }
 
   _StepKind get _kind => _StepKind.values[widget.index];
@@ -75,7 +75,7 @@ class _StepState extends ConsumerState<_Step> {
     if (_kind == _StepKind.nickname) {
       final nickname = _nickname.text.trim();
       if (nickname.isNotEmpty) {
-        ref.read(settingsProvider.notifier).setNickname(nickname);
+        ref.read(profileSettingsProvider.notifier).setNickname(nickname);
       }
     }
     if (_last) {
@@ -191,7 +191,7 @@ class _StepState extends ConsumerState<_Step> {
 
   Widget _language(BuildContext context) {
     final l10n = context.l10n;
-    final settings = ref.watch(settingsProvider);
+    final appearanceSettings = ref.watch(appearanceSettingsProvider);
     return _choices<AppLanguage>(
       intro: l10n.setupWelcomeBody,
       options: {
@@ -200,8 +200,8 @@ class _StepState extends ConsumerState<_Step> {
         AppLanguage.russian: 'Русский',
         AppLanguage.georgian: 'ქართული',
       },
-      selected: settings.language,
-      onChanged: ref.read(settingsProvider.notifier).setLanguage,
+      selected: appearanceSettings.language,
+      onChanged: ref.read(appearanceSettingsProvider.notifier).setLanguage,
     );
   }
 
@@ -223,18 +223,18 @@ class _StepState extends ConsumerState<_Step> {
 
   Widget _gender(BuildContext context) {
     final l10n = context.l10n;
-    final settings = ref.watch(settingsProvider);
+    final profileSettings = ref.watch(profileSettingsProvider);
     return _choices<Gender>(
       intro: l10n.setupGenderBody,
       options: {for (final g in Gender.values) g: g.label(l10n)},
-      selected: settings.gender,
-      onChanged: ref.read(settingsProvider.notifier).setGender,
+      selected: profileSettings.gender,
+      onChanged: ref.read(profileSettingsProvider.notifier).setGender,
     );
   }
 
   Widget _speech(BuildContext context) {
     final l10n = context.l10n;
-    final settings = ref.watch(settingsProvider);
+    final speechSettings = ref.watch(speechSettingsProvider);
     return _choices<SpeechOutput>(
       intro: l10n.setupSpeechBody,
       options: {
@@ -247,14 +247,14 @@ class _StepState extends ConsumerState<_Step> {
         SpeechOutput.tts: l10n.setupSpeechTtsSub,
         SpeechOutput.none: l10n.setupSpeechNoneSub,
       },
-      selected: settings.speechOutput,
-      onChanged: ref.read(settingsProvider.notifier).setSpeechOutput,
+      selected: speechSettings.speechOutput,
+      onChanged: ref.read(speechSettingsProvider.notifier).setSpeechOutput,
     );
   }
 
   Widget _voiceActivation(BuildContext context) {
     final l10n = context.l10n;
-    final settings = ref.watch(settingsProvider);
+    final microphoneSettings = ref.watch(microphoneSettingsProvider);
     return _choices<VadEngine>(
       intro: l10n.setupVoxBody,
       options: {for (final e in VadEngine.values) e: e.label},
@@ -262,8 +262,8 @@ class _StepState extends ConsumerState<_Step> {
         VadEngine.rnnoise: l10n.setupVoxRnnoise,
         VadEngine.silero: l10n.setupVoxSilero,
       },
-      selected: settings.vadEngine,
-      onChanged: ref.read(settingsProvider.notifier).setVadEngine,
+      selected: microphoneSettings.vadEngine,
+      onChanged: ref.read(microphoneSettingsProvider.notifier).setVadEngine,
     );
   }
 }

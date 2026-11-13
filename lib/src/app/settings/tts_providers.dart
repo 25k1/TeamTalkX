@@ -11,13 +11,13 @@ final ttsEnginesProvider = FutureProvider<List<TtsEngineInfo>>(
 );
 
 final ttsLanguagesProvider = FutureProvider<List<String>>((ref) async {
-  ref.watch(settingsProvider.select((s) => s.ttsEngine));
+  ref.watch(speechSettingsProvider.select((s) => s.ttsEngine));
   await Future<void>.delayed(const Duration(milliseconds: 300));
   return ref.read(ttsProvider).getLanguages();
 });
 
 final ttsVoicesProvider = FutureProvider<List<TtsVoiceInfo>>((ref) async {
-  ref.watch(settingsProvider.select((s) => s.ttsEngine));
+  ref.watch(speechSettingsProvider.select((s) => s.ttsEngine));
   await Future<void>.delayed(const Duration(milliseconds: 300));
   return ref.read(ttsProvider).getVoices();
 });

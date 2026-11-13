@@ -323,7 +323,7 @@ class _EffectiveVolumeRow extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final (master, media) = ref.watch(
-      settingsProvider.select(
+      playbackSettingsProvider.select(
         (s) => (s.masterVolumePercent, s.mediaVolumePercent),
       ),
     );

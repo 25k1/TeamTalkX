@@ -17,23 +17,27 @@ class _StatusDialogState extends ConsumerState<_StatusDialog>
     super.initState();
     final state = ref.read(teamTalkClientProvider).state;
     final me = state.users[state.myUserId];
-    final settings = ref.read(settingsProvider);
-    _message = textController(me?.statusMessage ?? settings.statusMessage);
-    _status = me != null ? UserStatus.fromMode(me.statusMode) : settings.status;
+    final profileSettings = ref.read(profileSettingsProvider);
+    _message = textController(
+      me?.statusMessage ?? profileSettings.statusMessage,
+    );
+    _status = me != null
+        ? UserStatus.fromMode(me.statusMode)
+        : profileSettings.status;
   }
 
   Future<void> _apply() async {
     final navigator = Navigator.of(context);
     final client = ref.read(teamTalkClientProvider);
-    final notifier = ref.read(settingsProvider.notifier);
     final message = _message.text.trim();
     final me = client.state.users[client.state.myUserId];
     final genderBits =
-        (me?.statusMode ?? ref.read(settingsProvider).gender.statusBits) &
+        (me?.statusMode ??
+            ref.read(profileSettingsProvider).gender.statusBits) &
         ~TtStatusMode.modeMask;
     final mode = genderBits | _status.statusBits;
-    notifier.setStatus(_status);
-    notifier.setStatusMessage(message);
+    ref.read(profileSettingsProvider.notifier).setStatus(_status);
+    ref.read(profileSettingsProvider.notifier).setStatusMessage(message);
     try {
       await client.changeStatus(mode, message);
     } on Object catch (e, st) {

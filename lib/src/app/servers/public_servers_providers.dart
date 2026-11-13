@@ -44,10 +44,10 @@ Future<ServerEntry?> lookupJoinCode(String code) async {
 
 final publicServersProvider = FutureProvider<List<ServerEntry>>((ref) async {
   final official = ref.watch(
-    settingsProvider.select((s) => s.showOfficialServers),
+    serverListSettingsProvider.select((s) => s.showOfficialServers),
   );
   final unofficial = ref.watch(
-    settingsProvider.select((s) => s.showUnofficialServers),
+    serverListSettingsProvider.select((s) => s.showUnofficialServers),
   );
   if (!official && !unofficial) return const [];
   final client = HttpClient()..connectionTimeout = const Duration(seconds: 10);

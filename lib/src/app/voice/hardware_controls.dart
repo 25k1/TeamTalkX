@@ -32,11 +32,11 @@ final hardwareControlsProvider = Provider<void>((ref) {
   }, fireImmediately: true);
   ref
     ..listen(
-      settingsProvider.select((s) => s.pttKeyCode),
+      keySettingsProvider.select((s) => s.pttKeyCode),
       (_, _) => controls.applyPttKey(),
     )
     ..listen(
-      settingsProvider.select((s) => s.keyBindings),
+      keySettingsProvider.select((s) => s.keyBindings),
       (_, _) => controls.applyKeyBindings(),
     );
 });
@@ -69,8 +69,7 @@ class _HardwareControls {
 
   int _selectedChannel = 0;
 
-  Settings get _settings => _ref.read(settingsProvider);
-  KeyBindings get _bindings => _settings.keyBindings;
+  KeyBindings get _bindings => _ref.read(keySettingsProvider).keyBindings;
   VoiceNotifier get _voice => _ref.read(voiceProvider.notifier);
 
   void start() {
@@ -81,7 +80,7 @@ class _HardwareControls {
       ..add(hotkeys.pttDown.listen((_) => _voice.startTransmission()))
       ..add(hotkeys.pttUp.listen((_) => _voice.stopTransmission()))
       ..add(_ref.read(mediaKeysProvider).events.listen(_onKey));
-    unawaited(hotkeys.setPttKey(_settings.pttKeyCode));
+    unawaited(hotkeys.setPttKey(_ref.read(keySettingsProvider).pttKeyCode));
     applyKeyBindings();
   }
 
@@ -102,7 +101,11 @@ class _HardwareControls {
 
   void applyPttKey() {
     if (_started) {
-      unawaited(_ref.read(hotkeysProvider).setPttKey(_settings.pttKeyCode));
+      unawaited(
+        _ref
+            .read(hotkeysProvider)
+            .setPttKey(_ref.read(keySettingsProvider).pttKeyCode),
+      );
     }
   }
 

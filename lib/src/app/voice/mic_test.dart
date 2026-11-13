@@ -49,29 +49,34 @@ class MicTestNotifier extends Notifier<MicTestPhase?> {
       return MicTestRefusal.noPermission;
     }
     await _shutdown();
-    final settings = ref.read(settingsProvider);
+    final playbackSettings = ref.read(playbackSettingsProvider);
+    final microphoneSettings = ref.read(microphoneSettingsProvider);
     final worker = _worker = await ref.read(micTestWorkerFactoryProvider)(
       _onPhase,
     );
     final outputs = ref.read(audioOutputsProvider).value ?? const [];
     final device = chosenOutput(
       outputs,
-      settings.outputRoute,
-      voiceCall: settings.voiceCallMode,
+      playbackSettings.outputRoute,
+      voiceCall: playbackSettings.voiceCallMode,
     );
     worker.setOutput(
       AudioOutput(
-        voiceCall: settings.voiceCallMode,
-        deviceId: settings.voiceCallMode ? 0 : device?.id ?? 0,
+        voiceCall: playbackSettings.voiceCallMode,
+        deviceId: playbackSettings.voiceCallMode ? 0 : device?.id ?? 0,
       ),
     );
-    await worker.startAudio(outputGain: settings.masterVolumePercent / 100);
+    await worker.startAudio(
+      outputGain: playbackSettings.masterVolumePercent / 100,
+    );
     worker
-      ..configureCapture(captureSettingsFor(settings, voiceDetection: false))
+      ..configureCapture(
+        captureSettingsFor(microphoneSettings, voiceDetection: false),
+      )
       ..startCapture(
-        audioSource: settings.customAudioSource,
-        sampleRate: settings.customInputSampleRate,
-        channels: settings.customInputChannels,
+        audioSource: microphoneSettings.customAudioSource,
+        sampleRate: microphoneSettings.customInputSampleRate,
+        channels: microphoneSettings.customInputChannels,
       )
       ..startMicTest(live: live);
     return null;

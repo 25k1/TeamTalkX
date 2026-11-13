@@ -15,19 +15,19 @@ final announcerProvider = Provider<Announcer>((ref) {
 });
 
 final ttsConfiguratorProvider = Provider<void>((ref) {
-  final settings = ref.watch(settingsProvider);
-  if (settings.speechOutput != SpeechOutput.tts) return;
+  final speechSettings = ref.watch(speechSettingsProvider);
+  if (speechSettings.speechOutput != SpeechOutput.tts) return;
   unawaited(
     Future(() async {
       final tts = ref.read(ttsProvider);
-      await tts.init(engine: settings.ttsEngine);
+      await tts.init(engine: speechSettings.ttsEngine);
       await tts.configure(
-        language: settings.ttsLanguage,
-        voice: settings.ttsVoice,
-        rate: settings.ttsRatePercent / 100,
-        pitch: settings.ttsPitchPercent / 100,
-        volume: settings.ttsVolumePercent / 100,
-        accessibilityStream: settings.ttsUseAccessibilityStream,
+        language: speechSettings.ttsLanguage,
+        voice: speechSettings.ttsVoice,
+        rate: speechSettings.ttsRatePercent / 100,
+        pitch: speechSettings.ttsPitchPercent / 100,
+        volume: speechSettings.ttsVolumePercent / 100,
+        accessibilityStream: speechSettings.ttsUseAccessibilityStream,
       );
     }),
   );
@@ -41,8 +41,8 @@ class Announcer {
 
   void announce(String message, {bool interrupt = false}) {
     if (message.trim().isEmpty) return;
-    final settings = _ref.read(settingsProvider);
-    switch (settings.speechOutput) {
+    final speechSettings = _ref.read(speechSettingsProvider);
+    switch (speechSettings.speechOutput) {
       case SpeechOutput.screenReader:
         final dispatcher = WidgetsBinding.instance.platformDispatcher;
         final view = dispatcher.implicitView ?? dispatcher.views.firstOrNull;
@@ -66,7 +66,7 @@ class Announcer {
   }
 
   void announceShown(String message) {
-    if (_ref.read(settingsProvider).speechOutput == SpeechOutput.tts) {
+    if (_ref.read(speechSettingsProvider).speechOutput == SpeechOutput.tts) {
       announce(message);
     }
   }

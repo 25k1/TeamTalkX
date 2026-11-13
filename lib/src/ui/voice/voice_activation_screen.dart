@@ -13,8 +13,7 @@ class VoiceActivationScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final settings = ref.watch(settingsProvider);
-    final notifier = ref.read(settingsProvider.notifier);
+    final microphoneSettings = ref.watch(microphoneSettingsProvider);
     final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(title: Text(l10n.settingsVoiceActivation)),
@@ -23,25 +22,27 @@ class VoiceActivationScreen extends ConsumerWidget {
           ListTile(
             leading: const Icon(Icons.record_voice_over),
             title: Text(l10n.audioVoiceDetection),
-            subtitle: Text(settings.vadEngine.label),
+            subtitle: Text(microphoneSettings.vadEngine.label),
             onTap: () async {
               final value = await showSingleChoiceMenu<VadEngine>(
                 context,
                 title: l10n.audioVoiceDetection,
                 options: {for (final e in VadEngine.values) e: e.label},
-                selected: settings.vadEngine,
+                selected: microphoneSettings.vadEngine,
               );
               if (value == null) return;
-              notifier.setVadEngine(value);
+              ref.read(microphoneSettingsProvider.notifier).setVadEngine(value);
               ref.read(voiceProvider.notifier).restartCustomTransmission();
             },
           ),
           LevelSlider(
             label: l10n.audioVoxLevel,
-            value: settings.voiceActivationLevel,
+            value: microphoneSettings.voiceActivationLevel,
             max: 20,
             onChanged: (value) {
-              notifier.setVoiceActivationLevel(value);
+              ref
+                  .read(microphoneSettingsProvider.notifier)
+                  .setVoiceActivationLevel(value);
               ref.read(teamTalkClientProvider).setVoiceActivationLevel(value);
             },
           ),

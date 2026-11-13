@@ -10,7 +10,9 @@ final deviceLocalesProvider = Provider<List<Locale>>(
 );
 
 final appLocaleProvider = Provider<Locale>((ref) {
-  final language = ref.watch(settingsProvider.select((s) => s.language));
+  final language = ref.watch(
+    appearanceSettingsProvider.select((s) => s.language),
+  );
   return resolveAppLocale(language.code, ref.watch(deviceLocalesProvider));
 });
 

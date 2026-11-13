@@ -259,8 +259,9 @@ class _GeneralTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final account = ref.watch(bearwareAccountProvider);
-    final settings = ref.watch(settingsProvider);
-    final notifier = ref.read(settingsProvider.notifier);
+    final appearanceSettings = ref.watch(appearanceSettingsProvider);
+    final profileSettings = ref.watch(profileSettingsProvider);
+    final connectionSettings = ref.watch(connectionSettingsProvider);
     final l10n = context.l10n;
     String languageName(AppLanguage language) => switch (language) {
       AppLanguage.system => l10n.languageSystem,
@@ -273,7 +274,7 @@ class _GeneralTab extends ConsumerWidget {
         ListTile(
           leading: const Icon(Icons.language),
           title: Text(l10n.languageSetting),
-          subtitle: Text(languageName(settings.language)),
+          subtitle: Text(languageName(appearanceSettings.language)),
           onTap: () async {
             final language = await showSingleChoiceMenu<AppLanguage>(
               context,
@@ -282,38 +283,48 @@ class _GeneralTab extends ConsumerWidget {
                 for (final language in AppLanguage.values)
                   language: languageName(language),
               },
-              selected: settings.language,
+              selected: appearanceSettings.language,
             );
-            if (language != null) notifier.setLanguage(language);
+            if (language != null) {
+              ref
+                  .read(appearanceSettingsProvider.notifier)
+                  .setLanguage(language);
+            }
           },
         ),
         ListTile(
           leading: const Icon(Icons.brightness_6),
           title: Text(l10n.settingsTheme),
-          subtitle: Text(settings.theme.label(l10n)),
+          subtitle: Text(appearanceSettings.theme.label(l10n)),
           onTap: () async {
             final theme = await showSingleChoiceMenu<AppTheme>(
               context,
               title: l10n.settingsTheme,
               options: {for (final t in AppTheme.values) t: t.label(l10n)},
-              selected: settings.theme,
+              selected: appearanceSettings.theme,
             );
-            if (theme != null) notifier.setTheme(theme);
+            if (theme != null) {
+              ref.read(appearanceSettingsProvider.notifier).setTheme(theme);
+            }
           },
         ),
         SwitchListTile(
           secondary: const Icon(Icons.contrast),
           title: Text(l10n.settingsHighContrast),
           subtitle: Text(l10n.settingsHighContrastSub),
-          value: settings.highContrast,
-          onChanged: notifier.setHighContrast,
+          value: appearanceSettings.highContrast,
+          onChanged: ref
+              .read(appearanceSettingsProvider.notifier)
+              .setHighContrast,
         ),
         SectionHeader(l10n.settingsAccount),
         ListTile(
           leading: const Icon(Icons.badge),
           title: Text(l10n.commonNickname),
           subtitle: Text(
-            settings.nickname.isEmpty ? l10n.settingsNotSet : settings.nickname,
+            profileSettings.nickname.isEmpty
+                ? l10n.settingsNotSet
+                : profileSettings.nickname,
           ),
           onTap: () => editNickname(context, ref),
         ),
@@ -337,16 +348,16 @@ class _GeneralTab extends ConsumerWidget {
         ListTile(
           leading: const Icon(Icons.wc),
           title: Text(l10n.settingsGender),
-          subtitle: Text(settings.gender.label(l10n)),
+          subtitle: Text(profileSettings.gender.label(l10n)),
           onTap: () async {
             final gender = await showSingleChoiceMenu<Gender>(
               context,
               title: l10n.settingsGender,
               options: {for (final g in Gender.values) g: g.label(l10n)},
-              selected: settings.gender,
+              selected: profileSettings.gender,
             );
             if (gender == null) return;
-            notifier.setGender(gender);
+            ref.read(profileSettingsProvider.notifier).setGender(gender);
             final client = ref.read(teamTalkClientProvider);
             final me = client.state.users[client.state.myUserId];
             if (me != null) {
@@ -385,15 +396,19 @@ class _GeneralTab extends ConsumerWidget {
           secondary: const Icon(Icons.account_tree),
           title: Text(l10n.settingsAutoJoinRoot),
           subtitle: Text(l10n.settingsAutoJoinRootSub),
-          value: settings.autoJoinRootChannel,
-          onChanged: notifier.setAutoJoinRootChannel,
+          value: connectionSettings.autoJoinRootChannel,
+          onChanged: ref
+              .read(connectionSettingsProvider.notifier)
+              .setAutoJoinRootChannel,
         ),
         SwitchListTile(
           secondary: const Icon(Icons.power_settings_new),
           title: Text(l10n.settingsKeepAwake),
           subtitle: Text(l10n.settingsKeepAwakeSub),
-          value: settings.keepAwakeWhileConnected,
-          onChanged: notifier.setKeepAwakeWhileConnected,
+          value: connectionSettings.keepAwakeWhileConnected,
+          onChanged: ref
+              .read(connectionSettingsProvider.notifier)
+              .setKeepAwakeWhileConnected,
         ),
       ],
     );
@@ -441,14 +456,13 @@ class _BatteryTileState extends ConsumerState<_BatteryTile> {
 
 Future<void> _mapPttHotkey(BuildContext context, WidgetRef ref) async {
   final hotkey = ref.read(hotkeysProvider);
-  final notifier = ref.read(settingsProvider.notifier);
   final navigator = Navigator.of(context);
   var handled = false;
   final sub = hotkey.captured.listen((event) {
     if (handled) return;
     handled = true;
     final (keyCode, label) = event;
-    notifier.setPttKey(keyCode, label);
+    ref.read(keySettingsProvider.notifier).setPttKey(keyCode, label);
     navigator.pop();
   });
   hotkey.startCapture().ignore();
@@ -474,21 +488,24 @@ class _ServerListTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final settings = ref.watch(settingsProvider);
-    final notifier = ref.read(settingsProvider.notifier);
+    final serverListSettings = ref.watch(serverListSettingsProvider);
     return ListView(
       children: [
         SwitchListTile(
           title: Text(context.l10n.settingsShowOfficial),
           subtitle: Text(context.l10n.settingsShowOfficialSub),
-          value: settings.showOfficialServers,
-          onChanged: notifier.setShowOfficialServers,
+          value: serverListSettings.showOfficialServers,
+          onChanged: ref
+              .read(serverListSettingsProvider.notifier)
+              .setShowOfficialServers,
         ),
         SwitchListTile(
           title: Text(context.l10n.settingsShowUnofficial),
           subtitle: Text(context.l10n.settingsShowUnofficialSub),
-          value: settings.showUnofficialServers,
-          onChanged: notifier.setShowUnofficialServers,
+          value: serverListSettings.showUnofficialServers,
+          onChanged: ref
+              .read(serverListSettingsProvider.notifier)
+              .setShowUnofficialServers,
         ),
         ListTile(
           leading: const Icon(Icons.lock),
@@ -506,8 +523,7 @@ class _KeysTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final settings = ref.watch(settingsProvider);
-    final notifier = ref.read(settingsProvider.notifier);
+    final keySettings = ref.watch(keySettingsProvider);
     final l10n = context.l10n;
     return ListView(
       children: [
@@ -515,17 +531,18 @@ class _KeysTab extends ConsumerWidget {
           leading: const Icon(Icons.keyboard),
           title: Text(l10n.settingsPttKey),
           subtitle: Text(
-            settings.pttKeyLabel.isEmpty
+            keySettings.pttKeyLabel.isEmpty
                 ? l10n.settingsPttKeyNone
-                : l10n.settingsPttKeyHold(settings.pttKeyLabel),
+                : l10n.settingsPttKeyHold(keySettings.pttKeyLabel),
           ),
           onTap: () => _mapPttHotkey(context, ref),
-          trailing: settings.pttKeyCode == 0
+          trailing: keySettings.pttKeyCode == 0
               ? null
               : IconButton(
                   icon: const Icon(Icons.clear),
                   tooltip: l10n.settingsPttKeyClear,
-                  onPressed: () => notifier.setPttKey(0, ''),
+                  onPressed: () =>
+                      ref.read(keySettingsProvider.notifier).setPttKey(0, ''),
                 ),
         ),
         ListTile(

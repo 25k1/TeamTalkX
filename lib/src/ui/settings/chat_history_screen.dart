@@ -59,7 +59,9 @@ class _ChatHistoryScreenState extends ConsumerState<ChatHistoryScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final days = ref.watch(settingsProvider.select((s) => s.chatRetentionDays));
+    final days = ref.watch(
+      chatSettingsProvider.select((s) => s.chatRetentionDays),
+    );
     return Scaffold(
       appBar: AppBar(title: Text(l10n.settingsChatHistory)),
       body: ListView(
@@ -76,7 +78,9 @@ class _ChatHistoryScreenState extends ConsumerState<ChatHistoryScreen> {
                 selected: days,
               );
               if (choice == null) return;
-              ref.read(settingsProvider.notifier).setChatRetentionDays(choice);
+              ref
+                  .read(chatSettingsProvider.notifier)
+                  .setChatRetentionDays(choice);
               _reload();
             },
           ),

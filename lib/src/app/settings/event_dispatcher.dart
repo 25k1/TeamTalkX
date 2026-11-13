@@ -23,7 +23,7 @@ class EventDispatcher {
   }) {
     final config = _ref.read(eventConfigProvider)[event]!;
     if (!config.enabled) return;
-    final settings = _ref.read(settingsProvider);
+    final eventSoundSettings = _ref.read(eventSoundSettingsProvider);
 
     if (speak && event.supportsSpeech && config.speechEnabled) {
       final template = _ref
@@ -33,7 +33,7 @@ class EventDispatcher {
           .read(announcerProvider)
           .announce(_substitute(template, vars), interrupt: config.interrupts);
     }
-    if (speak && config.soundEnabled && settings.soundsEnabled) {
+    if (speak && config.soundEnabled && eventSoundSettings.soundsEnabled) {
       final player = _ref.read(soundPlayerProvider);
       final volume = config.soundVolumePercent;
       if (config.hasCustomSound) {

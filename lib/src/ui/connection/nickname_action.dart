@@ -11,10 +11,11 @@ import '../a11y/dialogs.dart';
 Future<void> editNickname(BuildContext context, WidgetRef ref) async {
   final messenger = ScaffoldMessenger.of(context);
   final client = ref.read(teamTalkClientProvider);
-  final settings = ref.read(settingsProvider.notifier);
   final loggedIn = ref.read(connectionProvider) is LoggedIn;
   final live = client.state.users[client.state.myUserId]?.nickname ?? '';
-  final initial = live.isNotEmpty ? live : ref.read(settingsProvider).nickname;
+  final initial = live.isNotEmpty
+      ? live
+      : ref.read(profileSettingsProvider).nickname;
 
   final l10n = context.l10n;
   final nickname = await promptText(
@@ -28,7 +29,7 @@ Future<void> editNickname(BuildContext context, WidgetRef ref) async {
   if (nickname == null) return;
   final trimmed = nickname.trim();
   try {
-    settings.setNickname(trimmed);
+    ref.read(profileSettingsProvider.notifier).setNickname(trimmed);
     if (loggedIn) await client.changeNickname(trimmed);
   } on Object catch (e, st) {
     appLog.w('status', 'Nickname change failed', e, st);
