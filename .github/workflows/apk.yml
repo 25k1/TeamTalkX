@@ -70,7 +70,7 @@ jobs:
       - name: Verify signatures
         if: inputs.release-tag != ''
         run: |
-          apksigner="$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)/apksigner"
+          apksigner="$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -1)/apksigner"
           for apk in build/app/outputs/apk/release/*.apk; do
             "$apksigner" verify "$apk"
             digest="$("$apksigner" verify --print-certs "$apk" \
@@ -98,10 +98,10 @@ jobs:
           symbols="TeamTalkX-$version-debug-symbols.zip"
           (cd build/app/outputs/symbols && zip -qr "$RUNNER_TEMP/$symbols" .)
           cd build/app/outputs/apk/release
-          sha256sum *.apk > SHA256SUMS.txt
+          sha256sum -- *.apk > SHA256SUMS.txt
           gh release view "$TAG" --json body --jq .body > "$RUNNER_TEMP/notes.md"
           printf '\n' >> "$RUNNER_TEMP/notes.md"
           sed "s/{version}/$version/g; s/{tag}/$TAG/g" \
             "$GITHUB_WORKSPACE/.github/release-notes-footer.md" >> "$RUNNER_TEMP/notes.md"
-          gh release upload "$TAG" *.apk SHA256SUMS.txt "$RUNNER_TEMP/$symbols" --clobber
+          gh release upload "$TAG" ./*.apk SHA256SUMS.txt "$RUNNER_TEMP/$symbols" --clobber
           gh release edit "$TAG" --title "TeamTalkX $version" --notes-file "$RUNNER_TEMP/notes.md"
