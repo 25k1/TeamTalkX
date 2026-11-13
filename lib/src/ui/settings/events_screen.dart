@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../app/settings/event_config.dart';
 import '../../app/settings/haptic_player.dart';
 import '../../app/settings/locale_providers.dart';
+import '../../app/settings/settings_providers.dart';
 import '../../app/settings/sound_player.dart';
 import '../../l10n/l10n.dart';
 import '../common/insert_variable_button.dart';
@@ -38,6 +39,15 @@ class EventsScreen extends ConsumerWidget {
           title: Text(l10n.settingsSound),
           subtitle: Text(l10n.eventsSoundSub),
           onTap: () => pushScreen(context, const SoundSettingsScreen()),
+        ),
+        SwitchListTile(
+          secondary: const Icon(Icons.vibration),
+          title: Text(l10n.eventsVibration),
+          subtitle: Text(l10n.eventsVibrationSub),
+          value: ref.watch(eventFeedbackSettingsProvider).vibrationEnabled,
+          onChanged: ref
+              .read(eventFeedbackSettingsProvider.notifier)
+              .setVibrationEnabled,
         ),
         const Divider(),
         SectionHeader(l10n.settingsEvents),

@@ -94,6 +94,7 @@ List<SettingsSearchEntry> settingsIndex(AppLocalizations l10n) {
       l10n.settingsRememberedUsers,
       l10n.settingsGender,
       l10n.settingsAutoJoinRoot,
+      l10n.settingsBackTwice,
       l10n.settingsKeepAwake,
       l10n.settingsFileExport,
       l10n.settingsFileImport,
@@ -135,6 +136,7 @@ List<SettingsSearchEntry> settingsIndex(AppLocalizations l10n) {
       l10n.duckOthersEvents,
       l10n.keepVolumeTalkBack,
     ]),
+    ...inSection(_events, [l10n.eventsVibration]),
     ...inScreen(_events, l10n.eventsSpeech, const SpeechSettingsScreen(), [
       l10n.speechSpeakEventsThrough,
       l10n.ttsRate,

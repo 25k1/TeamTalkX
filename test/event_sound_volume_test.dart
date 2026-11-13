@@ -87,9 +87,9 @@ void main() {
 
   test('the event-sound volume defaults to 100 % and is kept', () async {
     final c = await start();
-    expect(c.read(eventSoundSettingsProvider).eventVolumePercent, 100);
-    c.read(eventSoundSettingsProvider.notifier).setEventVolumePercent(60);
+    expect(c.read(eventFeedbackSettingsProvider).eventVolumePercent, 100);
+    c.read(eventFeedbackSettingsProvider.notifier).setEventVolumePercent(60);
     final again = await start({'event_volume_percent': 60});
-    expect(again.read(eventSoundSettingsProvider).eventVolumePercent, 60);
+    expect(again.read(eventFeedbackSettingsProvider).eventVolumePercent, 60);
   });
 }

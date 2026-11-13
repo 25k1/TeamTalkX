@@ -269,15 +269,19 @@ class _MainScreenState extends ConsumerState<MainScreen> {
         }
         final now = DateTime.now();
         final first = _backPressedAt;
-        if (first != null && now.difference(first) < backAgainWindow) {
+        final twice = ref
+            .read(connectionSettingsProvider)
+            .backTwiceToDisconnect;
+        if (!twice ||
+            (first != null && now.difference(first) < backAgainWindow)) {
           _backPressedAt = null;
           unawaited(ref.read(connectionProvider.notifier).disconnect());
           return;
         }
         _backPressedAt = now;
-        final text = l10n.mainBackAgainToDisconnect;
-        ScaffoldMessenger.of(context).showMessage(text);
-        ref.read(announcerProvider).announceShown(text);
+        ScaffoldMessenger.of(
+          context,
+        ).showMessage(l10n.mainBackAgainToDisconnect);
       },
       child: Scaffold(
         appBar: AppBar(

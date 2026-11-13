@@ -148,18 +148,22 @@ class ConnectionSettings {
   const ConnectionSettings({
     this.autoJoinRootChannel = true,
     this.keepAwakeWhileConnected = false,
+    this.backTwiceToDisconnect = true,
   });
 
   final bool autoJoinRootChannel;
   final bool keepAwakeWhileConnected;
+  final bool backTwiceToDisconnect;
 
   ConnectionSettings copyWith({
     bool? autoJoinRootChannel,
     bool? keepAwakeWhileConnected,
+    bool? backTwiceToDisconnect,
   }) => ConnectionSettings(
     autoJoinRootChannel: autoJoinRootChannel ?? this.autoJoinRootChannel,
     keepAwakeWhileConnected:
         keepAwakeWhileConnected ?? this.keepAwakeWhileConnected,
+    backTwiceToDisconnect: backTwiceToDisconnect ?? this.backTwiceToDisconnect,
   );
 }
 
@@ -174,12 +178,19 @@ class ConnectionSettingsNotifier extends PrefsNotifier<ConnectionSettings> {
     autoJoinRootChannel: prefs.getBool('auto_join_root_channel') ?? true,
     keepAwakeWhileConnected:
         prefs.getBool('keep_awake_while_connected') ?? false,
+    backTwiceToDisconnect: prefs.getBool('back_twice_to_disconnect') ?? true,
   );
 
   void setAutoJoinRootChannel(bool v) => saveBool(
     'auto_join_root_channel',
     v,
     (s) => s.copyWith(autoJoinRootChannel: v),
+  );
+
+  void setBackTwiceToDisconnect(bool v) => saveBool(
+    'back_twice_to_disconnect',
+    v,
+    (s) => s.copyWith(backTwiceToDisconnect: v),
   );
 
   void setKeepAwakeWhileConnected(bool v) => saveBool(

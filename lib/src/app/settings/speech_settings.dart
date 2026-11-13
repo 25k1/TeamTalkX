@@ -111,49 +111,58 @@ class SpeechSettingsNotifier extends PrefsNotifier<SpeechSettings> {
       saveInt('tts_pitch_percent', v, (s) => s.copyWith(ttsPitchPercent: v));
 }
 
-class EventSoundSettings {
-  const EventSoundSettings({
+class EventFeedbackSettings {
+  const EventFeedbackSettings({
     this.soundsEnabled = true,
     this.disabledSounds = const {},
     this.eventVolumePercent = 100,
+    this.vibrationEnabled = true,
   });
 
   final bool soundsEnabled;
   final Set<SoundEvent> disabledSounds;
   final int eventVolumePercent;
+  final bool vibrationEnabled;
 
   bool soundEnabled(SoundEvent event) =>
       soundsEnabled && !disabledSounds.contains(event);
 
-  EventSoundSettings copyWith({
+  EventFeedbackSettings copyWith({
     bool? soundsEnabled,
     Set<SoundEvent>? disabledSounds,
     int? eventVolumePercent,
-  }) => EventSoundSettings(
+    bool? vibrationEnabled,
+  }) => EventFeedbackSettings(
     soundsEnabled: soundsEnabled ?? this.soundsEnabled,
     disabledSounds: disabledSounds ?? this.disabledSounds,
     eventVolumePercent: eventVolumePercent ?? this.eventVolumePercent,
+    vibrationEnabled: vibrationEnabled ?? this.vibrationEnabled,
   );
 }
 
-final eventSoundSettingsProvider =
-    NotifierProvider<EventSoundSettingsNotifier, EventSoundSettings>(
-      EventSoundSettingsNotifier.new,
+final eventFeedbackSettingsProvider =
+    NotifierProvider<EventFeedbackSettingsNotifier, EventFeedbackSettings>(
+      EventFeedbackSettingsNotifier.new,
     );
 
-class EventSoundSettingsNotifier extends PrefsNotifier<EventSoundSettings> {
+class EventFeedbackSettingsNotifier
+    extends PrefsNotifier<EventFeedbackSettings> {
   @override
-  EventSoundSettings build() => EventSoundSettings(
+  EventFeedbackSettings build() => EventFeedbackSettings(
     soundsEnabled: prefs.getBool('sounds_enabled') ?? true,
     disabledSounds: {
       for (final event in SoundEvent.values)
         if (!(prefs.getBool('sound.${event.name}') ?? true)) event,
     },
     eventVolumePercent: prefs.getInt('event_volume_percent') ?? 100,
+    vibrationEnabled: prefs.getBool('vibration_enabled') ?? true,
   );
 
   void setSoundsEnabled(bool v) =>
       saveBool('sounds_enabled', v, (s) => s.copyWith(soundsEnabled: v));
+
+  void setVibrationEnabled(bool v) =>
+      saveBool('vibration_enabled', v, (s) => s.copyWith(vibrationEnabled: v));
 
   void setEventVolumePercent(int v) => saveInt(
     'event_volume_percent',

@@ -1243,5 +1243,9 @@
   "notificationRecording": "Идёт запись",
   "notificationTransmit": "Передавать",
   "notificationStopTransmitting": "Остановить передачу",
-  "notificationStopRecording": "Остановить запись"
+  "notificationStopRecording": "Остановить запись",
+  "settingsBackTwice": "Двойное нажатие «Назад» для отключения",
+  "settingsBackTwiceSub": "Выключено: одно нажатие «Назад» отключает",
+  "eventsVibration": "Вибрация",
+  "eventsVibrationSub": "Вибрировать при событиях, у которых задан шаблон"
 }

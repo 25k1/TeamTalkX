@@ -23,7 +23,7 @@ class EventDispatcher {
   }) {
     final config = _ref.read(eventConfigProvider)[event]!;
     if (!config.enabled) return;
-    final eventSoundSettings = _ref.read(eventSoundSettingsProvider);
+    final eventFeedbackSettings = _ref.read(eventFeedbackSettingsProvider);
 
     if (speak && event.supportsSpeech && config.speechEnabled) {
       final template = _ref
@@ -33,7 +33,7 @@ class EventDispatcher {
           .read(announcerProvider)
           .announce(_substitute(template, vars), interrupt: config.interrupts);
     }
-    if (speak && config.soundEnabled && eventSoundSettings.soundsEnabled) {
+    if (speak && config.soundEnabled && eventFeedbackSettings.soundsEnabled) {
       final player = _ref.read(soundPlayerProvider);
       final volume = config.soundVolumePercent;
       if (config.hasCustomSound) {
@@ -57,6 +57,7 @@ class EventDispatcher {
   void haptic(AppEvent event) {
     final config = _ref.read(eventConfigProvider)[event]!;
     if (event.supportsHaptic &&
+        _ref.read(eventFeedbackSettingsProvider).vibrationEnabled &&
         config.hapticEnabled &&
         config.haptic.isNotEmpty) {
       _ref.read(hapticPlayerProvider).play(config.haptic);
