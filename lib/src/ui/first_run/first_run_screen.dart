@@ -213,6 +213,7 @@ class _StepState extends ConsumerState<_Step> {
         Text(l10n.setupNicknameBody),
         TextField(
           controller: _nickname,
+          textCapitalization: TextCapitalization.sentences,
           decoration: InputDecoration(labelText: l10n.commonNickname),
           textInputAction: TextInputAction.next,
           onSubmitted: (_) => _next(),

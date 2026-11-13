@@ -64,6 +64,7 @@ class _ChatViewState extends ConsumerState<ChatView> {
                 Expanded(
                   child: TextField(
                     controller: _input,
+                    textCapitalization: TextCapitalization.sentences,
                     enabled: inChannel,
                     decoration: InputDecoration(
                       labelText: inChannel

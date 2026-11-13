@@ -66,10 +66,17 @@ class Announcer {
   }
 
   void announceShown(String message) {
+    if (_screenReaderOn) return;
     if (_ref.read(speechSettingsProvider).speechOutput == SpeechOutput.tts) {
       announce(message);
     }
   }
+
+  bool get _screenReaderOn => WidgetsBinding
+      .instance
+      .platformDispatcher
+      .accessibilityFeatures
+      .accessibleNavigation;
 
   void dispose() {
     unawaited(_tts.stop());

@@ -212,6 +212,7 @@ class _ServerEditScreenState extends State<ServerEditScreen>
               ),
               TextFormField(
                 controller: _nickname,
+                textCapitalization: TextCapitalization.sentences,
                 decoration: InputDecoration(
                   labelText: l10n.serverEditNicknameOptional,
                 ),

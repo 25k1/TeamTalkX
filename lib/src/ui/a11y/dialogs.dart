@@ -36,6 +36,7 @@ Future<String?> promptText(
   String? label,
   String initialValue = '',
   bool obscureText = false,
+  TextCapitalization capitalization = TextCapitalization.none,
   String? submitLabel,
   String? cancelLabel,
   bool barrierDismissible = true,
@@ -48,6 +49,7 @@ Future<String?> promptText(
       label: label,
       initialValue: initialValue,
       obscureText: obscureText,
+      capitalization: capitalization,
       submitLabel: submitLabel,
       cancelLabel: cancelLabel,
     ),
@@ -60,6 +62,7 @@ class _PromptDialog extends StatefulWidget {
     required this.label,
     required this.initialValue,
     required this.obscureText,
+    required this.capitalization,
     this.submitLabel,
     this.cancelLabel,
   });
@@ -68,6 +71,7 @@ class _PromptDialog extends StatefulWidget {
   final String? label;
   final String initialValue;
   final bool obscureText;
+  final TextCapitalization capitalization;
   final String? submitLabel;
   final String? cancelLabel;
 
@@ -96,6 +100,7 @@ class _PromptDialogState extends State<_PromptDialog> {
           : TextField(
               controller: _controller,
               autofocus: true,
+              textCapitalization: widget.capitalization,
               decoration: InputDecoration(labelText: widget.label),
               onSubmitted: (_) => _submit(),
             ),

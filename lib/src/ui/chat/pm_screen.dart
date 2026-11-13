@@ -152,6 +152,7 @@ class _PmScreenState extends ConsumerState<PmScreen> {
                   Expanded(
                     child: TextField(
                       controller: _input,
+                      textCapitalization: TextCapitalization.sentences,
                       enabled: online,
                       decoration: InputDecoration(
                         labelText: online
