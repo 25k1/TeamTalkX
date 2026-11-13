@@ -31,7 +31,7 @@ void main() {
       final r = MicTestRecorder(live: true, sampleRate: 16000, channels: 1);
       final out = r.add(_frame(), 2)!;
       expect(out.length, closeTo(960 * 2, 6));
-      expect(out.sublist(10), everyElement(2000));
+      expect(out.sublist(200), everyElement(2000));
       expect(r.recordingDone, isFalse);
     });
 

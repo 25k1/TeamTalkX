@@ -143,13 +143,50 @@ void main() {
 
     test('a tone survives a round trip', () {
       final input = tone(16000, 1600, hz: 300);
-      final up = StreamingResampler(16000, 48000).process(input);
-      final back = StreamingResampler(48000, 16000).process(up);
+      final upsampler = StreamingResampler(16000, 48000);
+      final downsampler = StreamingResampler(48000, 16000);
+      final back = downsampler.process(upsampler.process(input));
+      final delay = (upsampler.delay + downsampler.delay / 3).round();
       var maxError = 0;
-      for (var i = 10; i < back.length - 10; i++) {
-        maxError = math.max(maxError, (back[i] - input[i - 1]).abs());
+      for (var i = delay + 10; i < back.length - 10; i++) {
+        maxError = math.max(maxError, (back[i] - input[i - delay]).abs());
       }
-      expect(maxError, lessThan(2000));
+      expect(maxError, lessThan(1000));
+    });
+
+    double power(Int16List pcm, int rate, double hz) {
+      var re = 0.0;
+      var im = 0.0;
+      for (var i = 0; i < pcm.length; i++) {
+        final w = 0.5 - 0.5 * math.cos(2 * math.pi * i / pcm.length);
+        re += pcm[i] * w * math.cos(2 * math.pi * hz * i / rate);
+        im += pcm[i] * w * math.sin(2 * math.pi * hz * i / rate);
+      }
+      return re * re + im * im;
+    }
+
+    test('8 kHz sound upsampled to 48 kHz has no audible images', () {
+      final out = StreamingResampler(
+        8000,
+        48000,
+      ).process(tone(8000, 4000, hz: 1000));
+      final tone1k = power(out, 48000, 1000);
+      for (final image in [7000.0, 9000.0, 15000.0, 17000.0]) {
+        final db = 10 * math.log(power(out, 48000, image) / tone1k) / math.ln10;
+        expect(db, lessThan(-60), reason: 'image at $image Hz: $db dB');
+      }
+    });
+
+    test('a 44.1 kHz tone comes out at 48 kHz without distortion', () {
+      final out = StreamingResampler(
+        44100,
+        48000,
+      ).process(tone(44100, 8820, hz: 12000));
+      final wanted = power(out, 48000, 12000);
+      for (final spur in [32100.0 - 24000, 3900.0, 20000.0]) {
+        final db = 10 * math.log(power(out, 48000, spur) / wanted) / math.ln10;
+        expect(db, lessThan(-60), reason: 'spur at $spur Hz: $db dB');
+      }
     });
   });
 
