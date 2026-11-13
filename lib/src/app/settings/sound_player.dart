@@ -18,9 +18,11 @@ final soundPlayerProvider = Provider<SoundPlayer>((ref) {
 });
 
 class SoundPlayer {
-  SoundPlayer(this._ref);
+  SoundPlayer(this._ref, {Future<SoundEffects> Function()? spawn})
+    : _spawn = spawn ?? SoundEffects.spawn;
 
   final Ref _ref;
+  final Future<SoundEffects> Function() _spawn;
   Future<SoundEffects>? _effects;
   Directory? _assetCache;
   Directory? _folderCache;
@@ -34,11 +36,9 @@ class SoundPlayer {
 
   void setOutput({required bool voiceCall, int deviceId = 0}) {
     _output = (voiceCall: voiceCall, deviceId: deviceId);
-    unawaited(
-      _effects?.then(
-        (e) => e.setOutput(voiceCall: voiceCall, deviceId: deviceId),
-      ),
-    );
+    _effects
+        ?.then((e) => e.setOutput(voiceCall: voiceCall, deviceId: deviceId))
+        .ignore();
   }
 
   Future<void> play(SoundEvent event) async {
@@ -83,12 +83,24 @@ class SoundPlayer {
       }
     }
     final volume = _ref.read(settingsProvider).eventVolumePercent;
-    final effects = await (_effects ??= SoundEffects.spawn().then((e) {
+    final starting = _effects ??= _spawn().then((e) {
       e
         ..setOutput(voiceCall: _output.voiceCall, deviceId: _output.deviceId)
         ..busy.listen(_playing.add);
       return e;
-    }));
+    });
+    final SoundEffects effects;
+    try {
+      effects = await starting;
+    } on Object catch (e) {
+      if (identical(_effects, starting)) _effects = null;
+      appLog.w(
+        'sound',
+        'Event sounds are unavailable; trying again next time',
+        e,
+      );
+      return;
+    }
     effects.play(path, gain: volume / 100 * volumePercent / 100);
   }
 
@@ -142,6 +154,6 @@ class SoundPlayer {
     final effects = _effects;
     _effects = null;
     unawaited(_playing.close());
-    unawaited(effects?.then((e) => e.dispose()));
+    effects?.then((e) => e.dispose()).ignore();
   }
 }

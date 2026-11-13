@@ -1237,5 +1237,11 @@
   "recordingNote": "ჩანაწერში მოხვდება თქვენი ხმაც, როცა გადასცემთ. არხს შეუძლია ჩაწერის აკრძალვა.",
   "recordingIndicator": "მიმდინარეობს ჩაწერა",
   "keyActionToggleRecording": "ჩაწერის დაწყება ან შეწყვეტა",
-  "failureRecording": "ჩანაწერის ფაილის შექმნა ვერ მოხერხდა."
+  "failureRecording": "ჩანაწერის ფაილის შექმნა ვერ მოხერხდა.",
+  "notificationChannel": "კავშირი",
+  "notificationTransmitting": "გადაცემა",
+  "notificationRecording": "მიმდინარეობს ჩაწერა",
+  "notificationTransmit": "გადაცემის დაწყება",
+  "notificationStopTransmitting": "გადაცემის შეწყვეტა",
+  "notificationStopRecording": "ჩაწერის შეწყვეტა"
 }

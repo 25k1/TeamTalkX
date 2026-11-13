@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.os.Build
+import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
@@ -20,6 +21,7 @@ import io.flutter.plugin.common.MethodChannel
 class ConnectionForegroundService : Service() {
 
     private var wakeLock: PowerManager.WakeLock? = null
+    private var texts: Bundle? = null
     private val wakeLockRenewer = Handler(Looper.getMainLooper())
     private val renewWakeLock = object : Runnable {
         override fun run() {
@@ -43,6 +45,7 @@ class ConnectionForegroundService : Service() {
                 val transmitting = intent?.getBooleanExtra(EXTRA_TRANSMITTING, false) ?: false
                 val recording = intent?.getBooleanExtra(EXTRA_RECORDING, false) ?: false
                 val keepAwake = intent?.getBooleanExtra(EXTRA_KEEP_AWAKE, false) ?: false
+                intent?.getBundleExtra(EXTRA_TEXT)?.let { texts = it }
                 startForegroundWithNotification(serverName, channelName, transmitting, recording)
                 if (keepAwake) acquireWakeLock() else releaseWakeLock()
             }
@@ -50,6 +53,9 @@ class ConnectionForegroundService : Service() {
 
         return START_NOT_STICKY
     }
+
+    private fun label(key: String, fallback: Int): String =
+        texts?.getString(key)?.takeIf { it.isNotEmpty() } ?: getString(fallback)
 
     private fun sendAction(method: String) {
         Handler(Looper.getMainLooper()).post {
@@ -117,8 +123,8 @@ class ConnectionForegroundService : Service() {
         val body = if (channelName.isEmpty()) serverName else "$serverName / $channelName"
         val text = listOfNotNull(
             body,
-            if (transmitting) getString(R.string.notification_transmitting) else null,
-            if (recording) getString(R.string.notification_recording) else null
+            if (transmitting) label("transmitting", R.string.notification_transmitting) else null,
+            if (recording) label("recording", R.string.notification_recording) else null
         ).joinToString(" ")
         val toggleIntent = Intent(this, ConnectionForegroundService::class.java)
             .setAction(ACTION_TOGGLE_TX)
@@ -129,12 +135,12 @@ class ConnectionForegroundService : Service() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         val toggleLabel = if (transmitting) {
-            getString(R.string.notification_stop_transmitting)
+            label("stopTransmitting", R.string.notification_stop_transmitting)
         } else {
-            getString(R.string.notification_start_transmitting)
+            label("transmit", R.string.notification_start_transmitting)
         }
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle(getString(R.string.notification_title))
+            .setContentTitle(label("title", R.string.notification_title))
             .setContentText(text)
             .setSmallIcon(android.R.drawable.stat_sys_headset)
             .setOngoing(true)
@@ -151,7 +157,7 @@ class ConnectionForegroundService : Service() {
                     .setAction(ACTION_STOP_RECORDING),
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
-            builder.addAction(0, getString(R.string.notification_stop_recording), stopRecording)
+            builder.addAction(0, label("stopRecording", R.string.notification_stop_recording), stopRecording)
         }
         return builder.build()
     }
@@ -159,7 +165,7 @@ class ConnectionForegroundService : Service() {
     private fun createNotificationChannel() {
         val channel = NotificationChannel(
             CHANNEL_ID,
-            getString(R.string.notification_channel_name),
+            label("channel", R.string.notification_channel_name),
             NotificationManager.IMPORTANCE_LOW
         )
         channel.setShowBadge(false)
@@ -178,6 +184,7 @@ class ConnectionForegroundService : Service() {
         private const val EXTRA_TRANSMITTING = "transmitting"
         private const val EXTRA_RECORDING = "recording"
         private const val EXTRA_KEEP_AWAKE = "keepAwake"
+        private const val EXTRA_TEXT = "text"
         private const val ACTION_STOP = "org.gozaltech.teamtalkx.STOP"
         private const val ACTION_TOGGLE_TX = "org.gozaltech.teamtalkx.TOGGLE_TX"
         private const val ACTION_STOP_RECORDING = "org.gozaltech.teamtalkx.STOP_RECORDING"
@@ -188,6 +195,7 @@ class ConnectionForegroundService : Service() {
             context: Context,
             serverName: String,
             channelName: String,
+            text: Map<String, String>,
             transmitting: Boolean,
             recording: Boolean,
             keepAwake: Boolean
@@ -198,6 +206,7 @@ class ConnectionForegroundService : Service() {
                 .putExtra(EXTRA_TRANSMITTING, transmitting)
                 .putExtra(EXTRA_RECORDING, recording)
                 .putExtra(EXTRA_KEEP_AWAKE, keepAwake)
+                .putExtra(EXTRA_TEXT, Bundle().apply { text.forEach { (k, v) -> putString(k, v) } })
             context.startForegroundService(intent)
         }
 

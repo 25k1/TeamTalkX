@@ -4,12 +4,43 @@ import 'native_channel.dart';
 
 enum ForegroundAction { toggleTransmission, stopRecording }
 
+class NotificationText {
+  const NotificationText({
+    required this.title,
+    required this.channel,
+    required this.transmitting,
+    required this.recording,
+    required this.transmit,
+    required this.stopTransmitting,
+    required this.stopRecording,
+  });
+
+  final String title;
+  final String channel;
+  final String transmitting;
+  final String recording;
+  final String transmit;
+  final String stopTransmitting;
+  final String stopRecording;
+
+  Map<String, String> toMap() => {
+    'title': title,
+    'channel': channel,
+    'transmitting': transmitting,
+    'recording': recording,
+    'transmit': transmit,
+    'stopTransmitting': stopTransmitting,
+    'stopRecording': stopRecording,
+  };
+}
+
 abstract interface class ForegroundService {
   Stream<ForegroundAction> get actions;
 
   Future<void> start({
     required String serverName,
     required String channelName,
+    required NotificationText text,
     bool transmitting = false,
     bool recording = false,
     bool keepAwake = false,
@@ -18,6 +49,7 @@ abstract interface class ForegroundService {
   Future<void> update({
     required String serverName,
     required String channelName,
+    required NotificationText text,
     bool transmitting = false,
     bool recording = false,
     bool keepAwake = false,
@@ -49,6 +81,7 @@ class AndroidForegroundService implements ForegroundService {
   Future<void> start({
     required String serverName,
     required String channelName,
+    required NotificationText text,
     bool transmitting = false,
     bool recording = false,
     bool keepAwake = false,
@@ -56,6 +89,7 @@ class AndroidForegroundService implements ForegroundService {
     'start',
     serverName,
     channelName,
+    text,
     transmitting,
     recording,
     keepAwake,
@@ -65,6 +99,7 @@ class AndroidForegroundService implements ForegroundService {
   Future<void> update({
     required String serverName,
     required String channelName,
+    required NotificationText text,
     bool transmitting = false,
     bool recording = false,
     bool keepAwake = false,
@@ -72,6 +107,7 @@ class AndroidForegroundService implements ForegroundService {
     'update',
     serverName,
     channelName,
+    text,
     transmitting,
     recording,
     keepAwake,
@@ -81,12 +117,14 @@ class AndroidForegroundService implements ForegroundService {
     String method,
     String serverName,
     String channelName,
+    NotificationText text,
     bool transmitting,
     bool recording,
     bool keepAwake,
   ) => _channel.invoke<void>(method, <String, Object>{
     'serverName': serverName,
     'channelName': channelName,
+    'text': text.toMap(),
     'transmitting': transmitting,
     'recording': recording,
     'keepAwake': keepAwake,

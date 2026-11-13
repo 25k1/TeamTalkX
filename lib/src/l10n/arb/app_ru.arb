@@ -1237,5 +1237,11 @@
   "recordingNote": "В записи попадает и ваш голос, пока вы передаёте. Канал может запретить запись.",
   "recordingIndicator": "Идёт запись",
   "keyActionToggleRecording": "Начать или остановить запись",
-  "failureRecording": "Не удалось создать файл записи."
+  "failureRecording": "Не удалось создать файл записи.",
+  "notificationChannel": "Подключение",
+  "notificationTransmitting": "Передача",
+  "notificationRecording": "Идёт запись",
+  "notificationTransmit": "Передавать",
+  "notificationStopTransmitting": "Остановить передачу",
+  "notificationStopRecording": "Остановить запись"
 }
