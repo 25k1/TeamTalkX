@@ -73,7 +73,7 @@ StoredMessage _stored(String text, {DateTime? time, String conv = 'c:/'}) =>
     );
 
 void main() {
-  test('a database from S1 gains the chat tables', () async {
+  test('a database from the first schema version gains the chat tables', () async {
     final db = AppDatabase(
       NativeDatabase.memory(
         setup: (raw) {
@@ -243,7 +243,7 @@ void main() {
       await stop();
     });
 
-    test('private chat is kept by username across sessions (D152)', () async {
+    test('private chat is kept by username across sessions', () async {
       await start();
       emit(UserTextMessageEvent(_text(TtMsgType.user, 8, 'psst', to: 7)));
       await settle();
@@ -272,7 +272,7 @@ void main() {
       expect(chatServerKey('TT.example', 10333), 'tt.example:10333');
     });
 
-    test('messages older than the retention are dropped (D48)', () async {
+    test('messages older than the retention are dropped', () async {
       final store = ChatHistoryStore(db);
       await store.add(
         StoredMessage(
@@ -334,7 +334,7 @@ void main() {
       return reached;
     }
 
-    testWidgets('messages on a hidden tab stay unread (D154)', (tester) async {
+    testWidgets('messages on a hidden tab stay unread', (tester) async {
       final reached = await pump(tester, active: false);
       expect(reached, isEmpty);
       expect(find.text('Jump to first unread (2)'), findsOneWidget);

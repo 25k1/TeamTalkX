@@ -231,7 +231,7 @@ void main() {
     return scheduler.pending!;
   }
 
-  group('H1: abandoned attempts', () {
+  group('abandoned attempts', () {
     test('disconnecting while connecting abandons the attempt', () async {
       client.loginGate = Completer<void>();
       final connecting = expectLater(
@@ -274,7 +274,7 @@ void main() {
     });
   });
 
-  group('reconnecting (D25)', () {
+  group('reconnecting', () {
     test('a connection lost while joining still counts as connected', () async {
       client.joinGate = Completer<void>();
       final connecting = session().connect(
@@ -299,7 +299,7 @@ void main() {
       expect(retry.delay.inMilliseconds, inInclusiveRange(1600, 2400));
       expect(platform.tts.spoken.where((t) => t.startsWith('Connection')), [
         'Connection lost. Reconnecting',
-      ], reason: 'once, as the connection-lost event (D159)');
+      ], reason: 'once, as the connection-lost event');
       expect(platform.tts.interrupted, ['Connection lost. Reconnecting']);
       expect(platform.sounds.played, contains('serverLost'));
 
@@ -389,7 +389,7 @@ void main() {
     });
   });
 
-  group('wake lock (P1)', () {
+  group('wake lock', () {
     test('by default the connection lets the phone sleep', () async {
       await connected();
       expect(platform.foregroundService.calls, contains('start Test'));
@@ -414,7 +414,7 @@ void main() {
     });
   });
 
-  group('certificates (D5, D143)', () {
+  group('certificates', () {
     test(
       'a certificate to decide on ends the connect with the entry',
       () async {
@@ -461,7 +461,7 @@ void main() {
     });
   });
 
-  group('kicks (H2, D6)', () {
+  group('kicks', () {
     test('a server kick ends the session without reconnecting', () async {
       await connected();
       final kicker = _user(2, nickname: 'Op');
@@ -518,7 +518,7 @@ void main() {
       expect(
         endsReconnecting(_untrusted(const NewCertificate())),
         isTrue,
-        reason: 'waits for the user (D5)',
+        reason: 'waits for the user',
       );
       expect(
         endsReconnecting(

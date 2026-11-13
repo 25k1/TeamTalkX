@@ -90,7 +90,7 @@ Future<List<String>> _measure() async {
       ..add(
         'mouth-to-ear estimate without network: '
         '${(median + _pipelineMs).toStringAsFixed(0)} ms '
-        '(round trip + 20 ms frame + 60 ms jitter prebuffer; D97 gate 150 ms)',
+        '(round trip + 20 ms frame + 60 ms jitter prebuffer; target 150 ms)',
       );
   }
   return out;

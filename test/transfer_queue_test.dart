@@ -85,7 +85,7 @@ void main() {
     await pumpEventQueue();
   }
 
-  test('two at a time; the next starts when one ends (D67)', () async {
+  test('two at a time; the next starts when one ends', () async {
     final queue = c.read(transferQueueProvider.notifier);
     expect(queue.download(_file(1), 'a'), isFalse);
     expect(queue.download(_file(2), 'b'), isFalse);
@@ -124,7 +124,7 @@ void main() {
     );
   });
 
-  test('a saved download is offered to open (D68)', () async {
+  test('a saved download is offered to open', () async {
     final temp = await Directory.systemTemp.createTemp('ttx');
     addTearDown(() async {
       if (await temp.exists()) await temp.delete(recursive: true);

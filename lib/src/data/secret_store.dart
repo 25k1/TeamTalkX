@@ -101,7 +101,7 @@ class SecretStore {
           appLog.w(
             'secrets',
             'The Keystore is unavailable; saving secrets unencrypted, '
-                'excluded from backup (D146)',
+                'excluded from backup',
           );
         }
         content = {'version': _version, 'plain': values};

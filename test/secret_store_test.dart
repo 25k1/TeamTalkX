@@ -58,7 +58,7 @@ void main() {
       expect(again.read('b'), 'swordfish');
     });
 
-    test('without a Keystore it saves plain JSON (D146)', () async {
+    test('without a Keystore it saves plain JSON', () async {
       cipher.available = false;
       final store = await SecretStore.open(file, cipher);
       await store.write('a', 'hunter2');
@@ -76,7 +76,7 @@ void main() {
       expect((await SecretStore.open(file, cipher)).read('a'), 'hunter2');
     });
 
-    test("another device's secrets are dropped (D7)", () async {
+    test("another device's secrets are dropped", () async {
       await (await SecretStore.open(file, cipher)).write('a', 'hunter2');
       cipher.keyId = 'k2';
       final store = await SecretStore.open(file, cipher);
@@ -98,7 +98,7 @@ void main() {
     });
   });
 
-  group('migration from plaintext (H6)', () {
+  group('migration from plaintext', () {
     const legacy = [
       ServerEntry(
         name: 'Home',
@@ -150,7 +150,7 @@ void main() {
       expect(again.first.channelPassword, 'door');
     });
 
-    test('a restore without the secrets keeps the servers (D7)', () async {
+    test('a restore without the secrets keeps the servers', () async {
       final c = await start({'server_list': ServerEntry.encodeList(legacy)});
       final saved = (await c.read(serverListProvider.future)).length;
       c.dispose();

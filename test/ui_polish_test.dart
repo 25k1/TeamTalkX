@@ -105,7 +105,7 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  testWidgets('leaving with unsaved changes asks first (D168)', (tester) async {
+  testWidgets('leaving with unsaved changes asks first', (tester) async {
     await pumpHome(
       tester,
       Builder(
@@ -144,7 +144,7 @@ void main() {
     expect(find.text('open'), findsOneWidget);
   });
 
-  testWidgets('a removed server comes back with Undo (D173)', (tester) async {
+  testWidgets('a removed server comes back with Undo', (tester) async {
     serverListStartupHandled = true;
     final platform = FakePlatform();
     final client = FakeVoiceClient();
@@ -188,7 +188,7 @@ void main() {
     expect(back.password, 'pw');
   });
 
-  testWidgets('online users can be searched (D171)', (tester) async {
+  testWidgets('online users can be searched', (tester) async {
     final platform = FakePlatform();
     final client = _Client()..addMe();
     client.state
@@ -215,7 +215,7 @@ void main() {
     expect(find.text('Nothing matches "zzz"'), findsOneWidget);
   });
 
-  test('high contrast strengthens outlines (D169)', () {
+  test('high contrast strengthens outlines', () {
     final plain = appTheme(Brightness.light, highContrast: false);
     final strong = appTheme(Brightness.light, highContrast: true);
     expect(strong.dividerTheme.color, strong.colorScheme.onSurface);
@@ -227,7 +227,7 @@ void main() {
     );
   });
 
-  test('the theme setting is kept (D169)', () async {
+  test('the theme setting is kept', () async {
     SharedPreferences.setMockInitialValues(const {});
     final c = ProviderContainer(
       overrides: [

@@ -108,7 +108,7 @@ void main() {
   });
 
   group(
-    'media streaming (V5)',
+    'media streaming',
     skip: nativeLibraryOverride == ''
         ? 'Needs a host build of native/: --dart-define=TT_NATIVE_LIB=<path>'
         : null,

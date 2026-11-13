@@ -217,7 +217,7 @@ void main() {
       expect(platform.updater.installed, [ready.path]);
     });
 
-    test('a wrong checksum or another key is refused (D39)', () async {
+    test('a wrong checksum or another key is refused', () async {
       await start();
       await controller().check();
       final release =
@@ -239,7 +239,7 @@ void main() {
       );
     });
 
-    test('betas are offered only when wanted (D38)', () async {
+    test('betas are offered only when wanted', () async {
       await start(releases: [_release('v1.7.0-beta.1', prerelease: true)]);
       await controller().check();
       expect(c.read(updateControllerProvider), isA<UpdateUpToDate>());

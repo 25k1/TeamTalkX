@@ -106,9 +106,7 @@ void main() {
     expect(container.read(serverListProvider).value, hasLength(2));
   });
 
-  testWidgets('a file with one server is offered like a link (D149)', (
-    tester,
-  ) async {
+  testWidgets('a file with one server is offered like a link', (tester) async {
     await pumpList(tester);
     platform.deepLinks.file.add(
       _twoServers.replaceAll(RegExp(r'<host><name>Two.*?</host>'), ''),

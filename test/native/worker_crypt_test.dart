@@ -85,7 +85,7 @@ void main() {
       ? 'Needs a host build of native/: --dart-define=TT_NATIVE_LIB=<path>'
       : null;
 
-  group('encrypted voice (V3)', skip: skip, () {
+  group('encrypted voice', skip: skip, () {
     late _FakeServer server;
     final key = Uint8List.fromList(List.generate(32, (i) => i * 7));
 

@@ -31,7 +31,7 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  testWidgets('the menu is named by its title (D166)', (tester) async {
+  testWidgets('the menu is named by its title', (tester) async {
     final semantics = tester.ensureSemantics();
     String? picked;
     await pump(tester, (context) async {

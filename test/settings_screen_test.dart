@@ -26,7 +26,7 @@ final _sections = find.descendant(
 );
 
 void main() {
-  testWidgets('settings root lists all sections (D89)', (tester) async {
+  testWidgets('settings root lists all sections', (tester) async {
     await pumpSettings(tester);
     for (final title in [
       'General',
@@ -50,7 +50,7 @@ void main() {
     }
   });
 
-  testWidgets('voice enhancement is found and changed (D190)', (tester) async {
+  testWidgets('voice enhancement is found and changed', (tester) async {
     await pumpSettings(tester);
     await tester.enterText(find.byType(TextField), 'voice enhancement');
     await tester.pumpAndSettle();
@@ -73,9 +73,7 @@ void main() {
     );
   });
 
-  testWidgets('search finds a setting and opens where it is (D89)', (
-    tester,
-  ) async {
+  testWidgets('search finds a setting and opens where it is', (tester) async {
     await pumpSettings(tester);
     await tester.enterText(find.byType(TextField), 'media keys');
     await tester.pumpAndSettle();

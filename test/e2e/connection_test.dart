@@ -45,7 +45,7 @@ void main() {
     }
 
     test(
-      'asks about a new certificate, then trusts only it (D5, D143)',
+      'asks about a new certificate, then trusts only it',
       skip: E2eTransport.tls.skip,
       () async {
         final trust = e2eTrust();

@@ -82,7 +82,7 @@ void main() {
     expect(extreme.targetMs, 400, reason: 'the 400 ms ceiling');
   });
 
-  group('catch-up (D125)', () {
+  group('catch-up', () {
     test('speeds up with a backlog, back to normal at the target', () {
       final b = _buffer();
       for (var i = 0; i < 15; i++) {
