@@ -15,6 +15,25 @@ permissions:
   contents: read
 
 jobs:
+  workflows:
+    name: Workflow lint
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      ACTIONLINT_VERSION: 1.7.12
+      ACTIONLINT_SHA256: 8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Run actionlint
+        run: |
+          name="actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+          curl -sSfL -o "$RUNNER_TEMP/$name" \
+            "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/$name"
+          echo "${ACTIONLINT_SHA256}  $RUNNER_TEMP/$name" | sha256sum --check --strict
+          tar -xzf "$RUNNER_TEMP/$name" -C "$RUNNER_TEMP" actionlint
+          "$RUNNER_TEMP/actionlint" -color
+
   check:
     name: Format, analyze, test
     runs-on: ubuntu-24.04
@@ -33,7 +52,7 @@ jobs:
         run: flutter analyze
 
       - name: Test
-        run: flutter test --coverage --dart-define=TT_NATIVE_LIB=$PWD/build/native-host/libtt_audio.so
+        run: flutter test --coverage "--dart-define=TT_NATIVE_LIB=$PWD/build/native-host/libtt_audio.so"
 
       - name: Coverage by layer
         run: dart run tool/coverage.dart coverage/lcov.info --summary "$GITHUB_STEP_SUMMARY"
@@ -117,7 +136,7 @@ jobs:
         run: |
           defines=(
             --dart-define=TT_E2E_HOST=127.0.0.1
-            --dart-define=TT_NATIVE_LIB=$PWD/build/native-host/libtt_audio.so
+            "--dart-define=TT_NATIVE_LIB=$PWD/build/native-host/libtt_audio.so"
           )
           if [ -n "$TT_PRO_BEARWARE_ID" ] && [ -n "$TT_PRO_BEARWARE_TOKEN" ]; then
             defines+=(--dart-define=TT_E2E_PRO_PORT=10543)
@@ -135,7 +154,7 @@ jobs:
   release-please:
     name: Release PR and tag
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-    needs: [check, sanitizers, e2e, apk]
+    needs: [workflows, check, sanitizers, e2e, apk]
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
