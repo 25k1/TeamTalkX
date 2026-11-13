@@ -32,7 +32,8 @@ runs:
     - name: Accept the Android SDK licenses
       if: inputs.android == 'true'
       shell: bash
-      run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null
+      run: |
+        { yes 2> /dev/null || true; } | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null
 
     - name: Build the native module for the host
       if: inputs.native == 'plain'
