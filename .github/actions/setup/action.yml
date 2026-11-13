@@ -1,5 +1,5 @@
 name: Set up the toolchain
-description: Flutter and packages, and optionally Java with the Android SDK parts or the host build of the native module, with their downloads and compiler output cached.
+description: Flutter and packages, and optionally Java with the Android SDK licenses or the host build of the native module, with the native sources and compiler output cached.
 
 inputs:
   android:
@@ -29,20 +29,11 @@ runs:
       shell: bash
       run: flutter pub get
 
-    - name: Read the native toolchain versions
+    - name: Compile native code through ccache
       if: inputs.android == 'true' || inputs.native != 'none'
-      id: versions
+      id: ccache
       shell: bash
       run: |
-        gradle=android/app/build.gradle.kts
-        ndk="$(sed -n 's/^ *ndkVersion = "\(.*\)"$/\1/p' "$gradle")"
-        cmake="$(sed -n '/cmake {/,/}/s/^ *version = "\(.*\)"$/\1/p' "$gradle")"
-        if [[ -z "$ndk" || -z "$cmake" ]]; then
-          echo "::error::Could not read ndkVersion and the CMake version from $gradle"
-          exit 1
-        fi
-        echo "ndk=$ndk" >> "$GITHUB_OUTPUT"
-        echo "cmake=$cmake" >> "$GITHUB_OUTPUT"
         {
           echo "CCACHE_DIR=$HOME/.ccache"
           echo "CCACHE_MAXSIZE=400M"
@@ -52,23 +43,14 @@ runs:
         } >> "$GITHUB_ENV"
 
     - name: Cache the native sources
-      if: steps.versions.outcome == 'success'
+      if: steps.ccache.outcome == 'success'
       uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
       with:
         path: build/native-downloads
         key: native-downloads-${{ hashFiles('native/CMakeLists.txt') }}
 
-    - name: Cache the NDK and CMake
-      if: inputs.android == 'true'
-      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
-      with:
-        path: |
-          /usr/local/lib/android/sdk/ndk/${{ steps.versions.outputs.ndk }}
-          /usr/local/lib/android/sdk/cmake/${{ steps.versions.outputs.cmake }}
-        key: android-ndk-${{ steps.versions.outputs.ndk }}-cmake-${{ steps.versions.outputs.cmake }}
-
     - name: Cache compiler output
-      if: steps.versions.outcome == 'success'
+      if: steps.ccache.outcome == 'success'
       uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
       with:
         path: ~/.ccache
@@ -76,7 +58,7 @@ runs:
         restore-keys: ccache-${{ github.job }}-${{ inputs.android }}-${{ inputs.native }}-
 
     - name: Install ccache
-      if: steps.versions.outcome == 'success'
+      if: steps.ccache.outcome == 'success'
       shell: bash
       run: |
         command -v ccache > /dev/null || {
