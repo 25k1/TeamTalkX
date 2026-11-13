@@ -50,24 +50,10 @@ class AudioRoutingHandler(
     private fun outputs(): List<Map<String, Any>> =
         audio.getDevices(AudioManager.GET_DEVICES_OUTPUTS)
             .mapNotNull { d ->
-                val kind = kindOf(d.type) ?: return@mapNotNull null
+                val kind = PlatformRules.outputKind(d.type) ?: return@mapNotNull null
                 mapOf("id" to d.id, "kind" to kind, "name" to d.productName.toString())
             }
             .distinctBy { "${it["kind"]}/${it["name"]}" }
-
-    private fun kindOf(type: Int): String? = when (type) {
-        AudioDeviceInfo.TYPE_BUILTIN_SPEAKER -> "speaker"
-        AudioDeviceInfo.TYPE_BUILTIN_EARPIECE -> "earpiece"
-        AudioDeviceInfo.TYPE_WIRED_HEADSET,
-        AudioDeviceInfo.TYPE_WIRED_HEADPHONES -> "wired"
-        AudioDeviceInfo.TYPE_USB_HEADSET,
-        AudioDeviceInfo.TYPE_USB_DEVICE -> "usb"
-        AudioDeviceInfo.TYPE_BLUETOOTH_A2DP,
-        AudioDeviceInfo.TYPE_BLUETOOTH_SCO,
-        AudioDeviceInfo.TYPE_BLE_HEADSET -> "bluetooth"
-        AudioDeviceInfo.TYPE_HEARING_AID -> "hearingAid"
-        else -> null
-    }
 
     private fun setCommunication(on: Boolean, deviceId: Int) {
         if (!on) {
@@ -92,7 +78,7 @@ class AudioRoutingHandler(
                 ?: audio.availableCommunicationDevices.firstOrNull { d ->
                     val chosen = audio.getDevices(AudioManager.GET_DEVICES_OUTPUTS)
                         .firstOrNull { it.id == deviceId }
-                    chosen != null && kindOf(d.type) == kindOf(chosen.type) &&
+                    chosen != null && PlatformRules.outputKind(d.type) == PlatformRules.outputKind(chosen.type) &&
                         d.productName == chosen.productName
                 }
             if (device != null) {
@@ -103,7 +89,7 @@ class AudioRoutingHandler(
         } else {
             val chosen = audio.getDevices(AudioManager.GET_DEVICES_OUTPUTS)
                 .firstOrNull { it.id == deviceId }
-            val kind = chosen?.let { kindOf(it.type) }
+            val kind = chosen?.let { PlatformRules.outputKind(it.type) }
             @Suppress("DEPRECATION")
             audio.isSpeakerphoneOn = kind == "speaker"
             @Suppress("DEPRECATION")

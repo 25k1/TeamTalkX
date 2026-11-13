@@ -36,6 +36,11 @@ jobs:
         if: inputs.release-tag == ''
         run: bash scripts/build.sh --mode debug --abi arm64 --no-prereqs
 
+      - name: Kotlin unit tests and Android Lint
+        if: inputs.release-tag == ''
+        working-directory: android
+        run: ./gradlew :app:testDebugUnitTest :app:lintDebug --console=plain
+
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         if: inputs.release-tag == ''
         with:

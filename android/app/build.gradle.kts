@@ -60,6 +60,13 @@ android {
         }
     }
 
+    lint {
+        lintConfig = file("lint.xml")
+        warningsAsErrors = true
+        abortOnError = true
+        checkDependencies = false
+    }
+
     externalNativeBuild {
         cmake {
             path = file("../../native/CMakeLists.txt")
@@ -147,4 +154,5 @@ flutter {
 dependencies {
     implementation("androidx.core:core-ktx:1.19.1")
     implementation("androidx.media:media:1.8.0")
+    testImplementation("junit:junit:4.13.2")
 }

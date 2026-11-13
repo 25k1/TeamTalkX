@@ -10,6 +10,7 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
+import androidx.core.net.toUri
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodChannel
 import java.io.File
@@ -45,7 +46,7 @@ class ExportHandler(private val context: Context, messenger: BinaryMessenger) :
                     )
                 }
                 "open" -> {
-                    result.success(open(Uri.parse(call.argument<String>("uri") ?: "")))
+                    result.success(open((call.argument<String>("uri") ?: "").toUri()))
                 }
                 else -> result.notImplemented()
             }

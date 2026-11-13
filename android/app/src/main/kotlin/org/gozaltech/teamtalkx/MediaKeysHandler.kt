@@ -29,7 +29,7 @@ class MediaKeysHandler(
     }
 
     fun onKeyEvent(event: KeyEvent): Boolean {
-        val key = keyName(event.keyCode) ?: return false
+        val key = PlatformRules.mediaKeyName(event.keyCode) ?: return false
         if (key !in mapped) return false
         report(key, event)
         return true
@@ -43,7 +43,7 @@ class MediaKeysHandler(
                 @Suppress("DEPRECATION")
                 mediaButtonEvent.getParcelableExtra(Intent.EXTRA_KEY_EVENT)
             }
-            val key = event?.let { keyName(it.keyCode) }
+            val key = event?.let { PlatformRules.mediaKeyName(it.keyCode) }
                 ?: return super.onMediaButtonEvent(mediaButtonEvent)
             report(key, event)
             return true
@@ -72,19 +72,6 @@ class MediaKeysHandler(
             KeyEvent.ACTION_UP ->
                 channel.invokeMethod("key", mapOf("key" to key, "down" to false))
         }
-    }
-
-    private fun keyName(code: Int): String? = when (code) {
-        KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE,
-        KeyEvent.KEYCODE_MEDIA_PLAY,
-        KeyEvent.KEYCODE_MEDIA_PAUSE,
-        KeyEvent.KEYCODE_HEADSETHOOK -> "playPause"
-        KeyEvent.KEYCODE_MEDIA_NEXT -> "next"
-        KeyEvent.KEYCODE_MEDIA_PREVIOUS -> "previous"
-        KeyEvent.KEYCODE_MEDIA_FAST_FORWARD -> "fastForward"
-        KeyEvent.KEYCODE_MEDIA_REWIND -> "rewind"
-        KeyEvent.KEYCODE_MEDIA_STOP -> "stop"
-        else -> null
     }
 
     private fun startSession() {

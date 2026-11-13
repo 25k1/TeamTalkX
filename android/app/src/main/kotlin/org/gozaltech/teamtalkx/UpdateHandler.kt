@@ -9,7 +9,8 @@ import android.content.pm.PackageInstaller
 import android.content.pm.PackageManager
 import android.app.PendingIntent
 import android.net.ConnectivityManager
-import android.net.Uri
+import java.lang.ref.WeakReference
+import androidx.core.net.toUri
 import android.os.Build
 import android.provider.Settings
 import android.util.Log
@@ -41,7 +42,7 @@ class UpdateHandler(private val context: Context, messenger: BinaryMessenger) :
                 "openInstallSettings" -> {
                     val intent = Intent(
                         Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,
-                        Uri.parse("package:${context.packageName}")
+                        "package:${context.packageName}".toUri()
                     ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     result.success(start(intent))
                 }
@@ -105,9 +106,7 @@ class UpdateHandler(private val context: Context, messenger: BinaryMessenger) :
             context.packageName,
             PackageManager.GET_SIGNING_CERTIFICATES
         )
-        @Suppress("DEPRECATION")
-        val versionCode =
-            if (Build.VERSION.SDK_INT >= 28) archive.longVersionCode else archive.versionCode.toLong()
+        val versionCode = archive.longVersionCode
         return mapOf(
             "valid" to true,
             "packageName" to archive.packageName,
@@ -121,7 +120,13 @@ class UpdateHandler(private val context: Context, messenger: BinaryMessenger) :
         const val TAG = "TeamTalkXUpdates"
 
         @Volatile
-        var current: UpdateHandler? = null
+        private var currentRef: WeakReference<UpdateHandler>? = null
+
+        var current: UpdateHandler?
+            get() = currentRef?.get()
+            set(value) {
+                currentRef = value?.let { WeakReference(it) }
+            }
     }
 
     override fun dispose() {

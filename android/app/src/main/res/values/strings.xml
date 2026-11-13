@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="notification_channel_name">Connection</string>
-    <string name="notification_connected">Connected to TeamTalk server</string>
     <string name="notification_title">TeamTalk</string>
     <string name="notification_transmitting">Transmitting</string>
     <string name="notification_start_transmitting">Transmit</string>
