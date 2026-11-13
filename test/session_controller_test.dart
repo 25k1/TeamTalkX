@@ -412,6 +412,22 @@ void main() {
       await _settle();
       expect(platform.foregroundService.calls.last, isNot(endsWith(' awake')));
     });
+
+    test('the notification speaks the app language', () async {
+      c.listen(foregroundNotificationProvider, (_, _) {});
+      await connected();
+      await _settle();
+      expect(
+        platform.foregroundService.text?.stopTransmitting,
+        'Stop transmitting',
+      );
+      c.read(settingsProvider.notifier).setLanguage(AppLanguage.russian);
+      await _settle();
+      final text = platform.foregroundService.text!;
+      expect(text.channel, 'Подключение');
+      expect(text.transmit, 'Передавать');
+      expect(text.stopRecording, 'Остановить запись');
+    });
   });
 
   group('certificates', () {

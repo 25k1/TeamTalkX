@@ -2667,5 +2667,11 @@
   "recordingNote": "Recordings include your own voice while you transmit. A channel can forbid recording.",
   "recordingIndicator": "Recording",
   "keyActionToggleRecording": "Start or stop recording",
-  "failureRecording": "The recording file couldn't be created."
+  "failureRecording": "The recording file couldn't be created.",
+  "notificationChannel": "Connection",
+  "notificationTransmitting": "Transmitting",
+  "notificationRecording": "Recording",
+  "notificationTransmit": "Transmit",
+  "notificationStopTransmitting": "Stop transmitting",
+  "notificationStopRecording": "Stop recording"
 }

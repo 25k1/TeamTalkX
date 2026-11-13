@@ -99,6 +99,7 @@ class MainActivity : FlutterActivity() {
                         this,
                         call.argument<String>("serverName") ?: "",
                         call.argument<String>("channelName") ?: "",
+                        call.argument<Map<String, String>>("text") ?: emptyMap(),
                         call.argument<Boolean>("transmitting") ?: false,
                         call.argument<Boolean>("recording") ?: false,
                         call.argument<Boolean>("keepAwake") ?: false

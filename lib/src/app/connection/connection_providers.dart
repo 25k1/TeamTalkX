@@ -22,6 +22,7 @@ import '../settings/event_config.dart';
 import '../settings/event_dispatcher.dart';
 import '../settings/locale_providers.dart';
 import '../settings/settings_providers.dart';
+import 'notification_text.dart';
 import 'reconnect_policy.dart';
 
 final teamTalkClientProvider = Provider<TeamTalkClient>((ref) {
@@ -301,6 +302,7 @@ class SessionController extends Notifier<ConnectionState> {
           .start(
             serverName: entry.displayName,
             channelName: '',
+            text: notificationText(l10n),
             keepAwake: ref.read(settingsProvider).keepAwakeWhileConnected,
           );
       ensureCurrent();

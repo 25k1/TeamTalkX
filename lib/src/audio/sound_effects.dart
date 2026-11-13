@@ -155,9 +155,12 @@ class _LogMsg {
 class SoundEffects {
   SoundEffects._(this._isolate, this._commands, this._responses);
 
-  static Future<SoundEffects> spawn() async {
+  static Future<SoundEffects> spawn({
+    Duration timeout = const Duration(seconds: 5),
+    void Function(SendPort) entryPoint = _main,
+  }) async {
     final responses = ReceivePort();
-    final isolate = await Isolate.spawn(_main, responses.sendPort);
+    final isolate = await Isolate.spawn(entryPoint, responses.sendPort);
     final ready = Completer<SendPort>();
     SoundEffects? self;
     responses.listen((msg) {
@@ -169,7 +172,16 @@ class SoundEffects {
         appLog.w('sound', msg.message, msg.error);
       }
     });
-    return self = SoundEffects._(isolate, await ready.future, responses);
+    final SendPort commands;
+    try {
+      commands = await ready.future.timeout(timeout);
+    } on TimeoutException {
+      responses.close();
+      isolate.kill(priority: Isolate.immediate);
+      appLog.w('sound', 'The event sound isolate did not start in $timeout');
+      rethrow;
+    }
+    return self = SoundEffects._(isolate, commands, responses);
   }
 
   final Isolate _isolate;

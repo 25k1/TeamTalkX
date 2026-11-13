@@ -88,25 +88,37 @@ class FakeForegroundService implements ForegroundService {
 
   @override
   Stream<ForegroundAction> get actions => action.stream;
+  NotificationText? text;
+
   @override
   Future<void> start({
     required String serverName,
     required String channelName,
+    required NotificationText text,
     bool transmitting = false,
     bool recording = false,
     bool keepAwake = false,
-  }) async => calls.add('start $serverName${keepAwake ? ' awake' : ''}');
+  }) async {
+    this.text = text;
+    calls.add('start $serverName${keepAwake ? ' awake' : ''}');
+  }
+
   @override
   Future<void> update({
     required String serverName,
     required String channelName,
+    required NotificationText text,
     bool transmitting = false,
     bool recording = false,
     bool keepAwake = false,
-  }) async => calls.add(
-    'update $serverName tx=$transmitting${recording ? ' rec' : ''}'
-    '${keepAwake ? ' awake' : ''}',
-  );
+  }) async {
+    this.text = text;
+    calls.add(
+      'update $serverName tx=$transmitting${recording ? ' rec' : ''}'
+      '${keepAwake ? ' awake' : ''}',
+    );
+  }
+
   @override
   Future<void> stop() async => calls.add('stop');
 
