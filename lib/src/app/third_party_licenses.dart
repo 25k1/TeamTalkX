@@ -38,6 +38,9 @@ void registerThirdPartyLicenses({AssetBundle? bundle}) {
 }
 
 Stream<LicenseEntry> _load(AssetBundle bundle) async* {
+  yield LicenseEntryWithLineBreaks(const [
+    'TeamTalkX',
+  ], await bundle.loadString('LICENSE', cache: false));
   for (final license in thirdPartyLicenses) {
     final texts = [
       ?license.copyright,
