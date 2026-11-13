@@ -23,6 +23,7 @@ Future<void> editNickname(BuildContext context, WidgetRef ref) async {
     title: l10n.commonNickname,
     label: l10n.commonNickname,
     initialValue: initial,
+    capitalization: TextCapitalization.sentences,
     submitLabel: l10n.commonSave,
     barrierDismissible: false,
   );

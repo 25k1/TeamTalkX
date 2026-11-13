@@ -46,6 +46,7 @@ class CallsSettingsScreen extends ConsumerWidget {
                   title: l10n.callsStatusMessage,
                   label: l10n.callsStatusMessageLabel,
                   initialValue: interruptionSettings.callStatusMessage,
+                  capitalization: TextCapitalization.sentences,
                   submitLabel: l10n.commonSave,
                 );
                 if (text != null) {

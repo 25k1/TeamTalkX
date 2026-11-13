@@ -136,6 +136,7 @@ Future<void> handleMoreAction(
         context,
         title: l10n.broadcastTitle,
         label: l10n.broadcastLabel,
+        capitalization: TextCapitalization.sentences,
         submitLabel: l10n.commonSend,
       );
       if (text == null || text.trim().isEmpty) return;

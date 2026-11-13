@@ -73,6 +73,7 @@ class _StatusDialogState extends ConsumerState<_StatusDialog>
             ),
             TextField(
               controller: _message,
+              textCapitalization: TextCapitalization.sentences,
               decoration: InputDecoration(labelText: l10n.statusMessage),
             ),
           ],
