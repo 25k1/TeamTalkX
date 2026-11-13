@@ -42,7 +42,7 @@ class SoundPlayer {
   }
 
   Future<void> play(SoundEvent event) async {
-    if (!_ref.read(settingsProvider).soundEnabled(event)) return;
+    if (!_ref.read(eventSoundSettingsProvider).soundEnabled(event)) return;
     await playEventSound(event);
   }
 
@@ -82,7 +82,7 @@ class SoundPlayer {
         return;
       }
     }
-    final volume = _ref.read(settingsProvider).eventVolumePercent;
+    final volume = _ref.read(eventSoundSettingsProvider).eventVolumePercent;
     final starting = _effects ??= _spawn().then((e) {
       e
         ..setOutput(voiceCall: _output.voiceCall, deviceId: _output.deviceId)

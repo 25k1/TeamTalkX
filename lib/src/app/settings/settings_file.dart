@@ -228,8 +228,8 @@ class SettingsFileService {
           .save(BearwareAccount(username: username, token: token));
     }
 
+    invalidateAllSettings(_ref);
     _ref
-      ..invalidate(settingsProvider)
       ..invalidate(eventConfigProvider)
       ..invalidate(chatTemplatesProvider)
       ..invalidate(timestampFormatProvider)

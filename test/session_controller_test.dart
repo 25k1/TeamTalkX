@@ -396,7 +396,9 @@ void main() {
     });
 
     test('turned on, the foreground service keeps the phone awake', () async {
-      c.read(settingsProvider.notifier).setKeepAwakeWhileConnected(true);
+      c
+          .read(connectionSettingsProvider.notifier)
+          .setKeepAwakeWhileConnected(true);
       await connected();
       expect(platform.foregroundService.calls, contains('start Test awake'));
     });
@@ -405,10 +407,14 @@ void main() {
       c.listen(foregroundNotificationProvider, (_, _) {});
       await connected();
       await _settle();
-      c.read(settingsProvider.notifier).setKeepAwakeWhileConnected(true);
+      c
+          .read(connectionSettingsProvider.notifier)
+          .setKeepAwakeWhileConnected(true);
       await _settle();
       expect(platform.foregroundService.calls.last, endsWith(' awake'));
-      c.read(settingsProvider.notifier).setKeepAwakeWhileConnected(false);
+      c
+          .read(connectionSettingsProvider.notifier)
+          .setKeepAwakeWhileConnected(false);
       await _settle();
       expect(platform.foregroundService.calls.last, isNot(endsWith(' awake')));
     });
@@ -421,7 +427,9 @@ void main() {
         platform.foregroundService.text?.stopTransmitting,
         'Stop transmitting',
       );
-      c.read(settingsProvider.notifier).setLanguage(AppLanguage.russian);
+      c
+          .read(appearanceSettingsProvider.notifier)
+          .setLanguage(AppLanguage.russian);
       await _settle();
       final text = platform.foregroundService.text!;
       expect(text.channel, 'Подключение');

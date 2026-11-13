@@ -128,15 +128,15 @@ class CallHandler extends Notifier<CallState> {
   }
 
   void _setCallStatus() {
-    final settings = ref.read(settingsProvider);
-    if (!settings.awayDuringCalls || _statusBefore != null) return;
+    final interruptionSettings = ref.read(interruptionSettingsProvider);
+    if (!interruptionSettings.awayDuringCalls || _statusBefore != null) return;
     final client = ref.read(teamTalkClientProvider);
     final me = client.state.users[client.state.myUserId];
     if (me == null) return;
     final mode = (me.statusMode & ~TtStatusMode.modeMask) | TtStatusMode.away;
-    final message = settings.callStatusMessage.isEmpty
+    final message = interruptionSettings.callStatusMessage.isEmpty
         ? me.statusMessage
-        : settings.callStatusMessage;
+        : interruptionSettings.callStatusMessage;
     _statusBefore = (me.statusMode, me.statusMessage);
     _callStatus = (mode, message);
     if (mode == me.statusMode && message == me.statusMessage) return;

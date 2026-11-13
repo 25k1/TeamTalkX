@@ -237,7 +237,7 @@ void main() {
       ],
     );
     addTearDown(c.dispose);
-    c.read(settingsProvider.notifier)
+    c.read(appearanceSettingsProvider.notifier)
       ..setTheme(AppTheme.dark)
       ..setHighContrast(true);
     final shared = await SharedPreferences.getInstance();

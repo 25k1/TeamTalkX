@@ -19,8 +19,7 @@ class SpeechSettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final settings = ref.watch(settingsProvider);
-    final notifier = ref.read(settingsProvider.notifier);
+    final speechSettings = ref.watch(speechSettingsProvider);
     final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(title: Text(l10n.eventsSpeech)),
@@ -28,9 +27,13 @@ class SpeechSettingsScreen extends ConsumerWidget {
         children: [
           SectionHeader(l10n.speechSpeakEventsThrough),
           RadioGroup<SpeechOutput>(
-            groupValue: settings.speechOutput,
+            groupValue: speechSettings.speechOutput,
             onChanged: (value) {
-              if (value != null) notifier.setSpeechOutput(value);
+              if (value != null) {
+                ref
+                    .read(speechSettingsProvider.notifier)
+                    .setSpeechOutput(value);
+              }
             },
             child: Column(
               children: [
@@ -50,41 +53,49 @@ class SpeechSettingsScreen extends ConsumerWidget {
               ],
             ),
           ),
-          if (settings.speechOutput == SpeechOutput.tts) ...[
+          if (speechSettings.speechOutput == SpeechOutput.tts) ...[
             const Divider(),
             SectionHeader(l10n.speechTts),
             if (defaultTargetPlatform == TargetPlatform.android)
               SwitchListTile(
                 title: Text(l10n.ttsAccessibilityStream),
                 subtitle: Text(l10n.ttsAccessibilityStreamSub),
-                value: settings.ttsUseAccessibilityStream,
-                onChanged: notifier.setTtsUseAccessibilityStream,
+                value: speechSettings.ttsUseAccessibilityStream,
+                onChanged: ref
+                    .read(speechSettingsProvider.notifier)
+                    .setTtsUseAccessibilityStream,
               ),
-            _TtsEnginePicker(settings: settings),
-            _TtsLanguagePicker(settings: settings),
-            _TtsVoicePicker(settings: settings),
+            _TtsEnginePicker(settings: speechSettings),
+            _TtsLanguagePicker(settings: speechSettings),
+            _TtsVoicePicker(settings: speechSettings),
             LevelSlider(
               label: l10n.ttsVolume,
-              value: settings.ttsVolumePercent,
+              value: speechSettings.ttsVolumePercent,
               max: 100,
               percent: true,
-              onChanged: notifier.setTtsVolumePercent,
+              onChanged: ref
+                  .read(speechSettingsProvider.notifier)
+                  .setTtsVolumePercent,
             ),
             LevelSlider(
               label: l10n.ttsRate,
-              value: settings.ttsRatePercent,
+              value: speechSettings.ttsRatePercent,
               min: 10,
               max: 300,
               percent: true,
-              onChanged: notifier.setTtsRatePercent,
+              onChanged: ref
+                  .read(speechSettingsProvider.notifier)
+                  .setTtsRatePercent,
             ),
             LevelSlider(
               label: l10n.ttsPitch,
-              value: settings.ttsPitchPercent,
+              value: speechSettings.ttsPitchPercent,
               min: 50,
               max: 200,
               percent: true,
-              onChanged: notifier.setTtsPitchPercent,
+              onChanged: ref
+                  .read(speechSettingsProvider.notifier)
+                  .setTtsPitchPercent,
             ),
             ListTile(
               leading: const Icon(Icons.play_arrow),
@@ -113,8 +124,7 @@ class SoundSettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final settings = ref.watch(settingsProvider);
-    final notifier = ref.read(settingsProvider.notifier);
+    final eventSoundSettings = ref.watch(eventSoundSettingsProvider);
     final packsAsync = ref.watch(soundPacksProvider);
     final selected = ref.watch(selectedSoundPackProvider);
     final folder = ref.watch(soundPackFolderSettingProvider);
@@ -136,16 +146,20 @@ class SoundSettingsScreen extends ConsumerWidget {
           SwitchListTile(
             title: Text(l10n.soundPlayEvents),
             subtitle: Text(l10n.soundPlayEventsSub),
-            value: settings.soundsEnabled,
-            onChanged: notifier.setSoundsEnabled,
+            value: eventSoundSettings.soundsEnabled,
+            onChanged: ref
+                .read(eventSoundSettingsProvider.notifier)
+                .setSoundsEnabled,
           ),
           LevelSlider(
             label: l10n.soundEventVolume,
-            value: settings.eventVolumePercent,
+            value: eventSoundSettings.eventVolumePercent,
             max: 300,
             step: 5,
             percent: true,
-            onChanged: notifier.setEventVolumePercent,
+            onChanged: ref
+                .read(eventSoundSettingsProvider.notifier)
+                .setEventVolumePercent,
             onChangeEnd: (_) => unawaited(
               ref.read(soundPlayerProvider).playAsset('channel_message.ogg'),
             ),
@@ -278,7 +292,7 @@ class _PickerTile extends StatelessWidget {
 class _TtsEnginePicker extends ConsumerWidget {
   const _TtsEnginePicker({required this.settings});
 
-  final Settings settings;
+  final SpeechSettings settings;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -296,7 +310,7 @@ class _TtsEnginePicker extends ConsumerWidget {
         for (final engine in engines) (engine.name, engine.label),
       ],
       onSelected: (value) =>
-          ref.read(settingsProvider.notifier).setTtsEngine(value),
+          ref.read(speechSettingsProvider.notifier).setTtsEngine(value),
     );
   }
 }
@@ -304,7 +318,7 @@ class _TtsEnginePicker extends ConsumerWidget {
 class _TtsLanguagePicker extends ConsumerWidget {
   const _TtsLanguagePicker({required this.settings});
 
-  final Settings settings;
+  final SpeechSettings settings;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -322,7 +336,7 @@ class _TtsLanguagePicker extends ConsumerWidget {
         for (final language in languages) (language, language),
       ],
       onSelected: (value) =>
-          ref.read(settingsProvider.notifier).setTtsLanguage(value),
+          ref.read(speechSettingsProvider.notifier).setTtsLanguage(value),
     );
   }
 }
@@ -330,7 +344,7 @@ class _TtsLanguagePicker extends ConsumerWidget {
 class _TtsVoicePicker extends ConsumerWidget {
   const _TtsVoicePicker({required this.settings});
 
-  final Settings settings;
+  final SpeechSettings settings;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -356,7 +370,7 @@ class _TtsVoicePicker extends ConsumerWidget {
         for (final voice in voices) (voice.name, voice.name),
       ],
       onSelected: (value) =>
-          ref.read(settingsProvider.notifier).setTtsVoice(value),
+          ref.read(speechSettingsProvider.notifier).setTtsVoice(value),
     );
   }
 }

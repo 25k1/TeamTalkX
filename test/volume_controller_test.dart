@@ -378,7 +378,7 @@ void main() {
       expect(client.mediaVolumeCalls.last, 100);
       expect(client.normalizeCalls.last, isFalse);
 
-      container.read(settingsProvider.notifier)
+      container.read(playbackSettingsProvider.notifier)
         ..setMediaVolumePercent(40)
         ..setNormalizeSpeakers(true);
       await Future<void>.delayed(Duration.zero);
@@ -396,7 +396,7 @@ void main() {
     await Future<void>.delayed(Duration.zero);
     expect(client.qualityCalls.last, const VoiceQuality());
 
-    container.read(settingsProvider.notifier)
+    container.read(playbackSettingsProvider.notifier)
       ..setVoiceEnhancement(VoiceEnhancement.better)
       ..setBandwidthExtension(true)
       ..setLossProtection(LossProtection.channelAndDred);
@@ -422,7 +422,7 @@ void main() {
       },
     );
     addTearDown(reloaded.dispose);
-    expect(reloaded.read(settingsProvider).voiceQuality, expected);
+    expect(reloaded.read(playbackSettingsProvider).voiceQuality, expected);
   });
 
   test('an interruption ducks or mutes on top of the master', () async {
@@ -457,7 +457,9 @@ void main() {
     await Future<void>.delayed(Duration.zero);
     final before = client.masterVolumeCalls.length;
 
-    container.read(settingsProvider.notifier).setMasterVolumePercent(80);
+    container
+        .read(playbackSettingsProvider.notifier)
+        .setMasterVolumePercent(80);
     await Future<void>.delayed(Duration.zero);
 
     expect(client.masterVolumeCalls.length, greaterThan(before));

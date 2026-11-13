@@ -12,10 +12,10 @@ class CallsSettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final settings = ref.watch(settingsProvider);
-    final notifier = ref.read(settingsProvider.notifier);
+    final interruptionSettings = ref.watch(interruptionSettingsProvider);
     final ducksOthers =
-        settings.duckOthersForVoice || settings.duckOthersForEvents;
+        interruptionSettings.duckOthersForVoice ||
+        interruptionSettings.duckOthersForEvents;
     return Scaffold(
       appBar: AppBar(title: Text(l10n.settingsCalls)),
       body: ListView(
@@ -26,27 +26,33 @@ class CallsSettingsScreen extends ConsumerWidget {
             secondary: const Icon(Icons.do_not_disturb_on),
             title: Text(l10n.callsAway),
             subtitle: Text(l10n.callsAwaySub),
-            value: settings.awayDuringCalls,
-            onChanged: notifier.setAwayDuringCalls,
+            value: interruptionSettings.awayDuringCalls,
+            onChanged: ref
+                .read(interruptionSettingsProvider.notifier)
+                .setAwayDuringCalls,
           ),
-          if (settings.awayDuringCalls)
+          if (interruptionSettings.awayDuringCalls)
             ListTile(
               leading: const Icon(Icons.short_text),
               title: Text(l10n.callsStatusMessage),
               subtitle: Text(
-                settings.callStatusMessage.isEmpty
+                interruptionSettings.callStatusMessage.isEmpty
                     ? l10n.callsStatusMessageKeep
-                    : settings.callStatusMessage,
+                    : interruptionSettings.callStatusMessage,
               ),
               onTap: () async {
                 final text = await promptText(
                   context,
                   title: l10n.callsStatusMessage,
                   label: l10n.callsStatusMessageLabel,
-                  initialValue: settings.callStatusMessage,
+                  initialValue: interruptionSettings.callStatusMessage,
                   submitLabel: l10n.commonSave,
                 );
-                if (text != null) notifier.setCallStatusMessage(text);
+                if (text != null) {
+                  ref
+                      .read(interruptionSettingsProvider.notifier)
+                      .setCallStatusMessage(text);
+                }
               },
             ),
           SectionHeader(l10n.otherAppsSection),
@@ -55,9 +61,13 @@ class CallsSettingsScreen extends ConsumerWidget {
             subtitle: Text(l10n.focusPolicyNote),
           ),
           RadioGroup<FocusLossPolicy>(
-            groupValue: settings.focusLossPolicy,
+            groupValue: interruptionSettings.focusLossPolicy,
             onChanged: (value) {
-              if (value != null) notifier.setFocusLossPolicy(value);
+              if (value != null) {
+                ref
+                    .read(interruptionSettingsProvider.notifier)
+                    .setFocusLossPolicy(value);
+              }
             },
             child: Column(
               children: [
@@ -77,23 +87,29 @@ class CallsSettingsScreen extends ConsumerWidget {
             secondary: const Icon(Icons.record_voice_over),
             title: Text(l10n.duckOthersVoice),
             subtitle: Text(l10n.duckOthersSub),
-            value: settings.duckOthersForVoice,
-            onChanged: notifier.setDuckOthersForVoice,
+            value: interruptionSettings.duckOthersForVoice,
+            onChanged: ref
+                .read(interruptionSettingsProvider.notifier)
+                .setDuckOthersForVoice,
           ),
           SwitchListTile(
             secondary: const Icon(Icons.notifications_active),
             title: Text(l10n.duckOthersEvents),
             subtitle: Text(l10n.duckOthersSub),
-            value: settings.duckOthersForEvents,
-            onChanged: notifier.setDuckOthersForEvents,
+            value: interruptionSettings.duckOthersForEvents,
+            onChanged: ref
+                .read(interruptionSettingsProvider.notifier)
+                .setDuckOthersForEvents,
           ),
           if (ducksOthers)
             SwitchListTile(
               secondary: const Icon(Icons.accessibility_new),
               title: Text(l10n.keepVolumeTalkBack),
               subtitle: Text(l10n.keepVolumeTalkBackSub),
-              value: settings.keepVolumeUnderTalkBack,
-              onChanged: notifier.setKeepVolumeUnderTalkBack,
+              value: interruptionSettings.keepVolumeUnderTalkBack,
+              onChanged: ref
+                  .read(interruptionSettingsProvider.notifier)
+                  .setKeepVolumeUnderTalkBack,
             ),
         ],
       ),

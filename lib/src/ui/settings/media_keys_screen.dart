@@ -16,8 +16,9 @@ class MediaKeysScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final bindings = ref.watch(settingsProvider.select((s) => s.keyBindings));
-    final notifier = ref.read(settingsProvider.notifier);
+    final bindings = ref.watch(
+      keySettingsProvider.select((s) => s.keyBindings),
+    );
 
     Widget tile(MediaKey key, KeyPress press) {
       final action = bindings.actionFor(key, press);
@@ -37,7 +38,9 @@ class MediaKeysScreen extends ConsumerWidget {
             selected: action?.name ?? _none,
           );
           if (picked == null) return;
-          notifier.setKeyAction(key, press, KeyAction.fromName(picked));
+          ref
+              .read(keySettingsProvider.notifier)
+              .setKeyAction(key, press, KeyAction.fromName(picked));
         },
       );
     }

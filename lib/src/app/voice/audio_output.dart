@@ -39,7 +39,7 @@ AudioOutputDevice? chosenOutput(
 
 final audioOutputControllerProvider = Provider<void>((ref) {
   final settings = ref.watch(
-    settingsProvider.select((s) => (s.voiceCallMode, s.outputRoute)),
+    playbackSettingsProvider.select((s) => (s.voiceCallMode, s.outputRoute)),
   );
   final outputs = ref.watch(audioOutputsProvider).value ?? const [];
   final connected = ref.watch(

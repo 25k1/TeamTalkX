@@ -37,7 +37,7 @@ final audioFocusControllerProvider = Provider<void>((ref) {
         break;
     }
   }, fireImmediately: true);
-  ref.listen(settingsProvider, (previous, next) {
+  ref.listen(interruptionSettingsProvider, (previous, next) {
     if (previous?.focusLossPolicy != next.focusLossPolicy ||
         previous?.duckOthersForVoice != next.duckOthersForVoice ||
         previous?.duckOthersForEvents != next.duckOthersForEvents ||
@@ -73,7 +73,6 @@ class _AudioFocusController {
   Timer? _releaseTimer;
   Timer? _otherStoppedTimer;
 
-  Settings get _settings => _ref.read(settingsProvider);
   OutputInterruptionNotifier get _output =>
       _ref.read(outputInterruptionProvider.notifier);
 
@@ -142,13 +141,14 @@ class _AudioFocusController {
 
   void update() {
     if (!_started) return;
-    final settings = _settings;
+    final interruptions = _ref.read(interruptionSettingsProvider);
+    final playback = _ref.read(playbackSettingsProvider);
     final state = _ref.read(teamTalkClientProvider).state;
     final inCall = _ref.read(callHandlerProvider) != CallState.idle;
     final wantDuck =
         !inCall &&
-        ((settings.duckOthersForVoice && someoneAudible(state)) ||
-            (settings.duckOthersForEvents && _eventsPlaying));
+        ((interruptions.duckOthersForVoice && someoneAudible(state)) ||
+            (interruptions.duckOthersForEvents && _eventsPlaying));
 
     if (!wantDuck) _yielded = false;
     if (wantDuck && !_yielded) {
@@ -156,7 +156,7 @@ class _AudioFocusController {
       _releaseTimer = null;
       if (!_ducking) {
         _ducking = true;
-        unawaited(_interruptions.duckOthers(voiceCall: settings.voiceCallMode));
+        unawaited(_interruptions.duckOthers(voiceCall: playback.voiceCallMode));
       }
     } else if (_ducking) {
       _releaseTimer ??= Timer(duckHang, () {
@@ -171,7 +171,7 @@ class _AudioFocusController {
     _output
       ..set(
         InterruptionSource.focus,
-        _ducking && _askedToDuck && !settings.keepVolumeUnderTalkBack
+        _ducking && _askedToDuck && !interruptions.keepVolumeUnderTalkBack
             ? OutputEffect.duck
             : null,
       )
@@ -179,7 +179,7 @@ class _AudioFocusController {
         InterruptionSource.otherApp,
         _ducking || !_otherPlaying
             ? null
-            : switch (settings.focusLossPolicy) {
+            : switch (interruptions.focusLossPolicy) {
                 FocusLossPolicy.ignore => null,
                 FocusLossPolicy.duck => OutputEffect.duck,
                 FocusLossPolicy.mute => OutputEffect.mute,

@@ -43,9 +43,9 @@ class AudioSettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final settings = ref.watch(settingsProvider);
-    final notifier = ref.read(settingsProvider.notifier);
-    final agcActive = settings.agcEnabled;
+    final microphoneSettings = ref.watch(microphoneSettingsProvider);
+    final playbackSettings = ref.watch(playbackSettingsProvider);
+    final agcActive = microphoneSettings.agcEnabled;
     final l10n = context.l10n;
     final sources = _audioSources(l10n);
     final channels = _channelOptions(l10n);
@@ -90,40 +90,48 @@ class AudioSettingsScreen extends ConsumerWidget {
             icon: Icons.mic_external_on,
             title: l10n.audioSource,
             subtitle:
-                sources[settings.customAudioSource] ??
-                l10n.audioSourceOther(settings.customAudioSource),
+                sources[microphoneSettings.customAudioSource] ??
+                l10n.audioSourceOther(microphoneSettings.customAudioSource),
             options: sources,
-            selected: settings.customAudioSource,
-            onPick: notifier.setCustomAudioSource,
+            selected: microphoneSettings.customAudioSource,
+            onPick: ref
+                .read(microphoneSettingsProvider.notifier)
+                .setCustomAudioSource,
           ),
           choiceTile<int>(
             icon: Icons.graphic_eq,
             title: l10n.audioSampleRate,
             subtitle:
-                _sampleRates[settings.customInputSampleRate] ??
-                '${settings.customInputSampleRate} Hz',
+                _sampleRates[microphoneSettings.customInputSampleRate] ??
+                '${microphoneSettings.customInputSampleRate} Hz',
             options: _sampleRates,
-            selected: settings.customInputSampleRate,
-            onPick: notifier.setCustomInputSampleRate,
+            selected: microphoneSettings.customInputSampleRate,
+            onPick: ref
+                .read(microphoneSettingsProvider.notifier)
+                .setCustomInputSampleRate,
           ),
           choiceTile<int>(
             icon: Icons.headphones,
             title: l10n.audioChannels,
             subtitle:
-                channels[settings.customInputChannels] ??
-                '${settings.customInputChannels}',
+                channels[microphoneSettings.customInputChannels] ??
+                '${microphoneSettings.customInputChannels}',
             options: channels,
-            selected: settings.customInputChannels,
-            onPick: notifier.setCustomInputChannels,
+            selected: microphoneSettings.customInputChannels,
+            onPick: ref
+                .read(microphoneSettingsProvider.notifier)
+                .setCustomInputChannels,
           ),
-          if (settings.customInputChannels == 2)
+          if (microphoneSettings.customInputChannels == 2)
             choiceTile<StereoChannel>(
               icon: Icons.hearing,
               title: l10n.audioStereoChannel,
-              subtitle: settings.customStereoChannel.label(l10n),
+              subtitle: microphoneSettings.customStereoChannel.label(l10n),
               options: {for (final c in StereoChannel.values) c: c.label(l10n)},
-              selected: settings.customStereoChannel,
-              onPick: notifier.setCustomStereoChannel,
+              selected: microphoneSettings.customStereoChannel,
+              onPick: ref
+                  .read(microphoneSettingsProvider.notifier)
+                  .setCustomStereoChannel,
             ),
           SectionHeader(l10n.audioProcessing),
           ListTile(
@@ -136,48 +144,60 @@ class AudioSettingsScreen extends ConsumerWidget {
             secondary: const Icon(Icons.hearing_disabled),
             title: Text(l10n.audioNoiseSuppression),
             subtitle: Text(l10n.audioNoiseSuppressionSub),
-            value: settings.noiseSuppressionEnabled,
-            onChanged: notifier.setNoiseSuppressionEnabled,
+            value: microphoneSettings.noiseSuppressionEnabled,
+            onChanged: ref
+                .read(microphoneSettingsProvider.notifier)
+                .setNoiseSuppressionEnabled,
           ),
-          if (settings.noiseSuppressionEnabled)
+          if (microphoneSettings.noiseSuppressionEnabled)
             LevelSlider(
               label: l10n.audioSuppressionLevel,
-              value: settings.noiseSuppressionLevel,
+              value: microphoneSettings.noiseSuppressionLevel,
               max: 100,
               percent: true,
               step: 5,
-              onChanged: notifier.setNoiseSuppressionLevel,
+              onChanged: ref
+                  .read(microphoneSettingsProvider.notifier)
+                  .setNoiseSuppressionLevel,
             ),
           SwitchListTile(
             secondary: const Icon(Icons.equalizer),
             title: Text(l10n.audioAgc),
             subtitle: Text(l10n.audioAgcSub),
-            value: settings.agcEnabled,
-            onChanged: notifier.setAgcEnabled,
+            value: microphoneSettings.agcEnabled,
+            onChanged: ref
+                .read(microphoneSettingsProvider.notifier)
+                .setAgcEnabled,
           ),
           SectionHeader(l10n.audioLevels),
           LevelSlider(
             label: l10n.audioMasterVolume,
-            value: settings.masterVolumePercent,
+            value: playbackSettings.masterVolumePercent,
             max: volumePercentMax,
             percent: true,
             step: 5,
-            onChanged: notifier.setMasterVolumePercent,
+            onChanged: ref
+                .read(playbackSettingsProvider.notifier)
+                .setMasterVolumePercent,
           ),
           LevelSlider(
             label: l10n.audioMediaVolume,
-            value: settings.mediaVolumePercent,
+            value: playbackSettings.mediaVolumePercent,
             max: volumePercentMax,
             percent: true,
             step: 5,
-            onChanged: notifier.setMediaVolumePercent,
+            onChanged: ref
+                .read(playbackSettingsProvider.notifier)
+                .setMediaVolumePercent,
           ),
           SwitchListTile(
             secondary: const Icon(Icons.tune),
             title: Text(l10n.audioNormalize),
             subtitle: Text(l10n.audioNormalizeSub),
-            value: settings.normalizeSpeakers,
-            onChanged: notifier.setNormalizeSpeakers,
+            value: playbackSettings.normalizeSpeakers,
+            onChanged: ref
+                .read(playbackSettingsProvider.notifier)
+                .setNormalizeSpeakers,
           ),
           SectionHeader(l10n.audioVoiceQuality),
           _VoiceQualityTile<VoiceEnhancement>(
@@ -189,15 +209,19 @@ class AudioSettingsScreen extends ConsumerWidget {
               VoiceEnhancement.better: l10n.audioEnhancementBetter,
               VoiceEnhancement.best: l10n.audioEnhancementBest,
             },
-            selected: settings.voiceQuality.enhancement,
-            onPick: notifier.setVoiceEnhancement,
+            selected: playbackSettings.voiceQuality.enhancement,
+            onPick: ref
+                .read(playbackSettingsProvider.notifier)
+                .setVoiceEnhancement,
           ),
           SwitchListTile(
             secondary: const Icon(Icons.graphic_eq),
             title: Text(l10n.audioBandwidthExtension),
             subtitle: Text(l10n.audioBandwidthExtensionSub),
-            value: settings.voiceQuality.bandwidthExtension,
-            onChanged: notifier.setBandwidthExtension,
+            value: playbackSettings.voiceQuality.bandwidthExtension,
+            onChanged: ref
+                .read(playbackSettingsProvider.notifier)
+                .setBandwidthExtension,
           ),
           _VoiceQualityTile<LossProtection>(
             icon: Icons.shield_outlined,
@@ -207,16 +231,20 @@ class AudioSettingsScreen extends ConsumerWidget {
               LossProtection.channelAndDred: l10n.audioLossProtectionDred,
               LossProtection.none: l10n.audioLossProtectionNone,
             },
-            selected: settings.voiceQuality.protection,
-            onPick: notifier.setLossProtection,
+            selected: playbackSettings.voiceQuality.protection,
+            onPick: ref
+                .read(playbackSettingsProvider.notifier)
+                .setLossProtection,
           ),
           LevelSlider(
             label: agcActive ? l10n.audioTargetMicLevel : l10n.audioMicGain,
-            value: settings.customInputGainPercent,
+            value: microphoneSettings.customInputGainPercent,
             max: 100,
             percent: true,
             step: 5,
-            onChanged: notifier.setCustomInputGainPercent,
+            onChanged: ref
+                .read(microphoneSettingsProvider.notifier)
+                .setCustomInputGainPercent,
           ),
         ],
       ),
@@ -230,9 +258,8 @@ class _OutputSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final settings = ref.watch(settingsProvider);
-    final notifier = ref.read(settingsProvider.notifier);
-    final voiceCall = settings.voiceCallMode;
+    final playbackSettings = ref.watch(playbackSettingsProvider);
+    final voiceCall = playbackSettings.voiceCallMode;
     final outputs = ref.watch(audioOutputsProvider).value ?? const [];
     final kinds = <AudioOutputKind, AudioOutputDevice>{
       for (final d in outputs.reversed)
@@ -242,7 +269,7 @@ class _OutputSection extends ConsumerWidget {
       for (final d in outputs)
         if (kinds[d.kind] == d) d,
     ];
-    final route = settings.outputRoute;
+    final route = playbackSettings.outputRoute;
     final missing =
         route != null &&
         outputPickable(route, voiceCall: voiceCall) &&
@@ -273,14 +300,16 @@ class _OutputSection extends ConsumerWidget {
           title: Text(l10n.audioVoiceCallMode),
           subtitle: Text(l10n.audioVoiceCallModeSub),
           value: voiceCall,
-          onChanged: notifier.setVoiceCallMode,
+          onChanged: ref
+              .read(playbackSettingsProvider.notifier)
+              .setVoiceCallMode,
         ),
         RadioGroup<AudioOutputKind?>(
           groupValue:
               route != null && outputPickable(route, voiceCall: voiceCall)
               ? route
               : null,
-          onChanged: notifier.setOutputRoute,
+          onChanged: ref.read(playbackSettingsProvider.notifier).setOutputRoute,
           child: Column(
             children: [
               RadioListTile<AudioOutputKind?>(

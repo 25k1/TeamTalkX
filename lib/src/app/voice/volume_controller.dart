@@ -18,9 +18,10 @@ final volumeControllerProvider = Provider<void>((ref) {
     if (suppressed) return;
     final client = ref.read(teamTalkClientProvider);
     if (!client.isConnected) return;
-    final s = ref.read(settingsProvider);
+    final playbackSettings = ref.read(playbackSettingsProvider);
+    final microphoneSettings = ref.read(microphoneSettingsProvider);
     final interruption = ref.read(outputInterruptionProvider);
-    final master = volumeFromPercent(s.masterVolumePercent);
+    final master = volumeFromPercent(playbackSettings.masterVolumePercent);
     final mv = interruption == OutputEffect.duck
         ? (master * duckGain).round()
         : master;
@@ -28,11 +29,11 @@ final volumeControllerProvider = Provider<void>((ref) {
       debugPrint('[VolumeController] setMasterVolume=$mv rejected by client');
     }
     client
-      ..setMediaPlaybackVolume(s.mediaVolumePercent)
-      ..setPlaybackNormalization(enabled: s.normalizeSpeakers)
-      ..setVoiceQuality(s.voiceQuality);
+      ..setMediaPlaybackVolume(playbackSettings.mediaVolumePercent)
+      ..setPlaybackNormalization(enabled: playbackSettings.normalizeSpeakers)
+      ..setVoiceQuality(playbackSettings.voiceQuality);
     if (client.supportsInputGain) {
-      final mg = refGain(s.microphoneGainPercent.toDouble());
+      final mg = refGain(microphoneSettings.microphoneGainPercent.toDouble());
       if (!client.setMicrophoneGain(mg)) {
         debugPrint(
           '[VolumeController] setMicrophoneGain=$mg rejected by client',
@@ -50,22 +51,28 @@ final volumeControllerProvider = Provider<void>((ref) {
     debounce = Timer(Duration.zero, applyNow);
   }
 
-  bool volumeRelevantChanged(Settings? a, Settings b) {
-    if (a == null) return true;
-    return a.masterVolumePercent != b.masterVolumePercent ||
-        a.mediaVolumePercent != b.mediaVolumePercent ||
-        a.normalizeSpeakers != b.normalizeSpeakers ||
-        a.voiceQuality != b.voiceQuality ||
-        a.microphoneGainPercent != b.microphoneGainPercent ||
-        a.customInputGainPercent != b.customInputGainPercent;
-  }
+  bool playbackChanged(PlaybackSettings? a, PlaybackSettings b) =>
+      a == null ||
+      a.masterVolumePercent != b.masterVolumePercent ||
+      a.mediaVolumePercent != b.mediaVolumePercent ||
+      a.normalizeSpeakers != b.normalizeSpeakers ||
+      a.voiceQuality != b.voiceQuality;
+
+  bool microphoneChanged(MicrophoneSettings? a, MicrophoneSettings b) =>
+      a == null ||
+      a.microphoneGainPercent != b.microphoneGainPercent ||
+      a.customInputGainPercent != b.customInputGainPercent;
 
   suppressed = ref.read(connectionProvider) is! LoggedIn;
 
   ref.listen<TeamTalkClient>(teamTalkClientProvider, (_, _) => scheduleApply());
-  ref.listen<Settings>(settingsProvider, (prev, next) {
-    if (volumeRelevantChanged(prev, next)) scheduleApply();
-  });
+  ref
+    ..listen<PlaybackSettings>(playbackSettingsProvider, (prev, next) {
+      if (playbackChanged(prev, next)) scheduleApply();
+    })
+    ..listen<MicrophoneSettings>(microphoneSettingsProvider, (prev, next) {
+      if (microphoneChanged(prev, next)) scheduleApply();
+    });
   ref.listen<bool>(speakerMutedProvider, (_, _) => scheduleApply());
   ref.listen<OutputEffect?>(outputInterruptionProvider, (_, _) {
     scheduleApply();

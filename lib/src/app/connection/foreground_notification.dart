@@ -16,7 +16,7 @@ final foregroundNotificationProvider = Provider<void>((ref) {
   final transmitting = ref.watch(voiceProvider.select((v) => v.txEnabled));
   final recording = ref.watch(recordingProvider) is RecordingActive;
   final keepAwake = ref.watch(
-    settingsProvider.select((s) => s.keepAwakeWhileConnected),
+    connectionSettingsProvider.select((s) => s.keepAwakeWhileConnected),
   );
   final text = notificationText(ref.watch(appLocalizationsProvider));
   if (connection is! LoggedIn) return;

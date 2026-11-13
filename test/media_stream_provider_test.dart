@@ -179,8 +179,8 @@ void main() {
       ..setMonitor(monitor: true);
     await pumpEventQueue();
     expect(platform.tts.spoken.last, 'Loop on');
-    expect(c.read(settingsProvider).mediaStreamVolumePercent, 150);
-    expect(c.read(settingsProvider).mediaStreamMonitor, isTrue);
+    expect(c.read(playbackSettingsProvider).mediaStreamVolumePercent, 150);
+    expect(c.read(playbackSettingsProvider).mediaStreamMonitor, isTrue);
 
     media.stop();
     await pumpEventQueue();

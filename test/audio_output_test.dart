@@ -125,13 +125,13 @@ void main() {
 
   test('the mode and route are remembered', () async {
     final c = await start({});
-    c.read(settingsProvider.notifier)
+    c.read(playbackSettingsProvider.notifier)
       ..setVoiceCallMode(true)
       ..setOutputRoute(AudioOutputKind.wired);
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getString('audio_mode'), 'voiceCall');
     expect(prefs.getString('output_route'), 'wired');
-    c.read(settingsProvider.notifier).setOutputRoute(null);
+    c.read(playbackSettingsProvider.notifier).setOutputRoute(null);
     expect(prefs.getString('output_route'), isNull);
   });
 }

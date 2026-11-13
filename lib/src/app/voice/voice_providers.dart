@@ -60,7 +60,7 @@ class SpeakerMutedNotifier extends Notifier<bool> {
 }
 
 CaptureSettings captureSettingsFor(
-  Settings settings, {
+  MicrophoneSettings settings, {
   required bool voiceDetection,
 }) {
   final channels = settings.customInputChannels;
@@ -89,7 +89,7 @@ final voiceProvider = NotifierProvider<VoiceNotifier, VoiceState>(
 );
 
 final noiseSuppressionApplyProvider = Provider<void>((ref) {
-  ref.listen<Settings>(settingsProvider, (prev, next) {
+  ref.listen<MicrophoneSettings>(microphoneSettingsProvider, (prev, next) {
     if (prev == null) return;
     final changed =
         prev.noiseSuppressionEnabled != next.noiseSuppressionEnabled ||
@@ -133,14 +133,16 @@ class VoiceNotifier extends Notifier<VoiceState> {
     return true;
   }
 
-  CaptureSettings _captureSettingsFor(Settings settings) =>
+  CaptureSettings _captureSettingsFor(MicrophoneSettings settings) =>
       captureSettingsFor(settings, voiceDetection: state.voxEnabled);
 
   void _applyCaptureSettings() {
     if (!_inputActive) return;
     ref
         .read(teamTalkClientProvider)
-        .configureCapture(_captureSettingsFor(ref.read(settingsProvider)));
+        .configureCapture(
+          _captureSettingsFor(ref.read(microphoneSettingsProvider)),
+        );
   }
 
   static const _voxMinHold = Duration(milliseconds: 200);
@@ -176,7 +178,10 @@ class VoiceNotifier extends Notifier<VoiceState> {
           break;
       }
     });
-    ref.listen<Settings>(settingsProvider, (_, _) => _applyCaptureSettings());
+    ref.listen<MicrophoneSettings>(
+      microphoneSettingsProvider,
+      (_, _) => _applyCaptureSettings(),
+    );
     listenSelf((previous, next) {
       if (!_inputActive) return;
       if (previous?.txEnabled != next.txEnabled ||
@@ -195,14 +200,13 @@ class VoiceNotifier extends Notifier<VoiceState> {
   void startTransmission() {
     if (state.txEnabled) return;
     if (_refuseWhileBlocked()) return;
-    final settings = ref.read(settingsProvider);
     final wasVoxActive = state.voxActive;
     _pttOwnsTx = true;
     _voxStartedTx = false;
     _voxTxSince = null;
     _voxReleaseScheduled = false;
     _voxDetectsVoice = false;
-    _startCustomInput(settings);
+    _startCustomInput(ref.read(microphoneSettingsProvider));
     state = state.copyWith(txEnabled: true, voxActive: false);
     if (wasVoxActive) {
       _notifyVox(active: false);
@@ -237,7 +241,7 @@ class VoiceNotifier extends Notifier<VoiceState> {
     _txFeedback(on: false);
   }
 
-  void _startCustomInput(Settings settings) {
+  void _startCustomInput(MicrophoneSettings settings) {
     if (_inputActive) return;
     _inputActive = true;
     final client = ref.read(teamTalkClientProvider);
@@ -310,7 +314,7 @@ class VoiceNotifier extends Notifier<VoiceState> {
     final trigger = _voxTxSince ?? now;
     final minHoldDeadline = trigger.add(_voxMinHold);
     final releaseHold = captureSettingsFor(
-      ref.read(settingsProvider),
+      ref.read(microphoneSettingsProvider),
       voiceDetection: true,
     ).detector.releaseHold;
     final releaseHoldDeadline = now.add(releaseHold);
@@ -345,7 +349,7 @@ class VoiceNotifier extends Notifier<VoiceState> {
   void restartCustomTransmission() {
     if (!_inputActive) return;
     _stopCustomInput();
-    _startCustomInput(ref.read(settingsProvider));
+    _startCustomInput(ref.read(microphoneSettingsProvider));
   }
 
   void toggleTransmission() =>
@@ -405,16 +409,16 @@ class VoiceNotifier extends Notifier<VoiceState> {
   void setVoiceActivation({required bool enabled}) {
     if (enabled && _refuseWhileBlocked()) return;
     final client = ref.read(teamTalkClientProvider);
-    final settings = ref.read(settingsProvider);
+    final microphoneSettings = ref.read(microphoneSettingsProvider);
     client.setVoiceActivation(enabled: enabled);
     if (enabled) {
-      client.setVoiceActivationLevel(settings.voiceActivationLevel);
+      client.setVoiceActivationLevel(microphoneSettings.voiceActivationLevel);
       if (!state.txEnabled) {
         _voxMonitorActive = true;
         _voxStartedTx = false;
         _voxTxSince = null;
         ref.read(teamTalkClientProvider).resetCapture();
-        _startCustomInput(settings);
+        _startCustomInput(microphoneSettings);
       }
     } else {
       final wasVoxActive = state.voxActive;

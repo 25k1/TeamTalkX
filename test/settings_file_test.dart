@@ -85,7 +85,7 @@ void main() {
               password: 'keep',
             ),
           );
-      expect(b.read(settingsProvider).masterVolumePercent, 30);
+      expect(b.read(playbackSettingsProvider).masterVolumePercent, 30);
 
       final service = b.read(settingsFileProvider);
       await expectLater(
@@ -98,8 +98,8 @@ void main() {
       expect(preview.knownServers, 1);
 
       await service.apply(file, passwords: passwords);
-      expect(b.read(settingsProvider).masterVolumePercent, 70);
-      expect(b.read(settingsProvider).keyBindings.isEmpty, isFalse);
+      expect(b.read(playbackSettingsProvider).masterVolumePercent, 70);
+      expect(b.read(keySettingsProvider).keyBindings.isEmpty, isFalse);
       expect(
         b.read(eventConfigProvider)[AppEvent.userJoined]!.interrupts,
         isTrue,

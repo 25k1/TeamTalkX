@@ -145,7 +145,7 @@ void main() {
     voice().setVoiceActivation(enabled: true);
     await pumpEventQueue();
 
-    c.read(settingsProvider.notifier).setVadEngine(VadEngine.rnnoise);
+    c.read(microphoneSettingsProvider.notifier).setVadEngine(VadEngine.rnnoise);
     await pumpEventQueue();
 
     expect(client.settings.last.detector, VoiceDetectorKind.rnnoise);

@@ -50,7 +50,9 @@ void main() {
       '{nickname} logged on',
     );
 
-    c.read(settingsProvider.notifier).setLanguage(AppLanguage.georgian);
+    c
+        .read(appearanceSettingsProvider.notifier)
+        .setLanguage(AppLanguage.georgian);
 
     expect(
       events.speechTemplate(AppEvent.userLoggedIn),
@@ -63,7 +65,9 @@ void main() {
     final events = c.read(eventConfigProvider.notifier)
       ..setTemplate(AppEvent.userLoggedIn, 'Hi {nickname}');
 
-    c.read(settingsProvider.notifier).setLanguage(AppLanguage.russian);
+    c
+        .read(appearanceSettingsProvider.notifier)
+        .setLanguage(AppLanguage.russian);
     expect(events.speechTemplate(AppEvent.userLoggedIn), 'Hi {nickname}');
 
     events.resetTemplate(AppEvent.userLoggedIn);
@@ -110,7 +114,9 @@ void main() {
     );
 
     templates.setTemplate(ChatTemplate.channelTopic, 'T: {channeltopic}');
-    c.read(settingsProvider.notifier).setLanguage(AppLanguage.georgian);
+    c
+        .read(appearanceSettingsProvider.notifier)
+        .setLanguage(AppLanguage.georgian);
 
     expect(templates.of(ChatTemplate.channelTopic), 'T: {channeltopic}');
     expect(templates.of(ChatTemplate.channelQuota), 'დისკის კვოტა: {quota}');

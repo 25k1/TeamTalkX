@@ -267,26 +267,33 @@ class SessionController extends Notifier<ConnectionState> {
         );
         ensureCurrent();
       }
-      final settings = ref.read(settingsProvider);
+      final profileSettings = ref.read(profileSettingsProvider);
+      final playbackSettings = ref.read(playbackSettingsProvider);
+      final microphoneSettings = ref.read(microphoneSettingsProvider);
       await client.login(
         nickname: entry.nickname.isNotEmpty
             ? entry.nickname
-            : settings.nickname,
+            : profileSettings.nickname,
         username: username,
         password: entry.password,
       );
       ensureCurrent();
       client
-        ..setMasterVolume(volumeFromPercent(settings.masterVolumePercent))
-        ..setMediaPlaybackVolume(settings.mediaVolumePercent)
-        ..setPlaybackNormalization(enabled: settings.normalizeSpeakers)
-        ..setVoiceQuality(settings.voiceQuality)
-        ..setMicrophoneGain(refGain(settings.microphoneGainPercent.toDouble()))
-        ..setVoiceActivationLevel(settings.voiceActivationLevel);
+        ..setMasterVolume(
+          volumeFromPercent(playbackSettings.masterVolumePercent),
+        )
+        ..setMediaPlaybackVolume(playbackSettings.mediaVolumePercent)
+        ..setPlaybackNormalization(enabled: playbackSettings.normalizeSpeakers)
+        ..setVoiceQuality(playbackSettings.voiceQuality)
+        ..setMicrophoneGain(
+          refGain(microphoneSettings.microphoneGainPercent.toDouble()),
+        )
+        ..setVoiceActivationLevel(microphoneSettings.voiceActivationLevel);
       client
           .changeStatus(
-            settings.gender.statusBits | settings.status.statusBits,
-            settings.statusMessage,
+            profileSettings.gender.statusBits |
+                profileSettings.status.statusBits,
+            profileSettings.statusMessage,
           )
           .ignore();
       state = LoggedIn(client.myUserId);
@@ -303,7 +310,9 @@ class SessionController extends Notifier<ConnectionState> {
             serverName: entry.displayName,
             channelName: '',
             text: notificationText(l10n),
-            keepAwake: ref.read(settingsProvider).keepAwakeWhileConnected,
+            keepAwake: ref
+                .read(connectionSettingsProvider)
+                .keepAwakeWhileConnected,
           );
       ensureCurrent();
       await _autoJoin(entry, reconnect: reconnect);
@@ -521,7 +530,7 @@ class SessionController extends Notifier<ConnectionState> {
           return;
         }
       }
-      if (ref.read(settingsProvider).autoJoinRootChannel) {
+      if (ref.read(connectionSettingsProvider).autoJoinRootChannel) {
         final rootId = client.rootChannelId;
         if (rootId > 0) await client.joinChannel(rootId);
       }
