@@ -42,7 +42,7 @@ double _pitch(List<int> pcm) {
 }
 
 void main() {
-  group('time-stretching (D124)', skip: _skip, () {
+  group('time-stretching', skip: _skip, () {
     late TimeStretcher stretcher;
 
     setUp(() {

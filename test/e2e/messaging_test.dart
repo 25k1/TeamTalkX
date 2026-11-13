@@ -46,22 +46,19 @@ void main() {
       expect((await private).message.text, 'psst');
     });
 
-    test(
-      'a long message arrives whole, split and put back (D78, H7)',
-      () async {
-        final alice = await loginAs(E2eAccount.alice);
-        final bob = await loginAs(E2eAccount.bob);
-        final text = '${uniqueName('long')} ${'ქართული ტექსტი ' * 50}';
-        final private = nextEvent<UserTextMessageEvent>(
-          bob,
-          (e) => e.message.type == TtMsgType.user,
-        );
-        await alice.sendUserMessage(bob.state.myUserId, text);
-        final received = (await private).message;
-        expect(received.text, text);
-        expect(received.more, isFalse);
-      },
-    );
+    test('a long message arrives whole, split and put back', () async {
+      final alice = await loginAs(E2eAccount.alice);
+      final bob = await loginAs(E2eAccount.bob);
+      final text = '${uniqueName('long')} ${'ქართული ტექსტი ' * 50}';
+      final private = nextEvent<UserTextMessageEvent>(
+        bob,
+        (e) => e.message.type == TtMsgType.user,
+      );
+      await alice.sendUserMessage(bob.state.myUserId, text);
+      final received = (await private).message;
+      expect(received.text, text);
+      expect(received.more, isFalse);
+    });
 
     test('a password-protected channel needs its password', () async {
       final alice = await loginAs(E2eAccount.alice);

@@ -27,7 +27,7 @@ void main() {
   });
   tearDown(() => db.close());
 
-  test('a new self-signed certificate is asked about (D143)', () async {
+  test('a new self-signed certificate is asked about', () async {
     expect(
       await trust.check('tt.example', 10333, cert('aa')),
       isA<NewCertificate>(),
@@ -49,27 +49,24 @@ void main() {
     );
   });
 
-  test(
-    'authority-vouched certificates are trusted and remembered (D142)',
-    () async {
-      expect(
-        await trust.check('tt.example', 10443, cert('aa', authority: true)),
-        isNull,
-      );
-      expect(
-        await trust.check('tt.example', 10443, cert('cc', authority: true)),
-        isNull,
-        reason: 'a renewal',
-      );
-      final pin = await store.find('tt.example:10443');
-      expect(pin!.isAuthority, isTrue);
-      expect(pin.savedAt.isAtSameMomentAs(now), isTrue);
+  test('authority-vouched certificates are trusted and remembered', () async {
+    expect(
+      await trust.check('tt.example', 10443, cert('aa', authority: true)),
+      isNull,
+    );
+    expect(
+      await trust.check('tt.example', 10443, cert('cc', authority: true)),
+      isNull,
+      reason: 'a renewal',
+    );
+    final pin = await store.find('tt.example:10443');
+    expect(pin!.isAuthority, isTrue);
+    expect(pin.savedAt.isAtSameMomentAs(now), isTrue);
 
-      final downgraded = await trust.check('tt.example', 10443, cert('dd'));
-      expect(downgraded, isA<ChangedCertificate>());
-      expect((downgraded! as ChangedCertificate).previous.isAuthority, isTrue);
-    },
-  );
+    final downgraded = await trust.check('tt.example', 10443, cert('dd'));
+    expect(downgraded, isA<ChangedCertificate>());
+    expect((downgraded! as ChangedCertificate).previous.isAuthority, isTrue);
+  });
 
   test('a pinned server that gets an authority-vouched certificate', () async {
     await trust.accept('tt.example', 10333, cert('aa'));

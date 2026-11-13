@@ -26,7 +26,7 @@ class _Voice extends VoiceNotifier {
 }
 
 void main() {
-  group('the recorder (D71)', () {
+  group('the recorder', () {
     test('live: each frame comes back at 48 kHz stereo, at its gain', () {
       final r = MicTestRecorder(live: true, sampleRate: 16000, channels: 1);
       final out = r.add(_frame(), 2)!;

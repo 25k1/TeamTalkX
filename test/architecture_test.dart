@@ -71,8 +71,8 @@ void main() {
       _violations(),
       isEmpty,
       reason:
-          'Imports break the layer rule (docs/ARCHITECTURE.md, section 2). '
-          'Move the code to the right layer.',
+          'Imports break the layer rule: each layer of lib/src may import only '
+          'the layers listed for it in _allowed. Move the code to the right layer.',
     );
   });
 }

@@ -128,7 +128,7 @@ tasks.matching { it.name.startsWith("package") && it.name.endsWith("Release") }
                     "Release signing is not configured. Set TT_RELEASE_STORE_FILE, " +
                         "TT_RELEASE_STORE_PASSWORD, TT_RELEASE_KEY_ALIAS and " +
                         "TT_RELEASE_KEY_PASSWORD, or create android/key.properties. " +
-                        "See docs/RELEASE_SIGNING.md.",
+                        "The four values come from the release keystore.",
                 )
             }
         }

@@ -342,7 +342,7 @@ void main() {
     expect(client.muteCalls, contains(false));
   });
 
-  group('the volume scale (D132)', () {
+  group('the volume scale', () {
     Future<int> masterFor(Map<String, Object> prefs) async {
       final client = _StubClient();
       final container = await _container(client, prefs: prefs);
@@ -388,7 +388,7 @@ void main() {
     });
   });
 
-  test('voice quality reaches the client and is remembered (D190)', () async {
+  test('voice quality reaches the client and is remembered', () async {
     final client = _StubClient();
     final container = await _container(client);
     addTearDown(container.dispose);

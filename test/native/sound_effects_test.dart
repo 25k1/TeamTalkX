@@ -28,7 +28,7 @@ Int16List _clip(int ms, int value) =>
 
 void main() {
   group(
-    'event sounds (D56)',
+    'event sounds',
     skip: nativeLibraryOverride == ''
         ? 'Needs a host build of native/: --dart-define=TT_NATIVE_LIB=<path>'
         : null,

@@ -72,7 +72,7 @@ void main() {
     expect(ordinary.mayTransmit(6, ordinary.voiceUsers), isTrue);
   });
 
-  test('remembered subscriptions from before S6 keep broadcasts (D74)', () {
+  test('remembered subscriptions from older versions keep broadcasts', () {
     final old = StoredUserConfig.fromJson({
       'username': 'ann',
       'subscriptions': Subscriptions.voice,
@@ -130,7 +130,7 @@ void main() {
 
     List<String> spoken() => platform.tts.spoken;
 
-    test('operator changes, mine and in my channel (D157)', () async {
+    test('operator changes, mine and in my channel', () async {
       await emit(ChannelNewEvent(_channel()));
       await emit(UserJoinedEvent(_user(7, 'me')));
       expect(spoken(), isEmpty);
@@ -143,7 +143,7 @@ void main() {
       expect(spoken().last, 'You are no longer operator of /');
     });
 
-    test('being let to talk in a classroom (D95)', () async {
+    test('being let to talk in a classroom', () async {
       await emit(ChannelNewEvent(_channel(type: 4)));
       await emit(UserJoinedEvent(_user(7, 'me')));
       expect(spoken().last, 'You may not talk in this channel');

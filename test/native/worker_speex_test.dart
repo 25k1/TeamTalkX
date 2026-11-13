@@ -75,7 +75,7 @@ void main() {
       ? 'Needs a host build of native/: --dart-define=TT_NATIVE_LIB=<path>'
       : null;
 
-  group('Speex voice between workers (D23)', skip: skip, () {
+  group('Speex voice between workers', skip: skip, () {
     test('wideband, two frames per packet', () async {
       final (packets, audio) = await _speak([1, 1, 4, 2, 0]);
 

@@ -114,7 +114,7 @@ void main() {
   });
 
   group('downloads', () {
-    test('a finished download moves to Download/TeamTalkX (D34)', () async {
+    test('a finished download moves to Download/TeamTalkX', () async {
       await setUpWith(const {});
       final temp = await Directory.systemTemp.createTemp('ttx');
       addTearDown(() async {

@@ -133,7 +133,7 @@ void main() {
     expect(platform.tts.spoken.last, 'Call ended');
   });
 
-  test('the call status message is configurable (D138)', () async {
+  test('the call status message is configurable', () async {
     await setUpWith(const {'call_status_message': 'On the phone'});
     await call(CallState.active);
     expect(myMessage(), 'On the phone');

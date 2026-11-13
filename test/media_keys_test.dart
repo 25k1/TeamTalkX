@@ -145,7 +145,7 @@ void main() {
       });
     }
 
-    test('no mappings: no media session, keys pass through (D80)', () async {
+    test('no mappings: no media session, keys pass through', () async {
       await setUpWith('');
       expect(platform.mediaKeys.configured.last.session, false);
       expect(platform.mediaKeys.configured.last.mapped, <MediaKey>{});

@@ -40,7 +40,7 @@ String _wav(Directory dir, double seconds) {
 
 void main() {
   group(
-    'media streaming in the worker (V5)',
+    'media streaming in the worker',
     skip: nativeLibraryOverride == ''
         ? 'Needs a host build of native/: --dart-define=TT_NATIVE_LIB=<path>'
         : null,

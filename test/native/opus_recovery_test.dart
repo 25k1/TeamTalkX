@@ -122,7 +122,7 @@ void main() {
     ],
   };
 
-  group('recovering lost Opus packets (D190)', skip: _skip, () {
+  group('recovering lost Opus packets', skip: _skip, () {
     test('FEC is only sent when the encoder expects loss', () {
       final r = _decodeWithLoss(_encode(pcm, fec: true), single);
       expect(r.methods.keys, [OpusRecovery.concealed]);

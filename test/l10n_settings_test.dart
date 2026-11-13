@@ -42,7 +42,7 @@ void main() {
     );
   });
 
-  test('an unedited event template follows the app language (D113)', () async {
+  test('an unedited event template follows the app language', () async {
     final c = await _container({'app_language': 'english'});
     final events = c.read(eventConfigProvider.notifier);
     expect(
@@ -97,7 +97,7 @@ void main() {
     expect(_ru.valuePercent(25), '25 процентов');
   });
 
-  test('chat templates follow the language until edited (D113)', () async {
+  test('chat templates follow the language until edited', () async {
     final c = await _container({'app_language': 'russian'});
     final templates = c.read(chatTemplatesProvider.notifier);
     expect(

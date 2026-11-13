@@ -76,7 +76,7 @@ void main() {
     await pumpEventQueue();
   }
 
-  test('by default another app changes nothing (D85)', () async {
+  test('by default another app changes nothing', () async {
     await setUpWith(const {});
     await otherApp(playing: true);
     expect(effect(), isNull);
@@ -101,7 +101,7 @@ void main() {
     expect(effect(), OutputEffect.mute);
   });
 
-  test('ducking others for voice only while someone talks (D140)', () async {
+  test('ducking others for voice only while someone talks', () async {
     await setUpWith(const {'duck_others_voice': true});
     expect(focusCalls(), isEmpty);
 
@@ -114,7 +114,7 @@ void main() {
     expect(focusCalls(), ['duckOthers', 'stopDuckingOthers']);
   });
 
-  test('ducking others for event sounds (D140)', () async {
+  test('ducking others for event sounds', () async {
     await setUpWith(const {'duck_others_events': true});
     await annTalks(talking: true);
     expect(focusCalls(), isEmpty, reason: 'voice ducking is off');

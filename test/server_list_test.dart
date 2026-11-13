@@ -96,9 +96,7 @@ void main() {
 
   Finder row(String name) => find.bySemanticsLabel(RegExp('^$name(, |\$)'));
 
-  testWidgets('favorites come first, under their own heading (D163)', (
-    tester,
-  ) async {
+  testWidgets('favorites come first, under their own heading', (tester) async {
     await pump(
       tester,
       mine: const [
@@ -119,9 +117,7 @@ void main() {
     expect(find.text('My servers'), findsNothing, reason: 'all favorites');
   });
 
-  testWidgets('public filters hide servers and are remembered (D79)', (
-    tester,
-  ) async {
+  testWidgets('public filters hide servers and are remembered', (tester) async {
     await pump(tester);
     await tester.tap(find.text('Public'));
     await tester.pumpAndSettle();
@@ -172,9 +168,7 @@ void main() {
     expect(find.text('Middle'), findsOneWidget);
   });
 
-  testWidgets('connects on startup to the one server marked (D77)', (
-    tester,
-  ) async {
+  testWidgets('connects on startup to the one server marked', (tester) async {
     await pump(
       tester,
       mine: const [
@@ -191,7 +185,7 @@ void main() {
     expect(servers.map((s) => s.connectOnStartup), [true, false]);
   });
 
-  testWidgets('details show everything about a server (D164)', (tester) async {
+  testWidgets('details show everything about a server', (tester) async {
     await pump(
       tester,
       mine: [
@@ -218,7 +212,7 @@ void main() {
     semantics.dispose();
   });
 
-  testWidgets('rows read the name first, briefly (D165)', (tester) async {
+  testWidgets('rows read the name first, briefly', (tester) async {
     await pump(
       tester,
       mine: const [
@@ -244,7 +238,7 @@ void main() {
     semantics.dispose();
   });
 
-  testWidgets('servers move within their group (D165)', (tester) async {
+  testWidgets('servers move within their group', (tester) async {
     await pump(
       tester,
       mine: const [
@@ -339,7 +333,7 @@ void main() {
     expect(saved.favorite, isTrue);
   });
 
-  testWidgets('the end of startup is reported once the list is shown (D100)', (
+  testWidgets('the end of startup is reported once the list is shown', (
     tester,
   ) async {
     await pump(

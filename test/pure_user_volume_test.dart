@@ -4,7 +4,7 @@ import 'package:teamtalkx/src/domain/sound_level.dart';
 import 'package:teamtalkx/src/protocol/packet.dart';
 
 void main() {
-  group('the volume scale (D132)', () {
+  group('the volume scale', () {
     test('1000 is 100 %, the top is 300 %', () {
       expect(volumeFromPercent(100), volumeNormal);
       expect(volumeFromPercent(300), 3000);

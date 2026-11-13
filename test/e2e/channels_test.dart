@@ -83,7 +83,7 @@ void main() {
       });
     }
 
-    test('editing one property keeps all the others (C1)', () async {
+    test('editing one property keeps all the others', () async {
       final admin = await loginAs(E2eAccount.admin);
       final cfg = TtChannelConfig(
         name: uniqueName('edit'),

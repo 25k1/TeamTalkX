@@ -33,7 +33,7 @@ double _level(List<int> pcm) =>
     pcm.fold<int>(0, (n, s) => n + s.abs()) / math.max(1, pcm.length);
 
 void main() {
-  group('Speex (D23)', skip: _skip, () {
+  group('Speex', skip: _skip, () {
     for (final band in [0, 1, 2]) {
       final rate = speexSampleRate(band);
       test('band $band ($rate Hz) encodes and decodes a tone', () {

@@ -44,66 +44,68 @@ void main() {
       expect(alice.state.myUserId, 0);
     });
 
-    test('the operator password makes an operator who can block talk '
-        '(D95, D96, D156)', () async {
-      final alice = await loginAs(E2eAccount.alice);
-      final bob = await loginAs(E2eAccount.bob);
-      await alice.joinChannel(
-        E2eChannel.locked,
-        password: E2eChannel.lockedPassword,
-      );
-      await bob.joinChannel(
-        E2eChannel.locked,
-        password: E2eChannel.lockedPassword,
-      );
-      final aliceId = alice.state.myUserId;
-      final bobId = bob.state.myUserId;
+    test(
+      'the operator password makes an operator who can block talk',
+      () async {
+        final alice = await loginAs(E2eAccount.alice);
+        final bob = await loginAs(E2eAccount.bob);
+        await alice.joinChannel(
+          E2eChannel.locked,
+          password: E2eChannel.lockedPassword,
+        );
+        await bob.joinChannel(
+          E2eChannel.locked,
+          password: E2eChannel.lockedPassword,
+        );
+        final aliceId = alice.state.myUserId;
+        final bobId = bob.state.myUserId;
 
-      await expectLater(
-        alice.channelOperator(
+        await expectLater(
+          alice.channelOperator(
+            aliceId,
+            E2eChannel.locked,
+            makeOperator: true,
+            password: 'wrong',
+          ),
+          throwsA(_serverError(ServerError.incorrectOpPassword)),
+        );
+
+        final opped = nextEvent<ChannelUpdateEvent>(
+          bob,
+          (e) =>
+              e.channel.id == E2eChannel.locked &&
+              e.channel.operators.contains(aliceId),
+        );
+        await alice.channelOperator(
           aliceId,
           E2eChannel.locked,
           makeOperator: true,
-          password: 'wrong',
-        ),
-        throwsA(_serverError(ServerError.incorrectOpPassword)),
-      );
+          password: 'op-e2e',
+        );
+        await opped;
 
-      final opped = nextEvent<ChannelUpdateEvent>(
-        bob,
-        (e) =>
-            e.channel.id == E2eChannel.locked &&
-            e.channel.operators.contains(aliceId),
-      );
-      await alice.channelOperator(
-        aliceId,
-        E2eChannel.locked,
-        makeOperator: true,
-        password: 'op-e2e',
-      );
-      await opped;
+        final blocked = nextEvent<ChannelUpdateEvent>(
+          bob,
+          (e) => e.channel.voiceUsers.contains(bobId),
+        );
+        await alice.setTransmitUsers(
+          E2eChannel.locked,
+          voice: {bobId},
+          mediaFiles: const {},
+        );
+        final channel = (await blocked).channel;
+        expect(channel.mayTransmit(bobId, channel.voiceUsers), isFalse);
+        expect(channel.mayTransmit(aliceId, channel.voiceUsers), isTrue);
 
-      final blocked = nextEvent<ChannelUpdateEvent>(
-        bob,
-        (e) => e.channel.voiceUsers.contains(bobId),
-      );
-      await alice.setTransmitUsers(
-        E2eChannel.locked,
-        voice: {bobId},
-        mediaFiles: const {},
-      );
-      final channel = (await blocked).channel;
-      expect(channel.mayTransmit(bobId, channel.voiceUsers), isFalse);
-      expect(channel.mayTransmit(aliceId, channel.voiceUsers), isTrue);
+        await alice.setTransmitUsers(
+          E2eChannel.locked,
+          voice: const {},
+          mediaFiles: const {},
+        );
+      },
+    );
 
-      await alice.setTransmitUsers(
-        E2eChannel.locked,
-        voice: const {},
-        mediaFiles: const {},
-      );
-    });
-
-    test('a ban by username from a channel is listed as such (D93)', () async {
+    test('a ban by username from a channel is listed as such', () async {
       final admin = await loginAs(E2eAccount.admin);
       final bob = await loginAs(E2eAccount.bob);
       await bob.joinChannel(E2eChannel.files);
@@ -125,20 +127,17 @@ void main() {
       await admin.unbanUser(ban);
     });
 
-    test(
-      'admins get the server statistics, others are refused (D158)',
-      () async {
-        final admin = await loginAs(E2eAccount.admin);
-        final stats = await admin.queryServerStats();
-        expect(stats.usersServed, greaterThan(0));
-        expect(stats.uptime, greaterThan(Duration.zero));
+    test('admins get the server statistics, others are refused', () async {
+      final admin = await loginAs(E2eAccount.admin);
+      final stats = await admin.queryServerStats();
+      expect(stats.usersServed, greaterThan(0));
+      expect(stats.uptime, greaterThan(Duration.zero));
 
-        final alice = await loginAs(E2eAccount.alice);
-        await expectLater(
-          alice.queryServerStats(),
-          throwsA(_serverError(ServerError.notAuthorized)),
-        );
-      },
-    );
+      final alice = await loginAs(E2eAccount.alice);
+      await expectLater(
+        alice.queryServerStats(),
+        throwsA(_serverError(ServerError.notAuthorized)),
+      );
+    });
   });
 }
