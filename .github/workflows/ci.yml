@@ -157,6 +157,9 @@ jobs:
     if: needs.release-please.outputs.created == 'true'
     permissions:
       contents: write
+      id-token: write
+      attestations: write
+      artifact-metadata: write
     uses: ./.github/workflows/apk.yml
     with:
       release-tag: ${{ needs.release-please.outputs.tag }}
