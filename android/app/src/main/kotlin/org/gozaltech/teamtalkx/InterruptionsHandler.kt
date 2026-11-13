@@ -175,7 +175,9 @@ class InterruptionsHandler(
             ringtonePlaying = configs.any {
                 it.audioAttributes.usage == AudioAttributes.USAGE_NOTIFICATION_RINGTONE
             }
-            val other = configs.any { isOtherAppAudio(it.audioAttributes) }
+            val other = configs.any {
+                PlatformRules.isOtherAppAudio(it.audioAttributes.usage, it.audioAttributes.contentType)
+            }
             if (other != reportedOtherPlaying) {
                 reportedOtherPlaying = other
                 channel.invokeMethod("otherPlaying", other)
@@ -190,31 +192,12 @@ class InterruptionsHandler(
         }
     }
 
-    private fun isOtherAppAudio(a: AudioAttributes): Boolean {
-        val usage = a.usage
-        val content = a.contentType
-        return usage == AudioAttributes.USAGE_MEDIA &&
-            content != AudioAttributes.CONTENT_TYPE_SPEECH &&
-            content != AudioAttributes.CONTENT_TYPE_SONIFICATION
-    }
-
-    private fun callState(): String {
-        val mode = audio.mode
-        val activeMode = mode == AudioManager.MODE_IN_CALL ||
-            mode == MODE_CALL_SCREENING ||
-            mode == MODE_CALL_REDIRECT ||
-            mode == MODE_COMMUNICATION_REDIRECT ||
-            (mode == AudioManager.MODE_IN_COMMUNICATION &&
-                !AudioRoutingHandler.communicationActive)
-        return when {
-            carrierState == TelephonyManager.CALL_STATE_OFFHOOK || activeMode -> "active"
-            carrierState == TelephonyManager.CALL_STATE_RINGING ||
-                mode == AudioManager.MODE_RINGTONE ||
-                ringtonePlaying -> "ringing"
-            telecomInCall() -> "active"
-            else -> "idle"
-        }
-    }
+    private fun callState(): String = PlatformRules.callState(
+        carrierState = carrierState,
+        audioMode = audio.mode,
+        ringtonePlaying = ringtonePlaying,
+        ownCommunication = AudioRoutingHandler.communicationActive,
+    ) { telecomInCall() }
 
     private fun telecomInCall(): Boolean {
         if (!hasPhonePermission()) return false
@@ -234,8 +217,5 @@ class InterruptionsHandler(
     companion object {
         private const val POLL_MS = 2000L
 
-        private const val MODE_CALL_SCREENING = 4
-        private const val MODE_CALL_REDIRECT = 5
-        private const val MODE_COMMUNICATION_REDIRECT = 6
     }
 }

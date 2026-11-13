@@ -6,8 +6,9 @@ import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.provider.DocumentsContract
-import android.webkit.MimeTypeMap
 import android.util.Log
+import android.webkit.MimeTypeMap
+import androidx.core.net.toUri
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodChannel
 import java.io.File
@@ -97,7 +98,7 @@ class SoundPackFolderHandler(
             Intent.FLAG_GRANT_READ_URI_PERMISSION
         )) {
             try {
-                activity.contentResolver.releasePersistableUriPermission(Uri.parse(tree), flag)
+                activity.contentResolver.releasePersistableUriPermission(tree.toUri(), flag)
             } catch (e: SecurityException) {
             }
         }

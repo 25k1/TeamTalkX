@@ -18,6 +18,9 @@ subprojects {
 subprojects {
     plugins.withId("com.android.library") {
         extensions.configure<com.android.build.api.variant.LibraryAndroidComponentsExtension> {
+            beforeVariants { variant ->
+                variant.hostTests[com.android.build.api.variant.HostTestBuilder.UNIT_TEST_TYPE]?.enable = false
+            }
             finalizeDsl { library ->
                 val app = project(":app").extensions
                     .getByType<com.android.build.api.dsl.ApplicationExtension>()

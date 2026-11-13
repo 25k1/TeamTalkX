@@ -20,6 +20,15 @@ import io.flutter.plugin.common.MethodChannel
 class ConnectionForegroundService : Service() {
 
     private var wakeLock: PowerManager.WakeLock? = null
+    private val wakeLockRenewer = Handler(Looper.getMainLooper())
+    private val renewWakeLock = object : Runnable {
+        override fun run() {
+            val lock = wakeLock ?: return
+            if (!lock.isHeld) return
+            lock.acquire(WAKELOCK_TIMEOUT_MS)
+            wakeLockRenewer.postDelayed(this, WAKELOCK_RENEW_MS)
+        }
+    }
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -66,11 +75,13 @@ class ConnectionForegroundService : Service() {
         val pm = getSystemService(Context.POWER_SERVICE) as PowerManager
         wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, WAKELOCK_TAG).apply {
             setReferenceCounted(false)
-            acquire()
+            acquire(WAKELOCK_TIMEOUT_MS)
         }
+        wakeLockRenewer.postDelayed(renewWakeLock, WAKELOCK_RENEW_MS)
     }
 
     private fun releaseWakeLock() {
+        wakeLockRenewer.removeCallbacks(renewWakeLock)
         if (wakeLock?.isHeld == true) wakeLock?.release()
         wakeLock = null
     }
@@ -159,6 +170,8 @@ class ConnectionForegroundService : Service() {
     companion object {
         private const val CHANNEL_ID = "connection"
         private const val WAKELOCK_TAG = "teamtalkx:connection"
+        private const val WAKELOCK_TIMEOUT_MS = 60 * 60 * 1000L
+        private const val WAKELOCK_RENEW_MS = 50 * 60 * 1000L
         private const val NOTIFICATION_ID = 1
         private const val EXTRA_SERVER = "serverName"
         private const val EXTRA_CHANNEL = "channelName"

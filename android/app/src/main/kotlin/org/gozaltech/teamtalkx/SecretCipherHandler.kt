@@ -10,10 +10,8 @@ import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodChannel
 import java.security.KeyStore
 import java.util.concurrent.Executors
-import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
-import javax.crypto.spec.GCMParameterSpec
 
 class SecretCipherHandler(
     messenger: BinaryMessenger
@@ -42,7 +40,7 @@ class SecretCipherHandler(
                 outcome.fold(
                     onSuccess = { result.success(it) },
                     onFailure = { e ->
-                        val code = if (e is Undecryptable) "undecryptable" else "unavailable"
+                        val code = if (e is SecretBox.Undecryptable) "undecryptable" else "unavailable"
                         Log.w(TAG, "Secret $code", e)
                         result.error(code, e.javaClass.simpleName, null)
                     }
@@ -51,12 +49,13 @@ class SecretCipherHandler(
         }
     }
 
-    private class Undecryptable(cause: Throwable?) : Exception(cause)
-
-    private fun key(create: Boolean): SecretKey? {
+    private fun existingKey(): SecretKey? {
         val store = KeyStore.getInstance(KEYSTORE).apply { load(null) }
-        (store.getKey(ALIAS, null) as? SecretKey)?.let { return it }
-        if (!create) return null
+        return store.getKey(ALIAS, null) as? SecretKey
+    }
+
+    private fun key(): SecretKey {
+        existingKey()?.let { return it }
         val generator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, KEYSTORE)
         generator.init(
             KeyGenParameterSpec.Builder(
@@ -71,34 +70,17 @@ class SecretCipherHandler(
         return generator.generateKey()
     }
 
-    private fun encrypt(text: String): String {
-        val cipher = Cipher.getInstance(TRANSFORMATION)
-        cipher.init(Cipher.ENCRYPT_MODE, key(create = true))
-        val iv = cipher.iv
-        val sealed = cipher.doFinal(text.toByteArray(Charsets.UTF_8))
-        return Base64.encodeToString(iv + sealed, Base64.NO_WRAP)
-    }
+    private fun encrypt(text: String): String =
+        Base64.encodeToString(SecretBox.seal(key(), text), Base64.NO_WRAP)
 
     private fun decrypt(data: String): String {
-        val key = key(create = false) ?: throw Undecryptable(null)
+        val key = existingKey() ?: throw SecretBox.Undecryptable(null)
         val bytes = try {
             Base64.decode(data, Base64.NO_WRAP)
         } catch (e: IllegalArgumentException) {
-            throw Undecryptable(e)
+            throw SecretBox.Undecryptable(e)
         }
-        if (bytes.size <= IV_BYTES) throw Undecryptable(null)
-        val cipher = Cipher.getInstance(TRANSFORMATION)
-        cipher.init(
-            Cipher.DECRYPT_MODE,
-            key,
-            GCMParameterSpec(TAG_BITS, bytes, 0, IV_BYTES)
-        )
-        val plain = try {
-            cipher.doFinal(bytes, IV_BYTES, bytes.size - IV_BYTES)
-        } catch (e: javax.crypto.AEADBadTagException) {
-            throw Undecryptable(e)
-        }
-        return String(plain, Charsets.UTF_8)
+        return SecretBox.open(key, bytes)
     }
 
     override fun dispose() {
@@ -110,8 +92,5 @@ class SecretCipherHandler(
         const val TAG = "TeamTalkXSecrets"
         const val KEYSTORE = "AndroidKeyStore"
         const val ALIAS = "teamtalkx_secrets"
-        const val TRANSFORMATION = "AES/GCM/NoPadding"
-        const val IV_BYTES = 12
-        const val TAG_BITS = 128
     }
 }
